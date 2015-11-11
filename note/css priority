@@ -1,0 +1,27 @@
+It may not seem like something that important, and in most cases you won’t come across any conflicts at all, but the larger and more complex your CSS files become, or the more CSS files you start to juggle with, the greater likelihood there is of conflicts arising.
+
+More Specific = Greater Precedence
+
+If the selectors are the same then the last one will always take precedence. For example, if you had:
+
+
+p { color: red }
+p { color: blue }
+The text in the box of p elements would be colored blue because that rule came last.
+
+However, you won’t usually have identical selectors with conflicting declarations on purpose (because there’s not much point). Conflicts quite legitimately come up, though, when you have nested selectors.
+div p { color: red }
+p { color: blue }
+In this example it might seem that a p within a div would be colored blue, seeing as a rule to color p boxes blue comes last, but they would actually be colored red due to the specificity of the first selector. Basically, the more specific a selector, the more preference it will be given when it comes to conflicting styles.
+
+Calculating Specificity
+
+The actual specificity of a group of nested selectors takes some calculating. Basically, you give every ID selector (“#whatever”) a value of 100, every class selector (“.whatever”) a value of 10 and every HTML selector (“whatever”) a value of 1. Then you add them all up and hey presto, you have the specificity value.
+
+p has a specificity of 1 (1 HTML selector)
+div p has a specificity of 2 (2 HTML selectors, 1+1)
+.tree has a specificity of 10 (1 class selector)
+div p.tree has a specificity of 12 (2 HTML selectors + a class selector, 1+1+10)
+#baobab has a specificity of 100 (1 id selector)
+body #content .alternative p has a specificity of 112 (HTML selector + id selector + class selector + HTML selector, 1+100+10+1)
+So if all of these examples were used, div p.tree (with a specificity of 12) would win out over div p (with a specificity of 2) and body #content .alternative p would win out over all of them, regardless of the order.

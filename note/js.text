@@ -1,0 +1,64 @@
+/**
+ * Created by laina on 15/10/23.
+ */
+javascript 的数组
+
+数组的删除：
+
+delete ： 形式为delete arrayName[index] ,delete 会使得数组在index的位置的值 置为undefined
+
+splice ： 形式为arrayName.splice(start,length), 移除数组的元素
+
+javascript 自身没有提供区别数组和对象的 函数
+
+
+javascript的数组的下标可以动态扩充，并且定义赋值的时候可以使不连续
+
+
+
+javascript  必包
+
+个人理解：函数创建的时候，函数对象包含了一个连接到外部上下文的属性，这个形式我们叫做必包
+
+用途： 可以作为实现私有成员的方法
+
+形式：var functionName=function(argName){
+    return {
+        methodName:function(){
+            return argName
+        }
+    }
+}
+
+用途：冻结变量
+
+形式：var functionName=function(argName){
+    return function(){
+        dosomethingwith(argName)
+    }
+}
+使用functionName(argName) 时，即使argName 被外部修改 在dosomethingwith中仍然不变
+副作用：
+
+
+
+
+
+fahrner图像替换技术－将会造成严重的可访问性问题
+
+clagnut投影方法，用来实现阴影
+
+dunstan orchard 投影方法，新建图层然后向上移动4，5个像素
+
+山顶角 和圆角
+
+
+test-decaration:none  remove the xiahuaxian
+
+list-style-type:none
+cursor
+
+suckerfish css menu
+
+htc 行为文件
+

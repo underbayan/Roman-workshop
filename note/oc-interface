@@ -1,0 +1,61 @@
+define a interface
+
+// Hello.h
+#import
+@interface Hello : NSObject {
+    //变量声明
+}
+// 方法声明(public)
+@end
+//
+
+
+// Hello.m
+#import "Hello.h"
+@interface Hello () //=>此处Hello命名一致，后边跟括号
+//=>@property (某种) aType ivarName ; 可实现私有变量
+// 私有方法声明
+
+- (void)test;
+@end
+
+@implementation Hello
+// 私有方法实现
+//=>@synthesize ivarName; 有私有变量的话
+- (void)test {
+// ..
+}
+// 方法实现
+@end
+
+
+
+类目（Category）:
+类目是Objective-C中最有用的一个特性。实质上，类目允许你为一个已存在的类添加一些方法而不用子类化该类，也不需要你了解该类的实现细节。
+这是特别有用的，因为你可以给一个内建的对象添加方法。当你想在你的应用程序里面给所有NSString类型的实例添加一个方法，你只需要添加一个类目，而不需要通过定义一个子类来添加该方法。
+比如，我想给NSString添加一个方法以判断它是不是一个URL，写法就像这样：
+#import
+@interface NSString (Utilities)
+- (BOOL) isURL;
+@end
+这很像一个类的声明。不同的地方在于后面没有列出父类，并且在括号里面写了类目的名称。类目的名字可以随便取，但是最好能表达出你在类目中包含的方法所要做的事。
+下面是一个实现。切记，这不是很好的检查URL的方法。我们只是为了说清楚类目的概念。
+#import "NSString-Utilities.h"
+@implementation NSString (Utilities)
+- (BOOL) isURL
+{
+    if ( [self hasPrefix:@"http://"] )
+        return YES;
+    else
+        return NO;
+}
+@end
+现在，你可以使用NSString的这个方法了，下面的代码会在控制台打印“string1 is a URL”：
+NSString* string1 = @"http://pixar.com/";
+NSString* string2 = @"Pixar";
+if ( [string1 isURL] )
+    NSLog (@"string1 is a URL");
+if ( [string2 isURL] )
+    NSLog (@"string2 is a URL");
+与子类不同，你不能通过类目来添加实例变量。但是你能通过类目重写（override）类中已经存在的方法，当然，重写的时候要特别小心。
+记住，当你通过类目更改一个类的时候，这个更改会影响你这个应用程序中所有这个类的实例。
