@@ -1,0 +1,31 @@
+
+
+－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－
+etag检测 php实现
+
+if (method_exists($controller, $action)) {
+         ob_start();
+            $controller -> {$action}();
+            $content = ob_get_contents();
+            ob_end_clean();
+            $etag = md5($content); //计算输出内容的md5
+            fheader('Etag: ' . $etag); //服务器端输出Etag header
+   //判断浏览器发送过来的If-None-Match头与服务器端的etag值是否相等
+            if ($_SERVER['HTTP_IF_NONE_MATCH'] == $etag) {
+             write_log(sprintf("%s Client HTTP_IF_NONE_MATCH:|%s| and Server Etag:|%s| is same, send 304 header!", __METHOD__, $_SERVER['HTTP_IF_NONE_MATCH'], $etag));
+             fheader('HTTP/1.1 304 Not Modified!'); //相等，直接向浏览器发送304状态码，浏览器则直接取本地的缓存数据，节省带宽，提高页面响应速度
+            } else {
+             write_log(sprintf("%s file content already modified, output content!", __METHOD__));
+             echo $content;
+            }
+        } else {
+            $error = get_class($controller) . "::$action not exists!";
+            die($error);
+            write_log($error);
+        }
+－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－
+etag 文件头中的一个关键字
+和客户端的 if-none-match  相对应
+etag: it can identify the object with hash value ,it works on server.
+lastmodified： file last modified time
+Expires:keywords in headers ,it will prevent the client from requesting from the server while the expires is not timeout,it  works on client
