@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script>
+        //18516778853
+        var pho = 18650211000
+        var jsonp1963 = function (tmp) {
+//            console.log(tmp.message)
+            if (tmp.code = "0000" && tmp.data) {
+                console.log(tmp.data[0].phoneNum)
+            }
+        }
+        var judgenum=function(num,last){
+            if (num==0)return 1
+            var tmplast=Math.floor(num%10)
+            num=Math.floor(num/10)
+            if(tmplast==last&&num!=0)
+            { return judgenum(num,tmplast)+1;}
+            else return judgenum(num,tmplast);
+        }
+        for (var j = 0; j < 10; j++)
+        {
+            var tmpj = j
+            pho=18650210000+tmpj*1000
+            for (var i = 0; i < 1000; i++) {
+                pho += 1
+                if(judgenum((pho))<2)continue;
+//                console.log(pho)
+                var url="https://wt.tmall.com/trade/detail/itemOp.do?itemId=40828515985&planId=3379&provId=350000&cityId=350300&maxCount=25&phoneNum=" + pho + "&_ksTS=1447211854103_1962&callback=jsonp1963&m=SelectNum"
+//                var url = "https://wt.tmall.com/trade/detail/itemOp.do?itemId=40828515985&planId=3379&provId=310000&cityId=310100&maxCount=25&phoneNum=" + pho + "&_ksTS=1447208499345_2776&callback=jsonp2777&m=SelectNum"
+                $.ajax({
+                    type: "get",
+                    url: url,
+                    dataType: "jsonp",
+                    success: function (data) {
+//                    console.log (data.toString())
+                    },
+                    error: function (data) {
+//                    console.log (data.toString())
+
+                    },
+                    complete: function () {
+
+
+                    }
+                });
+//            $.getJSON(url,function(data){console.log (data)})
+            }
+        }
+    </script>
+</head>
+<body>
+
+</body>
+</html>

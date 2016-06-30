@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>koch</title>
+</head>
+<body>
+<canvas id="snow-plain" height="100%" width="100%"/>
+<script>
+    function snowfalke(c, n, x, y, len) {
+        var deg = Math.PI / 180
+        c.save()
+        c.fillStyle = 'blue'
+        c.translate(x, y)
+        c.moveTo(0, 0)
+        leg(n)
+        c.rotate(-120 * deg)
+        leg(n)
+        c.rotate(-120 * deg)
+        leg(n)
+        c.closePath()
+        c.fill()
+        c.restore()
+        function leg(n) {
+            c.save()
+            if (n == 0) {
+                c.lineTo(len, 0)
+            }
+            else {
+                c.scale(1 / 3, 1 / 3)
+                leg(n - 1)
+                c.rotate(60 * deg)
+                leg(n - 1)
+                c.rotate(-120 * deg)
+                leg(n - 1)
+                c.rotate(60 * deg)
+                leg(n - 1)
+            }
+            c.restore();
+            c.translate(len, 0)
+        }
+    }
+    var c = document.getElementById("snow-plain").getContext('2d')
+
+    snowfalke(c, 5, 50, 50, 50)
+    c.stroke()
+</script>
+</body>
+</html>

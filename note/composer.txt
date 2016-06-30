@@ -1,0 +1,11 @@
+#install package
+
+1,php composer.phar update
+
+2,php composer.phar install
+
+#install the  composer
+
+curl -sS https://getcomposer.org/installer | php
+
+

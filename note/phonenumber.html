@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script>
+        //18516778853
+        var pho = 18516770000
+        var jsonp2777 = function (tmp) {
+//            console.log(tmp)
+            if (tmp.code = "0000" && tmp.data) {
+                console.log(tmp.data[0].phoneNum)
+            }
+        }
+        for (var j = 1; j < 10; j++) {
+            var tmpj = j * 11
+            pho=18516770000+tmpj*100
+            for (var i = 0; i < 100; i++) {
+                pho += 1
+
+                var url = "https://wt.tmall.com/trade/detail/itemOp.do?itemId=40828515985&planId=3379&provId=310000&cityId=310100&maxCount=25&phoneNum=" + pho + "&_ksTS=1447208499345_2776&callback=jsonp2777&m=SelectNum"
+                $.ajax({
+                    type: "get",
+                    url: url,
+                    dataType: "jsonp",
+                    success: function (data) {
+//                    console.log (data.toString())
+                    },
+                    error: function (data) {
+//                    console.log (data.toString())
+
+                    },
+                    complete: function () {
+
+
+                    }
+                });
+//            $.getJSON(url,function(data){console.log (data)})
+            }
+        }
+    </script>
+</head>
+<body>
+
+</body>
+</html>
