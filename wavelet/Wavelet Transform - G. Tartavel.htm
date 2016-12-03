@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<!-- saved from url=(0081)http://perso.telecom-paristech.fr/~tartavel/programming/js/ipij/html/wavelets.php -->
+<html lang="en-US"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <link rel="stylesheet" type="text/css" href="./Wavelet Transform - G. Tartavel_files/template.css">
+
+    <!-- Extra headers -->
+
+<script type="text/javascript" src="./Wavelet Transform - G. Tartavel_files/Tools.object.js"></script>
+<script type="text/javascript" src="./Wavelet Transform - G. Tartavel_files/ImageJS.class.js"></script>
+<script type="text/javascript" src="./Wavelet Transform - G. Tartavel_files/ImageRGBA.class.js"></script>
+<script type="text/javascript" src="./Wavelet Transform - G. Tartavel_files/Wavelets.class.js"></script>
+<script type="text/javascript" src="./Wavelet Transform - G. Tartavel_files/Wavelets_list.js"></script>
+
+<style type="text/css">
+#tWt {
+    border-collapse:collapse;
+}
+#tWt td {
+    text-align: left;
+    vertical-align: top;
+}
+#tWt canvas {
+    border: 2px solid #77f;
+}
+#loading {
+    display: none;
+}
+fieldset {
+    width: 15em;
+    margin-bottom: 10px;
+}
+</style>
+
+<script type="text/javascript">
+<!--
+"use strict";
+
+// Global variables
+var imInput, imNoisy, imIwt;
+var wt;
+var estimStd;
+var imDenoised, imError;
+var tip = {
+    'threshold': 'With soft thresholding: try   3/2 * std\n'
+        + 'With hard thresholding: try   3 * std'
+};
+
+// Get an element or its value
+function $(elmt, type) {
+    if (typeof elmt === 'string' && document.getElementById(elmt)) {
+        elmt = document.getElementById(elmt);
+    }
+    if (type === undefined) {
+        return elmt;
+    }
+    if (typeof type !== 'string') {
+        throw new Error('Function $: second argument must be a string');
+    }
+    type = type.toLowerCase();
+
+    if (type.substr(0, 3) === 'str') {
+        elmt = elmt.value;
+    } else if (type.substr(0, 3) === 'int') {
+        elmt = parseInt(elmt.value, 10);
+    } else if (type.substr(0, 5) === 'float') {
+        elmt = parseFloat(elmt.value);
+    } else if (type.substr(0, 5) === 'check') {
+        elmt = (elmt.checked) ? true : false;
+    } else {
+        throw new Error('Function $: second argument value unknown');
+    }
+
+    return elmt;
+}
+
+// Assume a condition is true, error otherwise
+function assert(cond, msg) {
+    if (!cond) {
+        alert('Error: ' + msg);
+        throw new Error(msg);
+    }
+}
+
+// Display the input image
+function doDisplay() {
+    assert(imInput, 'no loaded image');
+    imInput.draw('cInput');
+}
+
+// Load an image
+function loadImage(url) {
+    if (url.substr(0, 5) !== 'data:')
+        url = '../../../images/reader.php?url=' + escape(url);
+    imInput = new ImageRGB().load(url, function() {
+        doDisplay();
+        doNoise();
+    });
+}
+
+// Initialize the script
+function init() {
+    Wavelet.toHTML('sWavelet');
+    Tools.makeDraggable(document, loadImage, 'url');
+}
+
+// Add noise
+function doNoise() {
+    assert(imInput, 'no loaded image');
+    imNoisy = imInput.addNoise($('tiNoiseStd', 'float'));
+    imNoisy.draw('cNoisy');
+}
+
+// Compute WT
+function doWT() {
+    assert(imNoisy, 'noisy image required');
+    wt = new WT(imNoisy, $('chRedundant', 'check'),
+                         $('sWavelet', 'str'),
+                         $('tiLevel', 'int'));
+    estimStd = wt.noiseStd();
+    $('toNoiseStd').value = estimStd;
+
+    var toggleCanvas = function () {
+        this.style.borderColor = (!this.style.borderColor) ? 'red' : '';
+    };
+    wt.toHTML('tWt', toggleCanvas, .75);
+}
+
+// Compute the IWT
+function doIWT() {
+    assert(wt, 'no WT computed');
+    var processFromCanvas = function (view) {
+        if (this.style.borderColor) {
+            view.fill(0);
+        }
+    };
+    var wtBis = new WT(wt).processHTML('tWt', processFromCanvas);
+    
+    // Thresold and inverse
+    var t = $('tThreshold', 'float');
+    var type = $('bSoftThreshold', 'check') ? 'soft' : 'hard';
+    wtBis.threshold($('tThreshold', 'float'), type);
+    var imRec = wtBis.inverse();
+    
+    // Display
+    imRec.draw('cDenoised');
+    var imError = imRec.getNew();
+    var psnr = imRec.psnr(imInput, imError);
+    $('toPsnr').value = psnr;
+    imError.setDynamic('abs');
+    imError.draw('cError');
+}
+//-->
+</script>
+
+
+    <title>Wavelet Transform - G. Tartavel</title>
+
+</head>
+<body youdao="bind">
+
+<h1 id="pagetitle">Wavelet Transform</h1>
+
+<div id="pagemenu">
+  <ul>
+    <li class="hiddenmenu">
+      <a href="http://perso.telecom-paristech.fr/~tartavel/index.php">Home page</a>
+    </li>
+    <li class="hiddenmenu">
+      <a href="http://perso.telecom-paristech.fr/~tartavel/teaching/">Teaching</a>
+      <ul>
+        <li class="hiddenmenu">
+          <a href="http://perso.telecom-paristech.fr/~tartavel/teaching/documents/">Documents</a>
+          <ul>
+            <li class="hiddenmenu">
+              <a href="http://perso.telecom-paristech.fr/~tartavel/teaching/documents/LI213/">LI 213 : structures de données</a>
+            </li>
+            <li class="hiddenmenu">
+              <a href="http://perso.telecom-paristech.fr/~tartavel/teaching/documents/LI215/">LI 215 : langage C (avancé)</a>
+            </li>
+            <li class="hiddenmenu">
+              <a href="http://perso.telecom-paristech.fr/~tartavel/teaching/documents/others/">Other courses</a>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li class="hiddenmenu">
+      <a href="http://perso.telecom-paristech.fr/~tartavel/research/">Research</a>
+      <ul>
+        <li class="hiddenmenu">
+          <a href="http://perso.telecom-paristech.fr/~tartavel/research/publications.php">Publications</a>
+        </li>
+        <li class="hiddenmenu">
+          <a href="http://perso.telecom-paristech.fr/~tartavel/research/jmiv14.php">Synthesis results</a>
+        </li>
+        <li class="hiddenmenu">
+          <a href="http://perso.telecom-paristech.fr/~tartavel/research/thesis15restoration.php">Restoration results</a>
+        </li>
+        <li class="currentmenu">
+          Results
+          <ul>
+            <li class="hiddenmenu">
+              <a href="http://perso.telecom-paristech.fr/~tartavel/research/ssvm13.php">SSVM'13</a>
+            </li>
+            <li class="hiddenmenu">
+              <a href="http://perso.telecom-paristech.fr/~tartavel/research/gretsi13.php">GRETSI'13</a>
+            </li>
+            <li class="hiddenmenu">
+              <a href="http://perso.telecom-paristech.fr/~tartavel/research/jmiv14.php">JMIV'14</a>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li class="currentmenu">
+      <a href="http://perso.telecom-paristech.fr/~tartavel/programming/">Programming</a>
+      <ul>
+        <li class="hiddenmenu">
+          <a href="http://perso.telecom-paristech.fr/~tartavel/programming/cpp/">C++</a>
+          <ul>
+            <li class="hiddenmenu">
+              <a href="http://perso.telecom-paristech.fr/~tartavel/programming/cpp/doc/Imagepp.php">Image++</a>
+            </li>
+          </ul>
+        </li>
+        <li class="hiddenmenu">
+          <a href="http://perso.telecom-paristech.fr/~tartavel/programming/python/">Python</a>
+          <ul>
+            <li class="hiddenmenu">
+              <a href="http://perso.telecom-paristech.fr/~tartavel/programming/python/index.php?file=numpyExample.py">NumPy example</a>
+            </li>
+          </ul>
+        </li>
+        <li class="hiddenmenu">
+          <a href="http://perso.telecom-paristech.fr/~tartavel/programming/matlab/">Matlab</a>
+          <ul>
+            <li class="hiddenmenu">
+              <a href="http://perso.telecom-paristech.fr/~tartavel/programming/matlab/doc/LaunchPatches.php">Patches</a>
+            </li>
+            <li class="hiddenmenu">
+              <a href="http://perso.telecom-paristech.fr/~tartavel/programming/matlab/doc/LaunchViewer.php">Viewer</a>
+            </li>
+            <li class="hiddenmenu">
+              <a href="http://perso.telecom-paristech.fr/~tartavel/programming/matlab/doc/LaunchMinimizerFGHL.php">Minimizer</a>
+            </li>
+          </ul>
+        </li>
+        <li class="currentmenu">
+          <a href="http://perso.telecom-paristech.fr/~tartavel/programming/js/">JavaScript</a>
+          <ul>
+            <li class="hiddenmenu">
+              <a href="http://perso.telecom-paristech.fr/~tartavel/programming/js/gleffect/sample/effect-designer.html">Real-time image processing</a>
+            </li>
+            <li class="hiddenmenu">
+              <a href="http://perso.telecom-paristech.fr/~tartavel/programming/js/webgl/">WebGL rendering</a>
+            </li>
+            <li class="currentmenu">
+              <a href="http://perso.telecom-paristech.fr/~tartavel/programming/js/ipij/html/wavelets.php">Wavelet Transform</a>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li class="hiddenmenu">
+      <a href="http://perso.telecom-paristech.fr/~tartavel/git-redirection.php">Git repository</a>
+    </li>
+    <li class="hiddenmenu">
+      <a href="http://perso.telecom-paristech.fr/~tartavel/files/">Downloadable content</a>
+    </li>
+  </ul>
+</div>
+
+<p>Hint: keep your mouse over an element to display a tooltip.</p>
+
+<h2>Images</h2>
+<table class="center">
+  <tbody><tr>
+    <td>
+      <div id="dropZone" class="isDraggable" title="Drop here an image from your disk">
+      Drag and drop an image<br>from your disk in this area
+      </div>
+      <form action="http://perso.telecom-paristech.fr/~tartavel/programming/js/ipij/html/wavelets.php#" onsubmit="loadImage($(&#39;tiImageUrl&#39;, &#39;str&#39;)); return false;">
+        <div>
+          Or <input type="submit" value="load url">:
+          <input type="text" id="tiImageUrl" onfocus="this.value=&#39;&#39;;" title="Paste the URL of an image to load it from the Internet">
+        </div>
+      </form>
+    </td>
+    <td>
+      <form action="http://perso.telecom-paristech.fr/~tartavel/programming/js/ipij/html/wavelets.php#" onsubmit="doNoise(); return false;">
+        <div>
+          <label title="Add a white gaussian noise">Noise std:
+            <input type="text" id="tiNoiseStd" size="4" value="0">
+          </label>
+          <input type="submit" value="Add">
+        </div>
+      </form>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <canvas id="cInput" width="1024" height="676" title="Original image"></canvas>
+    </td>
+    <td>
+      <canvas id="cNoisy" width="1024" height="676" title="Noisy image"></canvas>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <canvas id="cDenoised" width="1024" height="676" title="Denoised image"></canvas>
+    </td>
+    <td>
+      <canvas id="cError" width="1024" height="676" title="Difference between original and denoised"></canvas>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Denoised,
+      <label title="Error between original and denoised">
+        PSNR:
+        <input type="text" id="toPsnr" size="2" readonly="readonly" class="readonly">
+        dB
+      </label>
+    </td>
+    <td>
+      Error image
+    </td>
+  </tr>
+</tbody></table>
+
+<h2>Wavelet Transform</h2>
+<table>
+  <tbody><tr>
+    <td>
+      <form action="http://perso.telecom-paristech.fr/~tartavel/programming/js/ipij/html/wavelets.php#" onsubmit="doWT(); return false;">
+        <fieldset>
+          <legend>Decomposition</legend>
+          <label title="Name of the wavelet">
+            <select id="sWavelet"><option value="haar">Haar / Daubechies 1</option><option value="db2">Daubechies 2</option><option value="db4">Daubechies 4</option><option value="db8">Daubechies 8</option><option value="sym2">Symlets 2</option><option value="sym4">Symlets 4</option><option value="sym8">Symlets 8</option><option value="coif1">Coiflets 1</option><option value="coif2">Coiflets 2</option><option value="coif4">Coiflets 4</option><option value="bi13">Biorthogonal 1-3</option><option value="bi31">Biorthogonal 3-1</option><option value="bi68">Biorthogonal 6-8</option><option value="bi97">Biorthogonal 9-7</option></select>
+            wavelet
+          </label><br>
+          <label title="Number of scales in the decomposition">
+            <input type="text" id="tiLevel" size="2" maxlength="2" value="3">
+            levels
+          </label>
+          of decomposition<br>
+          <label title="Also called undecimated or translation invariant">
+            <input type="checkbox" id="chRedundant">
+            Redundant transform
+          </label><br>
+          <input type="submit" value=" Compute ">
+        </fieldset>
+      </form>
+    </td>
+    <td>
+      <form action="http://perso.telecom-paristech.fr/~tartavel/programming/js/ipij/html/wavelets.php#" onsubmit="doIWT(); return false;">
+        <fieldset>
+          <legend>Reconstruction</legend>
+          <label title="Estimation of the standard deviation of the noise">
+            Estimated noise std:
+            <input type="text" id="toNoiseStd" size="4" readonly="readonly" class="readonly">
+          </label><br>
+          <label title="Apply a threshold to the wavelet coefficients">
+            Threshold:
+            <input type="text" id="tThreshold" size="4" value="0">
+          </label>
+          <input type="button" value="?" onclick="alert(tip[&#39;threshold&#39;]);"><br>
+          <label title="Use soft thresholding instead of hard thresholding">
+            <input type="checkbox" id="bSoftThreshold" checked="checked">
+            Use soft thresholding
+          </label><br>
+          <input type="submit" value=" Reconstruct ">
+        </fieldset>
+      </form>
+    </td>
+  </tr>
+</tbody></table>
+<table id="tWt"><tbody><tr><td><canvas id="LL0" width="512" height="338"></canvas></td><td rowspan="1"><canvas id="HL1" width="512" height="338"></canvas></td><td rowspan="2" style="display: none;"><canvas id="HL2" width="64" height="43"></canvas></td><td rowspan="3" style="display: none;"><canvas id="HL3" width="128" height="85"></canvas></td><td rowspan="4" style="display: none;"><canvas id="HL4" width="256" height="169"></canvas></td><td rowspan="5" style="display: none;"><canvas id="HL5" width="512" height="338"></canvas></td></tr><tr><td colspan="1"><canvas id="LH1" width="512" height="338"></canvas></td><td><canvas id="HH1" width="512" height="338"></canvas></td></tr><tr style="display: none;"><td colspan="2"><canvas id="LH2" width="64" height="43"></canvas></td><td><canvas id="HH2" width="64" height="43"></canvas></td></tr><tr style="display: none;"><td colspan="3"><canvas id="LH3" width="128" height="85"></canvas></td><td><canvas id="HH3" width="128" height="85"></canvas></td></tr><tr style="display: none;"><td colspan="4"><canvas id="LH4" width="256" height="169"></canvas></td><td><canvas id="HH4" width="256" height="169"></canvas></td></tr><tr style="display: none;"><td colspan="5"><canvas id="LH5" width="512" height="338"></canvas></td><td><canvas id="HH5" width="512" height="338"></canvas></td></tr></tbody></table>
+
+<script type="text/javascript">
+  "use strict";
+  document.body.onload = init;
+</script>
+
+
+<div id="pagefooter">
+  Links:
+    <a href="http://perso.telecom-paristech.fr/~tartavel/programming/js/ipij/html/wavelets.php#">top of the page</a> |
+    <a href="http://perso.telecom-paristech.fr/~tartavel/">home page</a><br>
+  Copyright © 2012-2015 -- Guillaume Tartavel<br>
+  Last update: 04-04-2013, 16:38
+</div>
+
+
+
+
+</body></html>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" style="width: 100%;height: 100%">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        img[src$=".gif"], img[src$=".png"] {
+            image-rendering: -moz-crisp-edges;         /* Firefox */
+            image-rendering:   -o-crisp-edges;         /* Opera */
+            image-rendering: -webkit-optimize-contrast;/* Webkit (non-standard naming) */
+            image-rendering: crisp-edges;
+            -ms-interpolation-mode: nearest-neighbor;  /* IE (non-standard property) */
+        }
+    </style>
+</head>
+<body style="width: 100%;height: 100%">
+<canvas id="myCanvas"style="width: 50%;height: 50%"></canvas>
+</body>
+<script>
+    var canvas = document.getElementById('myCanvas');
+    var context = canvas.getContext('2d');
+    var imageObj = new Image();
+    context.scale(8,8)
+    imageObj.onload = function() {
+        context.imageSmoothingEnabled=false
+        context.drawImage(imageObj, 0, 0,imageObj.width,imageObj.height,0,0,canvas.width/8,canvas.height/8);
+    };
+    imageObj.src = './i.jpg';
+
+</script>
+</html>
