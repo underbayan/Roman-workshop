@@ -143,7 +143,7 @@ function doIWT() {
     var imRec = wtBis.inverse();
     
     // Display
-    imRec.draw('cDenoised');
+    wtBis.draw('cDenoised');
     var imError = imRec.getNew();
     var psnr = imRec.psnr(imInput, imError);
     $('toPsnr').value = psnr;

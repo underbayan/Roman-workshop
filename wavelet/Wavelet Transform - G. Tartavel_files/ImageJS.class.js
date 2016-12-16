@@ -265,7 +265,7 @@ ImageJS.prototype.init = function (width, height, nchannels, args) {
     // Image data
     delete this.dataType;
     if (args && args.dataType) {
-    /** Read only<br />Image data type, e.g. Float64Array. */
+        /** Read only<br />Image data type, e.g. Float64Array. */
         this.dataType = args.dataType;
     }
     if (this.data) {
@@ -508,12 +508,12 @@ ImageJS.prototype.exportImage = function (output, factor) {
         }
         if (nc !== 1 && nc !== output.chan.length) {
             throw new Error(errMsg + "when copying several channels, "
-                    + "the number of channels must not change");
+                + "the number of channels must not change");
         }
     } else if (typeof output === 'number') {
         if (nc !== 1 && nc !== output && this.nchannels !== output) {
             throw new Error(errMsg + "when copying several channels, "
-                    + "the number of channels must not change");
+                + "the number of channels must not change");
         }
         output = this.getNew();
         if (this.nchannels === output) {
@@ -527,8 +527,8 @@ ImageJS.prototype.exportImage = function (output, factor) {
     var iI0 = this.getI0(), oI0 = output.getI0();
     var iDx = this.getDx(), oDx = output.getDx();
     var iDy = this.getDy(), oDy = output.getDy();
-    var idata = this.data,  odata = output.data;
-    var nx = this.nx,        ny = this.ny;
+    var idata = this.data, odata = output.data;
+    var nx = this.nx, ny = this.ny;
 
     // Copy everything
     var c, y, x;
@@ -743,22 +743,22 @@ ImageJS.prototype.draw = function (canvas, scale) {
         var vScale = canvas.height / this.ny;
         if (typeof scale === 'string') {
             switch (scale) {
-            case 'CANVAS_WIDTH':
-                scale = hScale;
-                break;
-            case 'CANVAS_HEIGHT':
-                scale = vScale;
-                break;
-            case 'CANVAS_OR_LESS':
-                scale = Math.min(hScale, vScale);
-                scale = scale > 1 ? 1 : scale;
-                break;
-            case 'CANVAS_OR_MORE':
-                scale = Math.max(hScale, vScale);
-                scale = scale < 1 ? 1 : scale;
-                break;
-            default:
-                throw new Error(errMsg + 'unknown scale parameter "' + scale + '"');
+                case 'CANVAS_WIDTH':
+                    scale = hScale;
+                    break;
+                case 'CANVAS_HEIGHT':
+                    scale = vScale;
+                    break;
+                case 'CANVAS_OR_LESS':
+                    scale = Math.min(hScale, vScale);
+                    scale = scale > 1 ? 1 : scale;
+                    break;
+                case 'CANVAS_OR_MORE':
+                    scale = Math.max(hScale, vScale);
+                    scale = scale < 1 ? 1 : scale;
+                    break;
+                default:
+                    throw new Error(errMsg + 'unknown scale parameter "' + scale + '"');
             }
         }
         canvas.width = Math.round(this.nx * scale);
@@ -767,8 +767,8 @@ ImageJS.prototype.draw = function (canvas, scale) {
         // Get and draw image data
         myCtx.putImageData(imageData, 0, 0);
         canvas.getContext('2d').drawImage(myCanvas,
-                0, 0, imageData.width, imageData.height,
-                0, 0, canvas.width, canvas.height);
+            0, 0, imageData.width, imageData.height,
+            0, 0, canvas.width, canvas.height);
     }
 
     return scale;
@@ -800,8 +800,8 @@ ImageJS.prototype.open = function (param) {
         var left = Math.floor((screen.width - this.width) / 2);
         var top = Math.floor((screen.height - this.height) / 2);
         param = 'dependent:no,menubar:yes,location:no,'
-              + 'width=' + this.width + ',height=' + this.height + ','
-              + 'left=' + left + ',top=' + (top - 64);
+            + 'width=' + this.width + ',height=' + this.height + ','
+            + 'left=' + left + ',top=' + (top - 64);
     }
 
     return window.open(canvas.toDataURL(), undefined, param);
@@ -855,26 +855,26 @@ ImageJS.prototype.getImageData = function () {
     var canvasImage = new ImageJS(this.nx, this.ny, 4, param);
     canvasImage.data = imageData.data;
     switch (this.chan.length) {
-	case 1:
-        canvasImage.Ch('012');
-        this.exportImage(canvasImage, 255.0);
-        break;
+        case 1:
+            canvasImage.Ch('012');
+            this.exportImage(canvasImage, 255.0);
+            break;
 
-	case 2:
-        canvasImage.Ch('012');
-        this.Ch(this.chan[0]).exportImage(canvasImage, 255.0);
-        canvasImage.Ch('3');
-        this.Ch(this.chan[1]).exportImage(canvasImage, 255.0);
-        break;
+        case 2:
+            canvasImage.Ch('012');
+            this.Ch(this.chan[0]).exportImage(canvasImage, 255.0);
+            canvasImage.Ch('3');
+            this.Ch(this.chan[1]).exportImage(canvasImage, 255.0);
+            break;
 
-    case 3:
-    case 4:
-        canvasImage.Ch(this.chan);
-        this.exportImage(canvasImage, 255.0);
-        break;
+        case 3:
+        case 4:
+            canvasImage.Ch(this.chan);
+            this.exportImage(canvasImage, 255.0);
+            break;
 
-	default:
-        break;
+        default:
+            break;
     }
     return imageData;
 };
@@ -961,8 +961,8 @@ ImageJS.prototype.map = function (fcn, output) {
             }
         }
     } else {
-        var odata = output.data,    odx = output.getDx();
-        var oI0 = output.getI0(),   ody = output.getDy();
+        var odata = output.data, odx = output.getDx();
+        var oI0 = output.getI0(), ody = output.getDy();
         var ix_, iy_, ox_, oy_;
         for (c = 0; c < iI0.length; c++) {
             for (y = 0, iy_ = iI0[c], oy_ = oI0[c]; y < ny; y++, iy_ += idy, oy_ += ody) {
@@ -1013,8 +1013,8 @@ ImageJS.prototype.operator = function (op, im, output) {
     var iI0 = this.getI0(), eI0 = im.getI0(), oI0 = output.getI0();
     var iDx = this.getDx(), eDx = im.getDx(), oDx = output.getDx();
     var iDy = this.getDy(), eDy = im.getDy(), oDy = output.getDy();
-    var idata = this.data,  edata = im.data,  odata = output.data;
-    var nx = this.nx,       ny = this.ny;
+    var idata = this.data, edata = im.data, odata = output.data;
+    var nx = this.nx, ny = this.ny;
 
     // Apply
     var c, x, y;
@@ -1286,8 +1286,8 @@ ImageJS.prototype.psnr = function (imRef, outDiff) {
     var iI0 = this.getI0(), rI0 = imRef.getI0(), oI0 = outDiff.getI0();
     var iDx = this.getDx(), rDx = imRef.getDx(), oDx = outDiff.getDx();
     var iDy = this.getDy(), rDy = imRef.getDy(), oDy = outDiff.getDy();
-    var idata = this.data,  rdata = imRef.data,  odata = outDiff.data;
-    var nx = this.nx,       ny = this.ny;
+    var idata = this.data, rdata = imRef.data, odata = outDiff.data;
+    var nx = this.nx, ny = this.ny;
 
     var ssd = 0;
     var c, x, y;
@@ -1589,11 +1589,11 @@ ImageJS.prototype.getStatistics = function () {
     }
 
     return {
-        'count':    count,
-        'nonZero':  nonZero,
-        'sumX':     sumX,
-        'sumX2':    sumX2,
-        'sumAbsX':  sumAbsX
+        'count': count,
+        'nonZero': nonZero,
+        'sumX': sumX,
+        'sumX2': sumX2,
+        'sumAbsX': sumAbsX
     };
 };
 
@@ -1724,7 +1724,7 @@ ImageJS.prototype.filter1d = function (kernel, boundary, origin, subsample, outp
             throw new Error(errMsg + "if the output is the image itself, the kernel must be a scalar");
         } else {
             kernel = kernel[0];
-            var d  = this.data, I0 = this.getI0();
+            var d = this.data, I0 = this.getI0();
             dx = this.getDx();
             dy = this.getDy();
             nx = this.nx;
@@ -1805,7 +1805,7 @@ ImageJS.prototype.filter1d = function (kernel, boundary, origin, subsample, outp
         } else {
             throw new Error(errMsg + "unknown origin position '" + origin + "'");
         }
-    } else if (typeof origin  === 'number') {
+    } else if (typeof origin === 'number') {
         if (origin < 0) {
             origin += K;
         }
@@ -1818,7 +1818,7 @@ ImageJS.prototype.filter1d = function (kernel, boundary, origin, subsample, outp
     var iI0 = this.getI0(), oI0 = output.getI0();
     var iDx = this.getDx(), oDx = output.getDx();
     var iDy = this.getDy(), oDy = output.getDy();
-    var idata = this.data,  odata = output.data;
+    var idata = this.data, odata = output.data;
     nx = this.nx;
     ny = this.ny;
     var nx2 = 2 * nx;
@@ -1839,7 +1839,7 @@ ImageJS.prototype.filter1d = function (kernel, boundary, origin, subsample, outp
                 }
             }
         }
-    // Periodic boundary
+        // Periodic boundary
     } else if (boundary === 'per') {
         for (c = 0; c < iI0.length; c++) {
             for (y = 0, iy_ = iI0[c], oy_ = oI0[c]; y < ny; y++, iy_ += iDy, oy_ += oDy) {
@@ -1854,13 +1854,13 @@ ImageJS.prototype.filter1d = function (kernel, boundary, origin, subsample, outp
                         while (sTmp >= nx) {
                             sTmp -= nx;
                         }
-                        sum += kernel[k] * idata[iy_ + sTmp * iDx];
+                        sum += kernel[k] * (idata[iy_ + sTmp * iDx]);
                     }
                     odata[ox_] += sum;
                 }
             }
         }
-    // Symmetric boundary
+        // Symmetric boundary
     } else if (boundary === 'sym') {
         for (c = 0; c < iI0.length; c++) {
             for (y = 0, iy_ = iI0[c], oy_ = oI0[c]; y < ny; y++, iy_ += iDy, oy_ += oDy) {
@@ -1878,7 +1878,7 @@ ImageJS.prototype.filter1d = function (kernel, boundary, origin, subsample, outp
                         if (sTmp >= nx) {
                             sTmp = nx2 - 1 - sTmp;
                         }
-                        sum += kernel[k] * idata[iy_ + sTmp * iDx];
+                        sum += kernel[k] * (idata[iy_ + sTmp * iDx]);
                     }
                     odata[ox_] += sum;
                 }
@@ -1897,7 +1897,7 @@ ImageJS.prototype.filter1d = function (kernel, boundary, origin, subsample, outp
                         if (sTmp < 0) {
                             sTmp = -1 - sTmp;
                         }
-                        sum += kernel[k] * idata[iy_ + sTmp * iDx];
+                        sum += kernel[k] * (idata[iy_ + sTmp * iDx]);
                     }
                     odata[ox_] += sum;
                 }
@@ -1921,7 +1921,237 @@ ImageJS.prototype.filter1d = function (kernel, boundary, origin, subsample, outp
                         if (sTmp >= nx) {
                             sTmp = nx2 - 1 - sTmp;
                         }
-                        sum += kernel[k] * idata[iy_ + sTmp * iDx];
+                        sum += kernel[k] * (idata[iy_ + sTmp * iDx]);
+                    }
+                    odata[ox_] += sum;
+                }
+            }
+        }
+    } else {
+        throw new Error(errMsg + "unknown boundary conditions");
+    }
+
+    // Return the result
+    return output;
+};
+
+
+ImageJS.prototype.filter1dWithOther = function (kernel, boundary, origin, subsample, output, add, otherData) {
+    'use strict';
+
+    // 1. ARGUMENTS
+    var errMsg = this.constructor.name + '.filter1d: ';
+    kernel = new this.dataType((kernel && kernel.length) ? kernel : [kernel]);
+    var K = kernel.length;
+    var Dout = 1, Dker = 1, bg = 0;
+    var c, x, y;
+    var x_, y_;
+    var nx, ny, dx, dy;
+
+    // if output is this
+    if (output === this) {
+        if (kernel.length > 1) {
+            throw new Error(errMsg + "if the output is the image itself, the kernel must be a scalar");
+        } else {
+            kernel = kernel[0];
+            var d = this.data, I0 = this.getI0();
+            dx = this.getDx();
+            dy = this.getDy();
+            nx = this.nx;
+            ny = this.ny;
+            for (c = 0; c < I0.length; c++) {
+                for (y = 0, y_ = I0[c]; y < ny; y++, y_ += dy) {
+                    for (x = 0, x_ = y_; x < nx; x++, x_ += dx) {
+                        d[x_] *= kernel;
+                    }
+                }
+            }
+            return this;
+        }
+    }
+
+    // add
+    if (add === undefined) {
+        add = false;
+    } else if (typeof add !== 'boolean' && add !== 0 && add !== 1) {
+        throw new Error(errMsg + "'add' argument must be boolean");
+    }
+
+    // subsample
+    if (typeof subsample === 'number') {
+        Dout = subsample;
+    } else if (typeof subsample === 'object') {
+        Dout = subsample.Dout || Dout;
+        Dker = subsample.Dker || Dker;
+    }
+
+    // boundary
+    if (boundary === undefined) {
+        boundary = 'sym';
+    } else if (typeof boundary === 'number') {
+        bg = boundary;
+        boundary = 'const';
+    } else if (typeof boundary !== 'string') {
+        throw new Error(errMsg + "invalid type for 'boundary' argument");
+    }
+    boundary = boundary.toLowerCase().substr(0, 3); // 'con', 'per', 'sym'
+    if (boundary === 'sym' && K < this.nx) {
+        boundary = 'sym_optimized';
+    }
+
+    // output
+    if (output === undefined) {
+        output = this.getNew(Math.ceil(this.nx / Dout), this.ny);
+        output.Ch_(this.chan);
+    }
+    if (output instanceof ImageJS) {
+        var nxError = (this.nx - 1) - (output.nx - 1) * Dout;
+        var ncError = this.chan.length - output.chan.length;
+        if (nxError < 0 || nxError >= Dout || this.ny !== output.ny || ncError) {
+            throw new Error(errMsg + 'output shape (nx, ny, nc) must match');
+        }
+        // If output is specified but not add thne fill with 0.
+        if (!add) {
+            output.fill(0);
+        }
+    } else {
+        throw new Error(errMsg + "invalid type for 'output' argument");
+    }
+
+    // origin
+    if (origin === undefined) {
+        origin = 'C';
+    }
+    if (typeof origin === 'string') {
+        origin = origin.toUpperCase();
+        if (origin === 'C' || origin === 'CL') {
+            origin = Math.floor((K - 1) / 2);
+        } else if (origin === 'CR') {
+            origin = Math.ceil((K - 1) / 2);
+        } else if (origin === 'L') {
+            origin = 0;
+        } else if (origin === 'R') {
+            origin = K - 1;
+        } else {
+            throw new Error(errMsg + "unknown origin position '" + origin + "'");
+        }
+    } else if (typeof origin === 'number') {
+        if (origin < 0) {
+            origin += K;
+        }
+        if (origin < 0 || origin >= K) {
+            throw new Error(errMsg + "origin value must satisfy : |origin| < kernel.length");
+        }
+    }
+
+    // 2. Filtering
+    var iI0 = this.getI0(), oI0 = output.getI0();
+    var iDx = this.getDx(), oDx = output.getDx();
+    var iDy = this.getDy(), oDy = output.getDy();
+    var idata = this.data, odata = output.data;
+    nx = this.nx;
+    ny = this.ny;
+    var nx2 = 2 * nx;
+    var iy_, oy_, ox_;
+    var k, s, sTmp, sum;
+
+    // Constant boundary
+    if (boundary === 'con' || boundary === 'bla') {
+        for (c = 0; c < iI0.length; c++) {
+            for (y = 0, iy_ = iI0[c], oy_ = oI0[c]; y < ny; y++, iy_ += iDy, oy_ += oDy) {
+                for (x = 0, ox_ = oy_; Dout * x < nx; x++, ox_ += oDx) {
+                    sum = 0;
+                    s = Dout * x + Dker * origin;
+                    for (k = 0; k < K; k++, s -= Dker) {
+                        sum += kernel[k] * ((s >= 0 && s < nx) ? (idata[iy_ + s * iDx] + otherData[iy_ + s * iDx] / 40000) : bg);
+                    }
+                    odata[ox_] += sum;
+                }
+            }
+        }
+        // Periodic boundary
+    } else if (boundary === 'per') {
+        for (c = 0; c < iI0.length; c++) {
+            for (y = 0, iy_ = iI0[c], oy_ = oI0[c]; y < ny; y++, iy_ += iDy, oy_ += oDy) {
+                for (x = 0, ox_ = oy_; Dout * x < nx; x++, ox_ += oDx) {
+                    sum = 0;
+                    s = Dout * x + Dker * origin;
+                    for (k = 0; k < K; k++, s -= Dker) {
+                        sTmp = s;
+                        while (sTmp < 0) {
+                            sTmp += nx;
+                        }
+                        while (sTmp >= nx) {
+                            sTmp -= nx;
+                        }
+                        sum += kernel[k] * (idata[iy_ + sTmp * iDx] + otherData[iy_ + sTmp * iDx] / 40000);
+                    }
+                    odata[ox_] += sum;
+                }
+            }
+        }
+        // Symmetric boundary
+    } else if (boundary === 'sym') {
+        for (c = 0; c < iI0.length; c++) {
+            for (y = 0, iy_ = iI0[c], oy_ = oI0[c]; y < ny; y++, iy_ += iDy, oy_ += oDy) {
+                for (x = 0, ox_ = oy_; Dout * x < nx; x++, ox_ += oDx) {
+                    sum = 0;
+                    s = Dout * x + Dker * origin;
+                    for (k = 0; k < K; k++, s -= Dker) {
+                        sTmp = s;
+                        while (sTmp < 0) {
+                            sTmp += nx2;
+                        }
+                        while (sTmp >= nx2) {
+                            sTmp -= nx2;
+                        }
+                        if (sTmp >= nx) {
+                            sTmp = nx2 - 1 - sTmp;
+                        }
+                        sum += kernel[k] * (idata[iy_ + sTmp * iDx] + otherData[iy_ + sTmp * iDx] / 40000);
+                    }
+                    odata[ox_] += sum;
+                }
+            }
+        }
+    } else if (boundary === 'sym_optimized') {
+        var stop = nx - origin;
+        for (c = 0; c < iI0.length; c++) {
+            for (y = 0, iy_ = iI0[c], oy_ = oI0[c]; y < ny; y++, iy_ += iDy, oy_ += oDy) {
+                // Initial boundary condition
+                for (x = 0, ox_ = oy_; Dout * x < origin; x++, ox_ += oDx) {
+                    sum = 0;
+                    s = Dout * x + Dker * origin;
+                    for (k = 0; k < K; k++, s -= Dker) {
+                        sTmp = s;
+                        if (sTmp < 0) {
+                            sTmp = -1 - sTmp;
+                        }
+                        sum += kernel[k] * (idata[iy_ + sTmp * iDx] + otherData[iy_ + sTmp * iDx] / 40000);
+                    }
+                    odata[ox_] += sum;
+                }
+
+                // Central loop
+                for (x, ox_; Dout * x < stop; x++, ox_ += oDx) {
+                    sum = 0;
+                    s = Dout * x + Dker * origin;
+                    for (k = 0; k < K; k++, s -= Dker) {
+                        sum += kernel[k] * (idata[iy_ + s * iDx] + otherData[iy_ + s * iDx] / 40000);
+                    }
+                    odata[ox_] += sum;
+                }
+
+                // Final boundary condition
+                for (x, ox_; Dout * x < nx; x++, ox_ += oDx) {
+                    sum = 0;
+                    s = Dout * x + Dker * origin;
+                    for (k = 0; k < K; k++, s -= Dker) {
+                        sTmp = s;
+                        if (sTmp >= nx) {
+                            sTmp = nx2 - 1 - sTmp;
+                        }
+                        sum += kernel[k] * (idata[iy_ + sTmp * iDx] + otherData[iy_ + sTmp * iDx] / 40000);
                     }
                     odata[ox_] += sum;
                 }

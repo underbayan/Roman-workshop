@@ -267,9 +267,10 @@ function WT(im, redundant, wav, level) {
  * @return {ImageJS}
  *  The reconstructed image.
  */
-WT.prototype.inverse = function (output) {
+WT.prototype.inverse = function (otherData) {
     'use strict';
-    return this.iwt2(output);
+    var output
+    return this.iwt2(output,otherData);
 };
 
 
@@ -815,7 +816,7 @@ WT.prototype.wt2 = function () {
  * @return {ImageJS}
  *  The reconstructed image.
  */
-WT.prototype.iwt2 = function (output) {
+WT.prototype.iwt2 = function (output,otherData) {
     'use strict';
     var re = this.redundant;
     var factor = (re) ? 0.5 : 1;
@@ -874,10 +875,10 @@ WT.prototype.iwt2 = function (output) {
         }
 
         // V filtering
-        viewLL.T().filter1d(filterL, 'per', 'cr', D, buffL.T(), false);
-        view.LH.T().filter1d(filterH, 'per', 'cr', D, buffL.T(), true);
-        view.HL.T().filter1d(filterL, 'per', 'cr', D, buffH.T(), false);
-        view.HH.T().filter1d(filterH, 'per', 'cr', D, buffH.T(), true);
+        viewLL.T().filter1dWithOther(filterL, 'per', 'cr', D, buffL.T(), false,otherData);
+        view.LH.T().filter1dWithOther(filterH, 'per', 'cr', D, buffL.T(), true,otherData);
+        view.HL.T().filter1dWithOther(filterL, 'per', 'cr', D, buffH.T(), false,otherData);
+        view.HH.T().filter1dWithOther(filterH, 'per', 'cr', D, buffH.T(), true,otherData);
 
         // H filtering
         viewLL = outBuffer.getView();
@@ -886,8 +887,8 @@ WT.prototype.iwt2 = function (output) {
             viewLL.nx = buffL.nx;
             viewLL.ny = buffL.ny;
         }
-        buffL.filter1d(filterL, 'per', 'cr', D, viewLL, false);
-        buffH.filter1d(filterH, 'per', 'cr', D, viewLL, true);
+        buffL.filter1dWithOther(filterL, 'per', 'cr', D, viewLL, false,otherData);
+        buffH.filter1dWithOther(filterH, 'per', 'cr', D, viewLL, true,otherData);
     }
 
     // Copy the result

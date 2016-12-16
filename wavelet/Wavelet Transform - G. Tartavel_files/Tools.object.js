@@ -38,7 +38,7 @@ var Tools = {};
  *  // Make the canvas with id 'canvas' draggable
  *  Tools.makeDraggable('canvasId', main);
  */
-Tools.makeDraggable = function (element, callback, type) {
+Tools.makeDraggable = function (element, callback, type,id) {
     "use strict";
 
     // Deal with arguments
@@ -81,7 +81,8 @@ Tools.makeDraggable = function (element, callback, type) {
         if (type !== 'none') {
             newCallback = function (evt) {
                 if (callback) {
-                    callback(evt.target.result, evt);
+                    console.log(evt.target.result)
+                    callback(evt.target.result, evt,id);
                 }
             };
             handleFile =  function (file) {
