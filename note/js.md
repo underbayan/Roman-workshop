@@ -36,21 +36,44 @@ console.log(typeof Object.prototype)   // object
 class 详解
 =====
 ```javascript
-//私有变量(其实是利用了函数作用域)
+//局部变量(其实是利用了函数作用域)
 function A(){
   var privateVariable=12;
   var privateFunction=function(){}
 }
-
-// 静态变量和静态函数
+//私有变量,本质是闭包
+function A(){
+    var privateProperty=0
+    return function get(){
+        return privateProperty
+    }
+}
+// 静态变量和静态函数，只能通过A来调用，本质就是A的属性
 function A(){}
 A.staticVariable=12;
 A.staticFunction=function(){}
 
+// 本质是原型链
+// all instatnce share a memory can sue prototype
+// following methodA wouldn't be changed by sub instance
+A.prototype.methodA=function (){console.log('Amethod')}
+
+// 本质是 new 过程会改变this 为当前作用域
+// all instantce will keep own memory for OwnProperty(成员变量)
+function A(){
+    this.OwnProperty="Aproperty"
+}
+
+//A的成员有两种方式: 第二种方式可以限定成员是否能被修改，读取，变量等特性
+function A(){
+    this.OwnProperty="Aproperty"
+}
+function A(){
+    Object.defineProperty(this,"propertyName",{value:"propertyValue"})
+}
+
 //实例化
-
-
-//继承
+var a=new A()
 //继承方式 原理:
     var Point = {
         x: 0,
@@ -93,19 +116,19 @@ new 详解
 ====
 * new 指能用于函数,生成一个对象
 * new A 和 new A() 本质一样
->```javascript
->function New (f) { 
->   /*1*/  
->   var n = { '__proto__': f.prototype }; 
->   return function () { 
->      /*2*/    
->      f.apply(n, arguments); 
->      /*3*/    
->      return n; 
->   }; 
->}
->/*作者：wang z
->链接：https://www.zhihu.com/question/36440948/answer/72391410
->来源：知乎
->著作权归作者所有，转载请联系作者获得授权。*/
->```
+```javascript
+ /*
+ * @see https://www.zhihu.com/question/36440948/answer/72391410
+ * @author wang z 
+ */
+ function New (f) { 
+   /*1*/  
+   var n = { '__proto__': f.prototype }; 
+   return function () { 
+      /*2*/    
+      f.apply(n, arguments); 
+      /*3*/    
+      return n; 
+   }; 
+}
+```

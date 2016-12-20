@@ -30,5 +30,10 @@
                     document.createElement("div");
         }
     }
+
+    function tmp(){
+        var obj = document.getElementById("element")
+        obj.onclick=function(evt){}
+    }//=== 这个函数原来会内存泄露。
 </script>
 </html>
