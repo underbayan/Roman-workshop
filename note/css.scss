@@ -46,12 +46,6 @@ h2:before {
   counter-increment: chapter;
   content: "Chapter " counter(chapter) ". "
 }
-
-
-
-
-
-
 //////////////////////////////////default
 img,div,input {
   width: 100%;
@@ -61,3 +55,10 @@ img,div,input {
 aspect-1,apsect-56{
 
 }
+//zindex 的定义
+//999 一定是最大的
+//普通的我们定义为0
+//如果是一般意义上的增高我们定义为9
+//大于一般意义的 我们用10 20 30 。。。
+//如果是nav 是99
+//大于nav 我到我们用100 200 300。。。

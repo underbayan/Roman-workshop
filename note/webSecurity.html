@@ -15,28 +15,18 @@
 <p>代码和数据分离原则，angular？</p>
 <p>aslr控制技术，不可预测性原则</p>
 </div>
-
-
-
-
 <h1>tips</h1>
 <p>一个业务安全设计得好的网站,往往 loginID 和 nickname(昵称)是分开的,登录 ID 是用 户的私有信息,只有用户本人能够看到;而 nickname 不能用于登录,但可以公开给所有人看。</p>
 <p>点击劫持</p>
 <p>sqlmap检测动态变量</p>
-
 <h1>php的安全问题</h1>
-
 <p>php 万恶的 0 字节截断功能</p>
 <p>cgi.fix_pathinfo 默认配置</p>
 <p>is_a()函数</p>
 <p>因为 magic_quotes_gpc 是有缺陷的,它并没有在正确的地方 解决问题。magic_quotes_gpc 实际上是调用了一次 addslashes(),将一些特殊符号(比如单引号) 进行转义,变成了 \’ </p>
-
 <h1></h1>
-
-
 <h2>        frame busting
 </h2>
-
     <code>
         通常可以写一段JavaScript代码,以禁止iframe的嵌套。这种方法叫frame busting。比如 下面这段代码:
         常见的 frame busting 有以下这些方式:
@@ -66,17 +56,11 @@
         parent.location.href = self.document.location
         top.location.href = self.location
         top.location = window.location top.location.replace(window.location.pathname) window.top.location = window.self.location setTimeout(function(){document.body.innerHTML='';},1); window.self.onload = function(evt){document.body.innerHTML='';} var url = window.location.href; top.location.replace(url)
-
         因为 frame busting 存在被绕过的可能,所以我们需要寻找其他更好的解决方案。一个比较 好的方案是使用一个 HTTP 头——X-Frame-Options。
         X-Frame-Options 可以说是为了解决 ClickJacking 而生的,目前有以下浏览器开始支持 X-Frame-Options:
     </code>
 <h2>Cookie 的 HttpOnly Flag,它能告诉浏览器不要让 JavaScript
     访问该 Cookie</h2>
-
-
-
-
-
 </body>
 
 

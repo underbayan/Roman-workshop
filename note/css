@@ -25,3 +25,41 @@ div p.tree has a specificity of 12 (2 HTML selectors + a class selector, 1+1+10)
 #baobab has a specificity of 100 (1 id selector)
 body #content .alternative p has a specificity of 112 (HTML selector + id selector + class selector + HTML selector, 1+100+10+1)
 So if all of these examples were used, div p.tree (with a specificity of 12) would win out over div p (with a specificity of 2) and body #content .alternative p would win out over all of them, regardless of the order.
+
+
+
+//css link
+
+
+
+基于css3 的 link 特效
+http://tympanus.net/Development/CreativeLinkEffects/
+
+
+立体的progress bar
+http://tympanus.net/Tutorials/CSSProgress/
+
+
+image  hover effect
+http://www.yyyweb.com/demo/hover-effects/index.html   ：not  work well on phone
+
+Arrow Navigation Styles
+
+http://tympanus.net/Development/ArrowNavigationStyles/
+
+Progress Button Styles
+
+http://tympanus.net/Development/ProgressButtonStyles/
+
+
+Creative Loading Effects
+
+http://tympanus.net/Development/CreativeLoadingEffects/
+
+
+Elastic Progress
+http://tympanus.net/codrops/2015/09/23/elastic-progress/
+
+
+generate map
+http://pixelmap.amcharts.com/
