@@ -1,112 +1,76 @@
 {
-  "name": "common",
-  "description": "common",
-  "homepage": "http://xxx",
-  "repository": {
-    "type": "git",
-    "url": "git://xxx.git"
-  },
-  "bugs": {
-    "url": ""
-  },
-  "keywords": [
-
-  ],
-  "author": "underbayan <underbayan@gmail.com>",
-  "contributors": [
-
-
-  ],
-  "dependencies": {
-    "bluebird": "^2.9.27",
-    "body-parser": "^1.12.4",
-    "chokidar": "^1.0.1",
-    "colors": "^1.1.0",
-    "connect": "^3.3.5",
-    "core-js": "^1.0.1",
-    "di": "^0.0.1",
-    "dom-serialize": "^2.2.0",
-    "expand-braces": "^0.1.1",
-    "glob": "^5.0.10",
-    "graceful-fs": "^4.1.2",
-    "http-proxy": "^1.11.1",
-    "lodash": "^3.8.0",
-    "log4js": "^0.6.25",
-    "memoizee": "^0.3.8",
-    "mime": "^1.3.4",
-    "minimatch": "^2.0.7",
-    "optimist": "^0.6.1",
-    "rimraf": "^2.3.3",
-    "socket.io": "^1.3.7",
-    "source-map": "^0.4.4",
-    "useragent": "^2.1.6"
-  },
-  "devDependencies": {
-    "LiveScript": "^1.3.0",
-    "babel": "^5.6.23",
-    "babel-eslint": "^4.0.5",
-    "chai": "^2.3.0",
-    "chai-as-promised": "^5.0.0",
-    "chai-subset": "^1.0.1",
-    "coffee-script": "^1.9.2",
-    "cucumber": "^0.5.2",
-    "eslint": "^1.0.0",
-    "eslint-config-standard": "^4.0.0",
-    "eslint-plugin-react": "^3.2.0",
-    "eslint-plugin-standard": "^1.3.1",
-    "grunt": "^0.4",
-    "grunt-auto-release": "^0.0.6",
-    "grunt-browserify": "^3.8.0",
-    "grunt-bump": "^0.3.1",
-    "grunt-contrib-watch": "^0.6.1",
-    "grunt-conventional-changelog": "^3.0.0",
-    "grunt-conventional-github-releaser": "^0.2.0",
-    "grunt-cucumberjs": "^0.7.0",
-    "grunt-eslint": "^17.0.0",
-    "grunt-mocha-test": "^0.12.7",
-    "grunt-npm": "0.0.2",
-    "jasmine-core": "^2.3.4",
-    "karma-browserify": "^4.1.2",
-    "karma-browserstack-launcher": "*",
-    "karma-chrome-launcher": "*",
-    "karma-coffee-preprocessor": "*",
-    "karma-commonjs": "*",
-    "karma-coverage": "*",
-    "karma-firefox-launcher": "*",
-    "karma-growl-reporter": "*",
-    "karma-html2js-preprocessor": "*",
-    "karma-jasmine": "~0.3.5",
-    "karma-junit-reporter": "*",
-    "karma-live-preprocessor": "*",
-    "karma-mocha": "*",
-    "karma-ng-scenario": "*",
-    "karma-phantomjs-launcher": "*",
-    "karma-qunit": "*",
-    "karma-requirejs": "*",
-    "karma-sauce-launcher": "*",
-    "karma-script-launcher": "^0.1.0",
-    "load-grunt-tasks": "^3.1.0",
-    "mkdirp": "^0.5.0",
-    "mocha": "^2.2.5",
-    "mocks": "^0.0.15",
-    "phantomjs": "^1.9.18",
-    "proxyquire": "^1.5.0",
-    "qunitjs": "^1.19.0",
-    "requirejs": "^2.1.20",
-    "sinon": "^1.14.1",
-    "sinon-chai": "^2.7.0",
-    "supertest": "^1.0.1",
-    "supertest-as-promised": "^2.0.1",
-    "timer-shim": "^0.3.0",
-    "which": "^1.1.1"
-  },
-  "main": "./lib/index",
-  "bin": {
-    "karma": "./bin/karma"
-  },
-  "engines": {
-    "node": "0.10 || 0.12 || 4"
-  },
-  "version": "0.13.10",
-  "license": "MIT"
+  "softwareList": [
+    {
+      "id": 15,
+      "name": " WaylensStudio_for_windows",
+      "type": "PC_APP",
+      "version": "1.3.1",
+      "url": "https://d3dxhfn6er5hd4.cloudfront.net/software/pc_app/ WaylensStudio_for_windows_1.3.1_1491548025040.exe",
+      "description": {
+        "en": "1. Access to new Waylens Forum through the menu\r\n2. Improved interpolation algorithm of raw data\r\n3. Improved smart remix results\r\n4. Automatic switching to buffered video tab when no highlight videos exist\r\n5. Elimination of known crash issues and bugs",
+        "zh-Hans": "1. Access to new Waylens Forum through the menu\r\n2. Improved interpolation algorithm of raw data\r\n3. Improved smart remix results\r\n4. Automatic switching to buffered video tab when no highlight videos exist\r\n5. Elimination of known crash issues and bugs"
+      },
+      "size": 43162098,
+      "md5": "0377B1FD0592C2A51EC8210DFB3AA307",
+      "releaseDate": "2017-04-07"
+    },
+    {
+      "id": 3,
+      "name": "HACHI_V0C",
+      "type": "FIRMWARE",
+      "version": "1.7.01",
+      "BSPVersion": "1.58.53.108.370",
+      "url": "https://d3dxhfn6er5hd4.cloudfront.net/software/firmware/HACHI_V0C_1.7.01_1.58.53.108.370_1488446287321.tsf",
+      "description": {
+        "en": "New features include a refined WiFi setup. We’ve also added new multiple vehicle support, which allows you to connect up to 4 OBDII modules and remotes to a single camera. Empirical, metric and U.S. units for gauges and support for throttle position from the OBDII module have also been added. We’re also introducing a new “LapTimer” feature (Beta), which enables you to map a track and record your time. Other bug fixes also included.",
+        "zh-Hans": "New features include a refined WiFi setup. We’ve also added new multiple vehicle support, which allows you to connect up to 4 OBDII modules and remotes to a single camera. Empirical, metric and U.S. units for gauges and support for throttle position from the OBDII module have also been added. We’re also introducing a new “LapTimer” feature (Beta), which enables you to map a track and record your time. Other bug fixes also included."
+      },
+      "size": 31006720,
+      "md5": "b5e1c4b2fcd4428950a0c7e6c87eb89f",
+      "releaseDate": "2017-03-02"
+    },
+    {
+      "id": 10,
+      "name": "HACHI_V0D",
+      "type": "FIRMWARE",
+      "version": "1.7.01",
+      "BSPVersion": "1.58.53.108.370",
+      "url": "https://d3dxhfn6er5hd4.cloudfront.net/software/firmware/HACHI_V0D_1.7.01_1.58.53.108.370_1488445753384.tsf",
+      "description": {
+        "en": "New features include a refined WiFi setup. We’ve also added new multiple vehicle support, which allows you to connect up to 4 OBDII modules and remotes to a single camera. Empirical, metric and U.S. units for gauges and support for throttle position from the OBDII module have also been added. We’re also introducing a new “LapTimer” feature (Beta), which enables you to map a track and record your time. Other bug fixes also included.",
+        "zh-Hans": "New features include a refined WiFi setup. We’ve also added new multiple vehicle support, which allows you to connect up to 4 OBDII modules and remotes to a single camera. Empirical, metric and U.S. units for gauges and support for throttle position from the OBDII module have also been added. We’re also introducing a new “LapTimer” feature (Beta), which enables you to map a track and record your time. Other bug fixes also included."
+      },
+      "size": 31006720,
+      "md5": "d0869e04722573ae55e9e7493af01464",
+      "releaseDate": "2017-03-02"
+    },
+    {
+      "id": 14,
+      "name": "WaylensStudio_for_osx",
+      "type": "PC_APP",
+      "version": "1.3.1",
+      "url": "https://d3dxhfn6er5hd4.cloudfront.net/software/pc_app/WaylensStudio_for_osx_1.3.1_1491546358853.dmg",
+      "description": {
+        "en": "1. Access to new Waylens Forum through the menu\r\n2. Improved interpolation algorithm of raw data\r\n3. Improved smart remix results\r\n4. Automatic switching to buffered video tab when no highlight videos exist\r\n5. Elimination of known crash issues and bugs",
+        "zh-Hans": "1. Access to new Waylens Forum through the menu\r\n2. Improved interpolation algorithm of raw data\r\n3. Improved smart remix results\r\n4. Automatic switching to buffered video tab when no highlight videos exist\r\n5. Elimination of known crash issues and bugs"
+      },
+      "size": 87333458,
+      "md5": "B94143922FAEEDFED32AC57AA8391428",
+      "releaseDate": "2017-04-07"
+    },
+    {
+      "id": 23,
+      "name": "waylens",
+      "type": "ANDROID_APP",
+      "version": "0.8.3",
+      "url": "https://d3dxhfn6er5hd4.cloudfront.net/software/android_app/waylens_0.8.3_1488857377898.apk",
+      "description": {
+        "en": "Added support for new Lap Timer feature\r\nMinor bug fixes",
+        "zh-Hans": "Added support for new Lap Timer feature\r\nMinor bug fixes"
+      },
+      "size": 30629538,
+      "md5": "b4543be253d3815311d450c9412e5fdb",
+      "releaseDate": "2017-03-07"
+    }
+  ]
 }
