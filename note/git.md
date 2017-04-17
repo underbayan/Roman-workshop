@@ -2,7 +2,7 @@ git--世界上最先进的分布式版本控制系统
 
 ### config the git
 
-    git config --global user.name "John Doe" $ git config --global user.email johndoe@example.com、、
+    git config --global user.name "John Doe" $ git config --global user.email johndoe@example.com
 
 ### remove the whole git  project
     rm -rf .git
