@@ -72,5 +72,8 @@
       "md5": "b4543be253d3815311d450c9412e5fdb",
       "releaseDate": "2017-03-07"
     }
-  ]
+  ],
+  "dependencies": {
+    "xmlhttprequest": "^1.8.0"
+  }
 }

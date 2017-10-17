@@ -32,3 +32,7 @@ http://tympanus.net/codrops/2015/09/23/elastic-progress/
 #generate map
 http://pixelmap.amcharts.com/
 
+#一个能够 自动适配图片和屏幕的照片墙
+https://xieranmaya.github.io/images/cats/cats.html
+#css  拼成小动物
+http://www.webhek.com/misc-res/species-in-pieces/#
