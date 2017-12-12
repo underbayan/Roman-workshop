@@ -74,6 +74,10 @@
     }
   ],
   "dependencies": {
+    "express": "^4.16.2",
+    "isomorphic-fetch": "^2.2.1",
+    "protobufjs": "^6.8.3",
+    "webtorrent": "^0.98.20",
     "xmlhttprequest": "^1.8.0"
   }
 }

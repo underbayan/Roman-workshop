@@ -1,4 +1,4 @@
-#### basic Tips
+### basic Tips
 
 | Commands | Description |
 | ------ | ----------- |
@@ -25,7 +25,7 @@
 | Ctrl+w >   | 窗口宽度+ |
 | Ctrl+w <   | 窗口宽度- |
 
-#### amix vimc
+### amix vimc
 
 | Commands | Description |
 | ------ | ----------- |

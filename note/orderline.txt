@@ -240,7 +240,8 @@ tip:
 
 
 
-
+list open file == lsof
+netstat
 
 
 

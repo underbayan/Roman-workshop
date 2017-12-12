@@ -1,7 +1,7 @@
-#### 水仙花数
+### 水仙花数
 153= 1^3+5^3+3^3
 
-#### 韩信点兵
+### 韩信点兵
 一个整数 被 a,b,c 除，余数为ya,yb,yc
 那么这个数为 a*ma+b*mb+c*mb+M*k
 M为a,b,c 公倍数， mi分别满足 ,k为任意整数
@@ -18,9 +18,9 @@ mc mod a == 0
 mc mod b == 0
 mc mod c == 1
 ````
-#### 开灯问题 1-10000灯 k个人，第i个人每i盏等操作一次
+### 开灯问题 1-10000灯 k个人，第i个人每i盏等操作一次
 
-#### 给你10分钟时间，根据上排给出十个数，在其下排填出对应的十个数,要求下排每个数都是先前上排那十个数在下排出现的次数。
+### 给你10分钟时间，根据上排给出十个数，在其下排填出对应的十个数,要求下排每个数都是先前上排那十个数在下排出现的次数。
 ````
 举一个例子，
 数值:0,1,2,3,4,5,6,7,8,9
@@ -33,23 +33,23 @@ mc mod c == 1
 6）a中至少有两个非0数值在b中出现的次数非0
 
 ````
-#### 判断俩个链表是否相交 ===两个链表有没有共同终点
+### 判断俩个链表是否相交 ===两个链表有没有共同终点
 
-####    有两个房间，一间房里有三盏灯，另一间房有控制着三盏灯的三个开关，这两个房间是 分割开的，从一间里不能看到另一间的情况。 现在要求受训者分别进这两房间一次，然后判断出这三盏灯分别是由哪个开关控制的。
-#### 你让一些人为你工作了七天，你要用一根金条作为报酬。金条被分成七小块，每天给出一块。如果你只能将金条切割两次，你怎样分给这些工人?
+###    有两个房间，一间房里有三盏灯，另一间房有控制着三盏灯的三个开关，这两个房间是 分割开的，从一间里不能看到另一间的情况。 现在要求受训者分别进这两房间一次，然后判断出这三盏灯分别是由哪个开关控制的。
+### 你让一些人为你工作了七天，你要用一根金条作为报酬。金条被分成七小块，每天给出一块。如果你只能将金条切割两次，你怎样分给这些工人?
 
 
 # 输入一颗二元树，从上往下按层打印树的每个结点，同一层中按照从左往右的顺序打印。
 
-#### 在一个字符串中找到第一个只出现一次的字符。如输入abaccdeff，则输出b。
+### 在一个字符串中找到第一个只出现一次的字符。如输入abaccdeff，则输出b。
 
-#### 一亿个数字里面找到 最大的1w的数字
+### 一亿个数字里面找到 最大的1w的数字
 
-#### 一亿个用户数 积分排名，要求实时性  === 桶排序？？
+### 一亿个用户数 积分排名，要求实时性  === 桶排序？？
 
-####  网络流问题 == 残留网络+增广路径+最小流割  [link]http://mindlee.com/2011/11/19/network-flow/
+###  网络流问题 == 残留网络+增广路径+最小流割  [link]http://mindlee.com/2011/11/19/network-flow/
 
-####  如何让cpu的占有率 保持一个曲线,  锯齿状？  一条直线？  正弦曲线
+###  如何让cpu的占有率 保持一个曲线,  锯齿状？  一条直线？  正弦曲线
 ````
 1、电脑的cpu 频率 ，cpu 每一个时间周期 执行的代码数量？ 循环 n次，利用sleep函数。
 2、getTickCount 获取 现在执行了多少个tick, 每n 个 tick 我们 都是sleep(n)
@@ -57,11 +57,14 @@ mc mod c == 1
 
 ````
 
-#### 将帅问题
-如何抽象棋盘为数组。 
-#### 摞烙饼问题
+### 将帅问题
+````
+抽象棋盘为数组。 
+抽象将帅不能够同列为 对3 取mod 模的值不能相同。
+搜索过程 抽象为对81钟可能的遍历。
 
-
+````
+### 摞烙饼问题
 ````
 最简单的递归方法：
     设问题为 fn
@@ -69,7 +72,85 @@ mc mod c == 1
     
     
 动态规划问题
-    设问题为fn
-    将问题分解为fn=Gn(i)+Gn(k)+Gn(j)+.... 其中 Gn 为 fn 的子问题
+    把烙饼描述为元素，一堆烙饼描述成一个集合。
+    过程P：
+        把烙饼分成AB两部分，对于AB 来说 A的所有元素都比B中的要大，或者都要小。
+        置换AB
+    递归执行P 过程
+    
+   
+    
     
 ````
+###给你一个数组 如何找到一个分割这个数组为AB首尾两部分，使得中的元素(ai-bj)*(ak-bm)>0
+````
+
+function search(A) {
+    var inc = []
+    var dec = []
+    var length = A.length, index, cMax = A[0], cMin = A[0]
+    A.map(
+        (o, i)=> {
+            inc[i] = {}
+            cMax = inc[i].max = Math.max(cMax, A[i])
+            cMin = inc[i].min = Math.min(cMin, A[i])
+        }
+    )
+    cMax = A[length - 1]
+    cMin = A[length - 1]
+    A.map(
+        (o, i)=> {
+            index = length - 2 - i
+            dec[index] = {}
+            cMax = dec[index].max = Math.max(cMax, A[index+1])
+            cMin = dec[index].min = Math.min(cMin, A[index+1])
+        })
+    var isOverLap = (a, b)=>!(a.min > b.max || a.max < b.min)
+    var binarySearch = (start,end)=> {
+        if(start>end){
+            return -1
+        }
+        var mid=Math.floor((start+end)/2)
+        if (!isOverLap(inc[mid], dec[mid])) {
+            return mid
+        }
+        else {
+            var result=binarySearch(start,mid-1)
+            if(!~result)return binarySearch(mid+1,end)
+            return result
+        }
+    }
+    return binarySearch(0,length-2)
+}
+
+````
+### 算法的归类
+````
+每个阶段只有一个状态->递推；
+每个阶段的最优状态都是由上一个阶段的最优状态得到的->贪心；
+每个阶段的最优状态是由之前所有阶段的状态的组合得到的->搜索；
+每个阶段的最优状态可以从之前某个阶段的某个或某些状态直接得到而不管之前这个状态是如何得到的->动态规划。
+
+
+````
+####  判断一个数是不是素数，算法复杂度是o1,费马判定,Carmichael,Miller-Rabin ,!!AKS
+````
+old: 埃拉托斯特尼筛法
+aks: http://yves.gallot.pagesperso-orange.fr/src/
+https://github.com/tingliu/aks-primality-test/blob/master/aks.c
+https://www.codeproject.com/Articles/691200/Primality-test-algorithms-Prime-test-The-fastest-w
+http://www.geeksforgeeks.org/primality-test-set-3-miller-rabin/
+aks 复杂度：http://mathworld.wolfram.com/AKSPrimalityTest.html
+````
+####  编辑距离: 动态规划： 复杂度O(M*N)
+
+
+####
+```
+URL_ENCODE的过程就是把URL作为字符按照某种编码方式(GBK, UTF-8等)编码成二进制的字节码
+base64 字符串转为二进制,而后每6个比特（2^6）一个字符, 它防止了 每一个路由对特殊字符的过滤。
+bech32= base32+ bch
+base32  没有大小写之分,同时适合二维码
+`
+
+```

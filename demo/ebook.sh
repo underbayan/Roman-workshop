@@ -47,7 +47,7 @@ find . -name "*.htm*" -print0 | xargs -0  perl -pi -e 's/www.163164.com/www.book
 find . -name "*.htm*" -print0 | xargs -0  perl -pi -e 's/<a href="http:\/\/www.163164.com" target="_blank"><img src="yao123.gif" width="120" height="40" border=0><\/a>//gi'
 find . -name "*.htm*" -print0 | xargs -0  perl -pi -e 's/<script language=javascript src="http:\/\/www.163164.cn\/js\/xia.js"><\/script>//gi'
 find . -name "*.htm*" -print0 | xargs -0  perl -pi -e 's/163164/bookocean/g'
-find . -name "*.htm*" -print0 | xargs -0  perl -pi -e 's/<\/body>/########include("js.html")<\/body>/gi'
+find . -name "*.htm*" -print0 | xargs -0  perl -pi -e 's/<\/body>/######include("js.html")<\/body>/gi'
 
 
 #  generate the index.html
@@ -62,17 +62,17 @@ find . -name "index.html" -print0 | xargs -0  perl -pi -e 's/\n|\r//g'
 
 find . -name "index.html" -print0 | xargs -0  perl -pi -e 's/├──//gi'
 find . -name "index.html" -print0 | xargs -0  perl -pi -e 's/└──//gi'
-find . -name "index.html" -print0 | xargs -0  perl -pi -e 's/<\/head>/########include("css.html")<\/head>/gi'
+find . -name "index.html" -print0 | xargs -0  perl -pi -e 's/<\/head>/######include("css.html")<\/head>/gi'
 find . -name "index.html" -print0 | xargs -0  perl -pi -e 's/<h1>Directory Tree<\/h1>//gi'
 
 find . -name "index.html" -print0 | xargs -0  perl -pi -e 's/<p class="VERSION">[\s\S]*?<\/p>//gi'
 
 #menu after body
-find . -name "*.htm*" -print0 | xargs -0  perl -pi -e 's/<body(.*?)>/<body $1>########include("menu.html")/gi'
+find . -name "*.htm*" -print0 | xargs -0  perl -pi -e 's/<body(.*?)>/<body $1>######include("menu.html")/gi'
 
 
 # com
-find . -name "index.html" -print0 | xargs -0  perl -pi -e 's/<body(.*?)>/<body $1>########include("menu.html")/gi'
+find . -name "index.html" -print0 | xargs -0  perl -pi -e 's/<body(.*?)>/<body $1>######include("menu.html")/gi'
 
 #</style>
 #while read line; do

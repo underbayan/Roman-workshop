@@ -164,6 +164,14 @@ Infinity很大的数，但不是无限大，是js表示的最大值
 原型和继承：
 =====
 每一个对象都会链接到一个原型
+
+关键字:
+=====
+-Infinity,Infinity
+typeof不能区分出数组，null和普通对象
+只有通过new出来的基本类型才能通过instanceof判断
+在判断是否字符串，是否数字，是否布尔值的时候，我们应该使用typeof,对数组和要判断对象是否是在某个构造函数或对象的原型链上时使用instanceof,对函数的判断两者皆可
+
 数组：
 =====
 length 没有上限
@@ -189,5 +197,11 @@ javascript没有尾递归优化
 只有函数作用域没有块作用域
 
 
-
+Object:
+=====
+assign,
+defineProperties, defineProperty,
+entries(和 new Map 相互转化),
+freeze 和 seal 区别（前者完全冻结,后者禁止了所有新的defineProperty）
+setPrototypeOf(修改 __proto__ )
 

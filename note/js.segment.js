@@ -35,6 +35,13 @@ var getCookie = (name)=>decodeURIComponent(document.cookie)
         .find((c)=>!c.indexOf(name))
         .substring(name.length + 1)
     ;
-[].forEach.call(document.querySelector('*'), function (a) {
+[].forEach.call($('*'), function (a) {
     a.style.outline = '1px solid #' + (~~(Math.random() * (1 << 24)))
+    a.style.backgroundColor = '#' + (~~(Math.random() * (1 << 24)))
 })
+// Fake Array
+var domNodes = Array.prototype.slice.call(document.getElementsByTagName("*"));
+var fakeArgsArray = function () {
+    var args = Array.prototype.slice.call(arguments)
+}
+
