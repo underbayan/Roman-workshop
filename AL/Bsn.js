@@ -24,7 +24,6 @@ module.exports = class Bsn {
     //Pre-Order Traversal
     preot(node, Fun) {
         Fun(node)
-
         node.left && this.preot(node.left, Fun)
         node.right && this.preot(node.right, Fun)
     }
