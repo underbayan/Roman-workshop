@@ -1,0 +1,30 @@
+._flex {
+  display: flex; // this will disable childrens' float ,clear and vertical-align
+  // the _flex will be flex container with two axixes
+  width: 800px;
+  height: 400px;
+  background-color: #007bff;
+  border-bottom: 3px rosybrown solid ;
+  color: white;
+
+  &:nth-child(1) {
+    flex-direction: column;
+  }
+  &:nth-child(2) {
+    flex-direction: column-reverse;
+  }
+  &:nth-child(3) {
+    flex-direction: row;
+  }
+  &:nth-child(4) {
+    flex-direction: row-reverse;
+  }
+  ._items{
+    //width: 40px;
+    height: 40px;
+    background-color: #021B5F;
+    margin: 20px;
+    border:20px red solid;
+  }
+
+}

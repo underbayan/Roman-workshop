@@ -8,6 +8,7 @@
     "development": {
       "plugins": [
         "transform-decorators-legacy",
+        "syntax-dynamic-import",
         [
           "react-transform",
           {
@@ -35,7 +36,8 @@
     },
     "production": {
       "plugins": [
-        "transform-decorators-legacy"
+        "transform-decorators-legacy",
+        "syntax-dynamic-import"
       ]
     }
   }
