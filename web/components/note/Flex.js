@@ -1,27 +1,32 @@
 import './Flex.scss'
-export  let ItemList = p => <div>
-  <div className="_items">1</div>
-  <div className="_items">2</div>
-  <div className="_items">3</div>
-  <div className="_items">4</div>
-  <div className="_items">5</div>
-  <div className="_items">6</div>
-</div>
+export let ItemList = p => [1, 2, 3].map(n=><div key={n} className="_items">{n}</div>)
 let Flex = p => <div>
+  <p> flex-direction: column;</p>
+
   <div className="_flex">
-    <ItemList/>
+    {ItemList()}
+  </div>
+  <p> flex-direction: column-reverse;
+  </p>
+
+  <div className="_flex">
+
+    {ItemList()}
+  </div>
+  <p> flex-direction: row;
+  </p>
+  <div className="_flex">
+
+    {ItemList()}
+  </div>
+  <p> flex-direction: row-reverse;
+  </p>
+  <div className="_flex">
+
+    {ItemList()}
   </div>
   <div className="_flex">
-    <ItemList/>
-  </div>
-  <div className="_flex">
-    <ItemList/>
-  </div>
-  <div className="_flex">
-    <ItemList/>
-  </div>
-  <div className="_flex">
-    <ItemList/>
+    {ItemList()}
   </div>
 </div>
 
