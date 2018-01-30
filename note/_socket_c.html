@@ -5,6 +5,7 @@
   <title></title>
   <script src="https://cdn.bootcss.com/socket.io/2.0.4/socket.io.slim.js"></script>
   <script>
+    //socket 直接帮你管理了 session 和cookie
     var socket = io('http://localhost:1337');
     socket.on("news", function (data) {
       console.log(data.hello);
@@ -13,5 +14,4 @@
   </script>
 </head>
 <body>
-
 </body>

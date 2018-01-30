@@ -19,6 +19,7 @@
     "all": " rm -rf ./dist/ && npm run build && npm run deploy"
   },
   "dependencies": {
+    "sync-request": "^4.1.0"
     "babel-polyfill": "^6.23.0",
     "bluebird": "^2.9.27",
     "body-parser": "^1.12.4",
