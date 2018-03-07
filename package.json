@@ -19,7 +19,6 @@
     "all": " rm -rf ./dist/ && npm run build && npm run deploy"
   },
   "dependencies": {
-    "sync-request": "^4.1.0"
     "babel-polyfill": "^6.23.0",
     "bluebird": "^2.9.27",
     "body-parser": "^1.12.4",
@@ -40,6 +39,7 @@
     "isomorphic-fetch": "^2.2.1",
     "jquery": "^3.2.1",
     "jsoneditor": "^5.13.1",
+    "koa": "^2.5.0",
     "lodash": "^3.8.0",
     "log4js": "^0.6.25",
     "memoizee": "^0.3.8",
@@ -67,6 +67,7 @@
     "socket.io": "^2.0.4",
     "store2": "^2.5.1",
     "styled-components": "^2.0.0",
+    "sync-request": "^4.1.0",
     "useragent": "^2.1.6",
     "videojs": "^1.0.0",
     "videojs-contrib-hls": "^5.12.2",

@@ -133,13 +133,16 @@ return function () {
 ```
 javascript 类型
 =====
-数字，字符串，布尔值，null，undefined
+基本类型：数字，字符串，布尔值，null，undefined
+引用类型(Object)： Array, Date, RegExp
+
 数字
 =====
 
 只有64位数浮点数
 NAN是一个数值，不等于任何值，包括自己，用isNaN来检测。
 Infinity很大的数，但不是无限大，是js表示的最大值
+
 字符串
 =====
 不可改变
@@ -176,6 +179,7 @@ typeof不能区分出数组，null和普通对象
 =====
 length 没有上限
 delete 和 splice 的区别
+delete  不影响数组长度
 函数：
 =====
 函数就是对象
@@ -195,7 +199,8 @@ for in 再原型上表现糟糕
 delete 可以删除对象的属性，但是不会操作原型链中的任何对象
 javascript没有尾递归优化
 只有函数作用域没有块作用域
-
+JavaScript中if语句求值其实使用eval函数
+instanceof 和typeof的区别
 
 Object:
 =====
@@ -205,3 +210,11 @@ entries(和 new Map 相互转化),
 freeze 和 seal 区别（前者完全冻结,后者禁止了所有新的defineProperty）
 setPrototypeOf(修改 __proto__ )
 
+函数:
+=====
+箭头函数： 不绑定自己的this，super 和arguments，所以不能作为构造函数和new 一起使用，返回对象需要用o=>({o:12})的形式，可以用...arg来代替 arguments
+yield
+curry化sum: sum= (...o)=>o.length?(o.pop()+sum(...o)):0
+
+正则表达式
+=====

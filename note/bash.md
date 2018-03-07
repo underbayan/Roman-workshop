@@ -46,3 +46,6 @@ find "." -name "*.htm*" -print0 | xargs -0 enca -x utf-8
 ```bash 
 for d in ./*/*test.zip ; do (mv $d ${d/test/}); done
 ````
+###  端口
+sudo lsof -i -P | grep -i "listen"
+netstat -an | grep 3306
