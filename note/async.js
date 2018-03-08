@@ -23,3 +23,7 @@ A.series([
   c=> setTimeout(()=>console.log('200,series'),200),
   c=> setTimeout(()=>console.log('100,series'),100),
 ], function (e, r) {console.log(r)});
+
+
+// atuo , apply, cargo , compose , concat, detect, dir, each,
+//https://github.com/caolan/async/
