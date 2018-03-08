@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "immutable": "^3.8.2",
+    "stun": "^1.1.0"
+  }
+}

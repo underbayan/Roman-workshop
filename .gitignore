@@ -19,3 +19,4 @@ bootstrap-material-design
 yarn-debug.log*
 yarn-error.log*
 
+*.lock
