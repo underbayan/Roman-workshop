@@ -176,3 +176,27 @@ base32  没有大小写之分,同时适合二维码
 一边快速排序，一边比较是否重复，o(nlogn）
  
 ````
+##### 荷兰国旗问题
+````
+红色为0 ，白色为1， 蓝色为2. 然后使用快速排序即可
+````
+##### 矩阵相乘
+````
+复杂度为n^2.3737
+分治，把矩阵分解为不同的大小的区块
+````
+##### 寻找公共父节点
+````javascript
+// if node include A then thisNode.flag = 1
+// if node include B then thisNode.flag = 2
+// if node include A and B then thisNode.flag = 3
+// find the deepest node when its flag is 3
+
+let fv = (o, v1, v2)=> {
+  if (!o)return 0
+  let flag = o.value === v1 ? 1 : o.value === v2 ? 2 : 0
+  o.flag = fv(o.left,v1,v2) | fv(o.right,v1,v2) | flag
+  return o.flag
+}
+
+````

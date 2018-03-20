@@ -133,7 +133,7 @@ return function () {
 ```
 javascript 类型
 =====
-基本类型：数字，字符串，布尔值，null，undefined
+基本类型：number，string，boolean，null，undefined, symbol
 引用类型(Object)： Array, Date, RegExp
 
 数字
@@ -201,7 +201,10 @@ javascript没有尾递归优化
 只有函数作用域没有块作用域
 JavaScript中if语句求值其实使用eval函数
 instanceof 和typeof的区别
-
+未使用var关键字定义的变量都是全局变量。
+函数中声明的变量在整个函数中都有定义
+全局变量都是window对象的属性
+JavaScript中的函数运行在它们被定义的作用域里,而不是它们被执行的作用域里
 Object:
 =====
 assign,
@@ -218,3 +221,8 @@ curry化sum: sum= (...o)=>o.length?(o.pop()+sum(...o)):0
 
 正则表达式
 =====
+
+
+性能问题
+=====
+懒加载， 作用域越深，速度越慢，局部变量最快

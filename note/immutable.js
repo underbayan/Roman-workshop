@@ -1,26 +1,50 @@
-#!/usr/bin/env node
-const {Map} = require('immutable')
-const {List} = require('immutable')
-const assert = require('assert')
-const map1 = Map({a: 1, b: 2, c: 3})
-const map2 = map1.set('b', 50)
-console.log(map1.get('b') + " vs. " + map2.get('b')) // 2 vs. 50
-const obj = {d: 100, o: 200, g: 300}
-const map3 = map1.merge(map2, obj);
-const list1 = List([1, 2]);
-const list2 = list1.push(3, 4, 5);
-const array = [6, 7, 8, 9]
-const listMerge = list1.concat(list2, array)
-const list3 = list2.unshift(0);
-const list4 = list1.concat(list2, list3);
-assert.equal(list1.size, 2);
-assert.equal(list2.size, 5);
-assert.equal(list3.size, 6);
-assert.equal(list4.size, 13);
-assert.equal(list4.get(0), 1);
+function deepCopy(obj) {
+  if (!item) { return item; } // null, undefined values check
 
+  var types = [ Number, String, Boolean ],
+    result;
 
+  // normalizing primitives if someone did new String('aaa'), or new Number('444');
+  types.forEach(function(type) {
+    if (item instanceof type) {
+      result = type( item );
+    }
+  });
 
-const { fromJS } = require('immutable')
-const nested = fromJS({ a: { b: { c: [ 3, 4, 5 ] } } })
-// Map { a: Map { b: Map { c: List [ 3, 4, 5 ] } } }
+  if (typeof result == "undefined") {
+    if (Object.prototype.toString.call( item ) === "[object Array]") {
+      result = [];
+      item.forEach(function(child, index, array) {
+        result[index] = deepCopy( child );
+      });
+    } else if (typeof item == "object") {
+      // testing that this is DOM
+      if (item.nodeType && typeof item.cloneNode == "function") {
+        var result = item.cloneNode( true );
+      } else if (!item.prototype) { // check that this is a literal
+        if (item instanceof Date) {
+          result = new Date(item);
+        } else {
+          // it is an object literal
+          result = {};
+          for (var i in item) {
+            result[i] = deepCopy( item[i] );
+          }
+        }
+      } else {
+        // depending what you would like here,
+        // just keep the reference, or create new object
+        if (false && item.constructor) {
+          // would not advice to do that, reason? Read below
+          result = new item.constructor();
+        } else {
+          result = item;
+        }
+      }
+    } else {
+      result = item;
+    }
+  }
+
+  return result;
+}
