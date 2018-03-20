@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<div class="container" style="position: relative">
+  <div id="underLayer" style="background-color: #00B7FF;color: white;width: 100vw;height: 100vh;position: relative">
+    底层元素
+  </div>
+
+  <div id="popupLayer"
+       style="position: absolute;left: 0;right: 0;top: 0;bottom: 0;height: 300px;width: 300px;margin: auto;background-color: gold">
+    <div class="layer-title">弹出层</div>
+    <div class="layer-action">
+      <button class="btn" id="closePopup" style="padding: 20px; background-color: yellow">关闭</button>
+    </div>
+  </div>
+</div>
+<div id="bgMask"></div>
+</body>
+
+<script type="application/javascript" src="https://cdn.bootcss.com/jquery/3.3.1/jquery.js">
+
+</script>
+<script>  $('#closePopup').on('touchstart', function (e) {
+  $('#popupLayer').hide();
+  $('#bgMask').hide();
+});
+
+$('#underLayer').on('click', function () {
+  alert('underLayer clicked');
+});</script>
+</html>
