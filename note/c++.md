@@ -61,3 +61,5 @@ std::thread t(update_data_for_widget,w,data);
 //引用传递 避免盲目构造函数
 std::thread t(update_data_for_widget,w,std::ref(data));
 ```
+fcntl: 可以将文件io 变成非阻塞
+
