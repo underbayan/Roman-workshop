@@ -32,8 +32,14 @@ function quickSortHandler() {
       flag++
       pivot = right;
       partitionIndex = partition(arr, pivot, left, right);
-      setTimeout(()=>quickSort(arr, left, partitionIndex - 1, callback), 0);
-      setTimeout(()=>quickSort(arr, partitionIndex + 1, right, callback), 0);
+      if(left<right-100){
+        setTimeout(()=>quickSort(arr, left, partitionIndex - 1, callback), 0);
+        setTimeout(()=>quickSort(arr, partitionIndex + 1, right, callback), 0);
+      }else {
+        quickSort(arr, left, partitionIndex - 1, callback);
+        quickSort(arr, partitionIndex + 1, right, callback);
+      }
+
     }
     else {
       flag--
