@@ -48,7 +48,7 @@ let arr = randomList(50000000)
 let qs = asyncQuickSort(arr, ()=> {
   var et = new Date()
   for (var i = 0; i < arr.length - 1; i++) {
-    assert.ok(arr[i] <= arr[i + 1], 'error')
+    // assert.ok(arr[i] <= arr[i + 1], 'error')
   }
   console.log(et - st)
 });
