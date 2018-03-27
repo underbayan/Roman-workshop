@@ -1,4 +1,4 @@
-module.exports = function asyncMergeSort(arr, callback = r=> r, comparator = (a, b)=>a < b, timer = 0, blockLength = 100) {
+module.exports = function quickMerge(arr, comparator = (a, b)=>a < b, timer = 0, blockLength = 100) {
   function quickSort(arr, left, right) {
     function partition(arr, pivot, left, right) {
       let pivotValue = arr[pivot], partitionIndex = left, temp
@@ -31,7 +31,6 @@ module.exports = function asyncMergeSort(arr, callback = r=> r, comparator = (a,
     let helpArray = []
     let a = start, b = mid, index = 0
     let isFinish = false
-    if (start === 0 && end === arr.length) {isFinish = true }
     while (a < mid && b < end) {
       helpArray.push(comparator(arr[a], arr[b]) ? arr[a++] : arr[b++])
     }
@@ -44,56 +43,20 @@ module.exports = function asyncMergeSort(arr, callback = r=> r, comparator = (a,
     while (start < end) {
       arr[start++] = helpArray[index++]
     }
-
-    if (isFinish) {
-      callback(null, arr)
-    }
   }
 
   function mergeSort(arr, start, end) {
     if (end - start > blockLength) {
       let mid = Math.floor(start + (end - start) / 2)
-      delay(()=>mergeSort(arr, start, mid), 0)
-        .delay(()=>mergeSort(arr, mid, end), 0)
-        .delay(()=>merge(arr, start, mid, end), 0)
+      mergeSort(arr, start, mid)
+      mergeSort(arr, mid, end)
+      merge(arr, start, mid, end)
     }
     else {
       quickSort(arr, start, end - 1)
     }
   }
-
   mergeSort(arr, 0, arr.length)
   return arr
 }
 
-function delay(fn, t) {
-  let queue = [], self, timer
-
-  function schedule(fn, t) {
-    timer = setTimeout(function () {
-      timer = null
-      fn()
-      if (queue.length) {
-        let item = queue.shift()
-        schedule(item.fn, item.t)
-      }
-    }, t)
-  }
-
-  self = {
-    delay: function (fn, t) {
-      if (queue.length || timer) {
-        queue.push({fn: fn, t: t})
-      } else {
-        schedule(fn, t)
-      }
-      return self
-    },
-    cancel: function () {
-      clearTimeout(timer)
-      queue = []
-      return self
-    }
-  }
-  return self.delay(fn, t)
-}

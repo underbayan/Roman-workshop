@@ -1,8 +1,0 @@
-{
-  "dependencies": {
-    "benchmark": "^2.1.4",
-    "immutable": "^3.8.2",
-    "stun": "^1.1.0",
-    "ws": "^5.0.0"
-  }
-}
