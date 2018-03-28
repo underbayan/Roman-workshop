@@ -205,6 +205,10 @@ instanceof 和typeof的区别
 函数中声明的变量在整个函数中都有定义
 全局变量都是window对象的属性
 JavaScript中的函数运行在它们被定义的作用域里,而不是它们被执行的作用域里
+迭代器： 是一个实现next函数 的对象
+next函数：是一个返回{done:false, value:'' } 形式的无参函数
+generator: 是一个 生成迭代器的函数
+entries: 返回一个可迭代对象的迭代器
 Object:
 =====
 assign,
@@ -226,3 +230,5 @@ curry化sum: sum= (...o)=>o.length?(o.pop()+sum(...o)):0
 性能问题
 =====
 懒加载， 作用域越深，速度越慢，局部变量最快
+
+
