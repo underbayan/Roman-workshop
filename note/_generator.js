@@ -1,11 +1,8 @@
 // iterable对象：js 中的可迭代对象： 必须有 Symbol.iterator 属性
 // [Symbol.iterator] 属性 是 返回一个对象的无参函数，被返回对象符合迭代器协议
-
 // iterator  :An object is an iterator when it implements a next() method with the following semantics:
 // next函数：是一个返回{done:false, value:'' } 形式的无参函数
-
 // generator = iterator + iterable ; because it has a next method, so it's an iterator; because it has an @@iterator method, so it's an iterable
-
 // entries方法: 返回一个可迭代对象的迭代器
 var idMaker = () => {
   var index = 0
@@ -58,6 +55,12 @@ function* f() {
     if (firstOne) { i = -1; }
   }
 }
+f = function*(){}
+f.constructor.prototype //GeneratorFunction
+f.constructor.prototype.prototype // Generator
+f.constructor.prototype.prototype.next //function
+f.constructor.prototype.prototype[Symbol.iterator]() === f.constructor.prototype.prototype
+
 var l =(...r)=> console.log('**************')||console.log(...r)
 var g = f();
 

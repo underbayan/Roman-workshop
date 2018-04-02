@@ -194,21 +194,24 @@ delete  不影响数组长度
 
 tip：
 =====
-for in 遍历对象属性的顺序不是固定的
-for in 再原型上表现糟糕
-delete 可以删除对象的属性，但是不会操作原型链中的任何对象
-javascript没有尾递归优化
-只有函数作用域没有块作用域
-JavaScript中if语句求值其实使用eval函数
-instanceof 和typeof的区别
-未使用var关键字定义的变量都是全局变量。
-函数中声明的变量在整个函数中都有定义
-全局变量都是window对象的属性
-JavaScript中的函数运行在它们被定义的作用域里,而不是它们被执行的作用域里
-迭代器： 是一个实现next函数 的对象
-next函数：是一个返回{done:false, value:'' } 形式的无参函数
-generator: 是一个 生成迭代器的函数
-entries: 返回一个可迭代对象的迭代器
+ * for in 遍历对象属性的顺序不是固定的
+ * for in 再原型上表现糟糕
+ * delete 可以删除对象的属性，但是不会操作原型链中的任何对象
+ * javascript没有尾递归优化
+ * 只有函数作用域没有块作用域
+ * JavaScript中if语句求值其实使用eval函数
+ * instanceof 和typeof的区别
+ * 未使用var关键字定义的变量都是全局变量。
+ * 函数中声明的变量在整个函数中都有定义
+ * 全局变量都是window对象的属性
+ * JavaScript中的函数运行在它们被定义的作用域里,而不是它们被执行的作用域里
+ * 迭代器： 是一个实现next函数 的对象
+ * next函数：是一个返回{done:false, value:'' } 形式的无参函数
+ * generator: 是一个 生成迭代器的函数
+ * entries: 返回一个可迭代对象的迭代器
+ * IIFE Immediately-Invoked Function Expression
+ * 立即调用表达式: 自执行匿名函数 的设计模式: (function(){/* code */}())
+
 Object:
 =====
 assign,
@@ -232,3 +235,7 @@ curry化sum: sum= (...o)=>o.length?(o.pop()+sum(...o)):0
 懒加载， 作用域越深，速度越慢，局部变量最快
 
 
+Tool
+=====
+karma : test js on multiple browser and node.
+Jasmine || mocha || qunit: test frame work
