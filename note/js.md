@@ -211,7 +211,7 @@ tip：
  * entries: 返回一个可迭代对象的迭代器
  * IIFE Immediately-Invoked Function Expression
  * 立即调用表达式: 自执行匿名函数 的设计模式: (function(){/* code */}())
-
+ * setTimeout 有一个最小时间4ms/10ms? ,I will choose using the setImmediate 
 Object:
 =====
 assign,

@@ -1,9 +1,8 @@
-// iterable对象：js 中的可迭代对象： 必须有 Symbol.iterator 属性
-// [Symbol.iterator] 属性 是 返回一个对象的无参函数，被返回对象符合迭代器协议
-// iterator  :An object is an iterator when it implements a next() method with the following semantics:
-// next函数：是一个返回{done:false, value:'' } 形式的无参函数
+// iterable对象：js 中的可迭代对象： 必须有 Symbol.iterator 属性. [Symbol.iterator] 属性是一个返回iterator的函数
+// iterator  :An object is an iterator when it implements a next() method with the following semantics. next函数：是一个返回{done:false, value:'' } 形式的无参函数
 // generator = iterator + iterable ; because it has a next method, so it's an iterator; because it has an @@iterator method, so it's an iterable
 // entries方法: 返回一个可迭代对象的迭代器
+
 var idMaker = () => {
   var index = 0
   return {
@@ -14,23 +13,15 @@ var idMaker = () => {
 var iterator
 iterator = idMaker();
 iterator.next();
+iterator = [1, 2, 3, 4, 5, 6][Symbol.iterator](); // Array is iterable
 iterator.next();
-iterator.next();
-
-iterator = [1, 2, 3, 4, 5, 6][Symbol.iterator]();
-iterator.next();
-iterator.next();
+iterator = "1234567"[Symbol.iterator](); // String is iterable
 iterator.next();
 
-iterator = "1234567"[Symbol.iterator]();
-iterator.next();
-iterator.next();
-iterator.next();
-
-// iterable Object
+//Own iterable Object
 class simpleClass {
   [Symbol.iterator]() {
-    return idMaker()
+    return idMaker() // Must return a iterator
   }
 }
 var instance = new simpleClass()
@@ -38,14 +29,29 @@ for (var i of instance) {
   console.log(i)
   if (i > 15)break
 }
-var generator = function*() {
+
+
+var generatorFun = function*(){
   yield 1;
   yield 2;
   yield 3;
-}()
-generator.next()
-generator[Symbol.iterator]
-generator[Symbol.iterator]() === generator
+}
+
+var generator = generatorFun()
+generator.next() ? 'Generator is an iterator.': ''
+generator[Symbol.iterator] ? 'Generator is iterable.': ''
+generator[Symbol.iterator]() === generator //true
+
+generatorFun.constructor // GeneratorFunction Function, generatorFun 的构造函数是 GeneratorFunction
+generatorFun.constructor.prototype // GeneratorFunction的原型对象
+generatorFun.constructor.prototype  === generatorFun["__proto__"]  //new operation
+generatorFun.constructor.prototype.constructor === generatorFun.constructor // true
+
+var Generator= generatorFun.constructor.prototype.prototype // Generator
+Generator.next // function
+Generator[Symbol.iterator]() === Generator //
+
+var l =(...r)=> console.log('**************')||console.log(...r)
 
 function* f() {
   for (var i = 0; true; i++) {
@@ -55,15 +61,7 @@ function* f() {
     if (firstOne) { i = -1; }
   }
 }
-f = function*(){}
-f.constructor.prototype //GeneratorFunction
-f.constructor.prototype.prototype // Generator
-f.constructor.prototype.prototype.next //function
-f.constructor.prototype.prototype[Symbol.iterator]() === f.constructor.prototype.prototype
-
-var l =(...r)=> console.log('**************')||console.log(...r)
 var g = f();
-
 l(g.next()) //{ value: 0, done: false }
 l(g.next()) //{ value: '======== another String ============0', done: false }
 l(g.next()) //The body is executed The params is  undefined undefined
