@@ -212,6 +212,7 @@ tip：
  * IIFE Immediately-Invoked Function Expression
  * 立即调用表达式: 自执行匿名函数 的设计模式: (function(){/* code */}())
  * setTimeout 有一个最小时间4ms/10ms? ,I will choose using the setImmediate 
+
 Object:
 =====
 assign,
@@ -229,6 +230,14 @@ curry化sum: sum= (...o)=>o.length?(o.pop()+sum(...o)):0
 正则表达式
 =====
 
+异步
+=====
+````
+Basically, use microtasks when you need to do stuff asynchronously in a synchronous way (i.e. when you would say perform this (micro-)task in the most immediate future). Otherwise, stick to macrotasks.
+Examples
+macrotasks: setTimeout, setInterval, setImmediate, requestAnimationFrame, I/O, UI rendering
+microtasks: process.nextTick, Promises, Object.observe, MutationObserver
+````
 
 性能问题
 =====
@@ -237,5 +246,8 @@ curry化sum: sum= (...o)=>o.length?(o.pop()+sum(...o)):0
 
 Tool
 =====
+````
 karma : test js on multiple browser and node.
 Jasmine || mocha || qunit: test frame work
+SetImmediate: 一个 js 库，可以取代 setTimeout
+````
