@@ -17,3 +17,14 @@
 * multipart/form-data  和 multipart/byteranges 区别
 * hidePoweredBy 去除 X-Powered-By header 可以 保证系统安全
 * etag If-none-match
+* Content-Security-Policy:script-src 'self' https://apis.google.com
+
+|name | value|
+| ------ | ----------- |
+|content-src：|限制连接的类型（例如XHR、WebSockets和EventSource）
+|font-src：|控制网络字体的来源。例如可以通过font-src https://themes.googleusercontent.com来使用Google的网络字体。
+|frame-src：|列出了可以嵌入的frame的来源。例如frame-src https://youtube.com只允许嵌入YouTube的视频。。
+|img-src：|定义了可加载图像的来源。
+|media-src：|限制视频和音频的来源。
+|object-src：|限制Flash和其他插件的来源。
+|style-src：|类似于Script-src，只是作用于css文件。
