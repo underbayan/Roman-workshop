@@ -1,3 +1,4 @@
+```bat
 @"%SystemRoot%\System32\WindowsPowerShell\v1.0\powershell.exe" -NoProfile -InputFormat None -ExecutionPolicy Bypass -Command "iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))" && SET "PATH=%PATH%;%ALLUSERSPROFILE%\chocolatey\bin"
 choco install -y wget
 choco install -y curl
@@ -26,6 +27,7 @@ choco install -y  ruby
 choco install -y  php
 choco install -y  jre8
 choco install -y  python3
+choco install -y  python2
 choco install -y  docker
 choco install -y  redis-64
 choco install -y  ffmpeg
@@ -35,7 +37,12 @@ choco install -y  nmap
 choco install -y  tor-browser
 choco install -y  mongodb
 choco install -y  jenkins
+choco install -y  autohotkey.portable
+choco install -y  tortoisesvn
+choco install zeal
 
+
+npm install -g windosu
 :: THIS IS USED IN THE CMDER config alias file.
 ;= @echo off
   ;= rem Call DOSKEY and use this file as the macrofile
@@ -48,7 +55,7 @@ choco install -y  jenkins
   ga=git add  $*
   gcam= git commit -a -m $*
   gca!= git commit -v -a --amend $*
-  gcp= git cherry-pick $*
+  gcp = git cherry-pick $*
   gp=git pull
   gpr=git pull --rebase
   gfa=git fetch --all --prune
@@ -58,4 +65,9 @@ choco install -y  jenkins
   history=cat "%CMDER_ROOT%\config\.history"
   unalias=alias /d $1
   vi=vim $*
+  ~=cd "C:\Users\lomondai\"
   cmderr=cd /d "%CMDER_ROOT%"
+  ````
+  
+  [^_^]:
+    

@@ -1,5 +1,6 @@
 'use strict'
 var path = require('path')
+var fs =require('fs')
 var webpack = require('webpack')
 var HtmlWebpackPlugin = require('html-webpack-plugin')
 const CompressionPlugin = require("compression-webpack-plugin")
@@ -65,7 +66,8 @@ module.exports = function (env) {
         },
         context: '/'
       }
-    })
+    }),
+    new webpack.BannerPlugin(fs.readFileSync('./LICENSE', 'utf8'))
   ]
 
   var optimizePlugins = [
