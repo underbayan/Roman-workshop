@@ -6,7 +6,6 @@ choco install -y cmder
 choco install -y find
 choco install -y git 
 choco install -y flux
-choco install -y nodejs
 choco install -y vim
 choco install -y svn
 choco install -y yarn
