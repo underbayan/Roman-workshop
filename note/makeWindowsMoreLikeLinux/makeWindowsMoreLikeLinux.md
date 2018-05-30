@@ -13,6 +13,7 @@ choco install -y make
 choco install -y openssh
 choco install -y inkscape
 choco install -y dotnet3.5
+choco install -y everything
 choco install -y sourcetree
 choco install -y libreoffice-fresh 
 choco install -y  ccleaner
@@ -38,10 +39,9 @@ choco install -y  mongodb
 choco install -y  jenkins
 choco install -y  autohotkey.portable
 choco install -y  tortoisesvn
-choco install zeal
-
-
+choco install -y  zeal
 npm install -g windosu
+refreshenv
 :: THIS IS USED IN THE CMDER config alias file.
 ;= @echo off
   ;= rem Call DOSKEY and use this file as the macrofile
@@ -52,12 +52,20 @@ npm install -g windosu
   e.=explorer .
   gl=git log --oneline --all --graph --decorate  $*
   ga=git add  $*
+  gc=git checkout $*
   gcam= git commit -a -m $*
   gca!= git commit -v -a --amend $*
   gcp = git cherry-pick $*
   gp=git pull
   gpr=git pull --rebase
   gfa=git fetch --all --prune
+  gfli=git flow init
+  gflfs=git flow feature start $*
+  gflff=git flow feature finish $*
+  gflrs=git flow release start $*
+  gflrf=git flow release finish $*
+  gflhs=git flow hotfix start $*
+  gflhf=git flow hotfix finish $*
   ls=ls --show-control-chars -F --color $*
   pwd=cd
   clear=cls
@@ -68,5 +76,5 @@ npm install -g windosu
   cmderr=cd /d "%CMDER_ROOT%"
   ````
   
-  [^_^]:
+
     
