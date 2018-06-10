@@ -161,9 +161,11 @@ Infinity很大的数，但不是无限大，是js表示的最大值
     '\t\r\n'==0 true
 
     我们判断的时候最好使用 真值来判断
+
 对象：
 =====
 通过引用来访问
+
 原型和继承：
 =====
 每一个对象都会链接到一个原型
@@ -180,6 +182,7 @@ typeof不能区分出数组，null和普通对象
 length 没有上限
 delete 和 splice 的区别
 delete  不影响数组长度
+
 函数：
 =====
 函数就是对象
@@ -188,6 +191,16 @@ delete  不影响数组长度
      构造器调用（this就是new 出来的新的对象）、
      apply调用（this可以被指定）
      
+this:
+=====
+this is bound at runtime based on the context
+
+context vs scope
+====
+A context of function is the value of this for that function
+Scope defines the way javascript resolves a variable at run time.
+There is only two scopes in js, global and function scope, weuse scope chain to make closures possible
+
 返回：
 =====
 没有指定则返回的undefined

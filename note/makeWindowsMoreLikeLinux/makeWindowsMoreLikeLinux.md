@@ -4,7 +4,7 @@ choco install -y wget
 choco install -y curl
 choco install -y cmder
 choco install -y find
-choco install -y git 
+choco install -y git
 choco install -y flux
 choco install -y vim
 choco install -y svn
@@ -15,7 +15,7 @@ choco install -y inkscape
 choco install -y dotnet3.5
 choco install -y everything
 choco install -y sourcetree
-choco install -y libreoffice-fresh 
+choco install -y libreoffice-fresh
 choco install -y  ccleaner
 choco install -y  golang
 choco install -y  git-lfs
@@ -40,41 +40,44 @@ choco install -y  jenkins
 choco install -y  autohotkey.portable
 choco install -y  tortoisesvn
 choco install -y  zeal
+choco install -y haskell-stack
+choco install -y cabal
 npm install -g windosu
 refreshenv
 :: THIS IS USED IN THE CMDER config alias file.
 ;= @echo off
-  ;= rem Call DOSKEY and use this file as the macrofile
-  ;= %SystemRoot%\system32\doskey /listsize=1000 /macrofile=%0%
-  ;= rem In batch mode, jump to the end of the file
-  ;= goto:eof
-  ;= Add aliases below here
-  e.=explorer .
-  gl=git log --oneline --all --graph --decorate  $*
-  ga=git add  $*
-  gc=git checkout $*
-  gcam= git commit -a -m $*
-  gca!= git commit -v -a --amend $*
-  gcp = git cherry-pick $*
-  gp=git pull
-  gpr=git pull --rebase
-  gfa=git fetch --all --prune
-  gfli=git flow init
-  gflfs=git flow feature start $*
-  gflff=git flow feature finish $*
-  gflrs=git flow release start $*
-  gflrf=git flow release finish $*
-  gflhs=git flow hotfix start $*
-  gflhf=git flow hotfix finish $*
-  ls=ls --show-control-chars -F --color $*
-  pwd=cd
-  clear=cls
-  history=cat "%CMDER_ROOT%\config\.history"
-  unalias=alias /d $1
-  vi=vim $*
-  ~=cd "C:\Users\lomondai\"
-  cmderr=cd /d "%CMDER_ROOT%"
-  ````
-  
-
-    
+;= rem Call DOSKEY and use this file as the macrofile
+;= %SystemRoot%\system32\doskey /listsize=1000 /macrofile=%0%
+;= rem In batch mode, jump to the end of the file
+;= goto:eof
+;= Add aliases below here
+e.=explorer .
+gs=git status
+gl=git log --oneline --all --graph --decorate  $*
+ga=git add  $*
+gcam= git diff --check &&  git commit -a -m $*
+gca!= git diff --check && git commit -v -a --amend $*
+gcp= git cherry-pick $*
+gc=git checkout $*
+gp=git pull
+gr=git rebase -i $*
+gm= git merge --no-ff $*
+gpr=git pull --rebase
+gfa=git fetch --all --prune
+gfli=git flow init
+gflfs=git flow feature start $*
+gflff=git flow feature finish $*
+gflrs=git flow release start $*
+gflrf=git flow release finish $*
+gflhs=git flow hotfix start $*
+gflhf=git flow hotfix finish $*
+gsss= git stash && git stash clear
+ls=ls --show-control-chars -F --color $*
+pwd=cd
+clear=cls
+~=cd "C:\Users\lomondai\"
+history=cat "%CMDER_ROOT%\config\.history"
+unalias=alias /d $1
+vi=vim $*
+cmderr=cd /d "%CMDER_ROOT%"
+```
