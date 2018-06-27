@@ -35,7 +35,7 @@ chain
 
 const taskDeferred = (value, data) => {
   const r = $.Deferred();
-  setTimeout(() => r.resolve(value + data));
+  setTimeout(() => r.resolve(value + ~~data));
   return r;
 };
 
@@ -57,5 +57,21 @@ chain
   .then(_ => console.log("End is :", _));
 
 const taskAsyncFun = async (value, data) => {
-  return await value;
+  return await (value + ~~data);
 };
+const taskAsynList = Array.range(100).map(v => taskAsyncFun.bind(this, v));
+/** 链式调用 得到 1-n 的和*/
+chain.apply(this, taskAsynList).then(_ => console.log("sum is :", _));
+/** 平行触发 得到1-n 的list*/
+parallel.apply(this, taskAsynList).then(_ => console.log(_.toString()));
+/** 混合使用 取最后一个并行的结果 */
+chain
+  .apply(
+    this,
+    taskAsynList
+      .chunk(10)
+      .map(v =>
+        parallel.apply(this, v).then(arr => arr.reduce((s, v) => s + v, 0))
+      )
+  )
+  .then(_ => console.log("End is :", _));

@@ -1,7 +1,7 @@
 const toArray = args => Array.prototype.slice.call(args);
 const IIFE = (any, data) => (typeof any === "function" ? any(data) : any);
 /**
- * @description run async task parallel
+ * @description run async task parallelly
  * @example parallel(promise1,promise2,promise3,()=>promise4)
  * @return {Promise}
  *
