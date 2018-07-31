@@ -27,14 +27,13 @@ var e = e || event;
 e.bubbles && e.stopPropagation ? e.stopPropagation() : e.cancelBubble = true;
 
 //set Cookie
-var setCookie = (name, value, time, path = '/')=>document.cookie = `${name}=${value};expires=${new Date().setTime(new Date().getTime() + time)};path=${path}`
+var setCookie = (name, value, time, path = '/') => document.cookie = `${name}=${value};expires=${new Date().setTime(new Date().getTime() + time)};path=${path}`
 //getCookie
-var getCookie = (name)=>decodeURIComponent(document.cookie)
-    .split(';')
-    .map((c)=>c.charAt(0) === ' ' ? c.substring(1) : c)
-    .find((c)=>!c.indexOf(name))
-    .substring(name.length + 1)
-  ;
+var getCookie = (name) => decodeURIComponent(document.cookie)
+  .split(';')
+  .map((c) => c.charAt(0) === ' ' ? c.substring(1) : c)
+  .find((c) => !c.indexOf(name))
+  .substring(name.length + 1);
 [].forEach.call($('*'), function (a) {
   a.style.outline = '1px solid #' + (~~(Math.random() * (1 << 24)))
   a.style.backgroundColor = '#' + (~~(Math.random() * (1 << 24)))
@@ -50,15 +49,15 @@ function queryString(url) {
   let params = url.split('?')[1]
   if (params) {
     params.split('&').map(o => {
-        if (o) {
-          let param = o.split('=')
-          result[param[0]] = param[1] || true
-        }
+      if (o) {
+        let param = o.split('=')
+        result[param[0]] = param[1] || true
       }
-    )
+    })
   }
   return result
 }
+
 function addEvent(ele, type, func) {
   if (ele.addEventListener) {
     ele.addEventListener(type, func, false)
@@ -68,15 +67,55 @@ function addEvent(ele, type, func) {
     ele['on' + type] = handler
   }
 }
-let sum = (...o)=>o.length ? (o.pop() + sum(...o)) : 0
+let sum = (...o) => o.length ? (o.pop() + sum(...o)) : 0
 let sum2 = (function () {
   let data = []
   return function () {
     if (!arguments.length) {
-      return data.reduce((sum, i)=>i + sum, 0)
+      return data.reduce((sum, i) => i + sum, 0)
     } else {
       [].push.apply(data, arguments);
     }
   }
 })()
-let isEmail = s=>/\w+@\w+\.\w+/.test(s)
+let isEmail = s => /\w+@\w+\.\w+/.test(s)
+
+function clone(obj, deepClone) {
+
+  /* Default deep cloning to false */
+  deepClone = deepClone || false;
+
+  /* Test the object type and clone accordingly */
+  var clonedObj = obj;
+  switch (true) {
+    case (obj instanceof Element && typeof obj === "object" && obj.nodeName):
+      clonedObj = obj.cloneNode(deepClone);
+      break;
+    case (obj instanceof Object || typeof obj === "object"):
+      clonedObj = cloneObject(obj, deepClone)
+      break;
+    case (obj instanceof Array || isArray(obj)):
+      clonedObj = cloneArray(obj, deepClone);
+      break;
+    case (obj instanceof Function || typeof obj === "function"):
+      clonedObj = cloneFunction(obj);
+      break;
+    case (obj instanceof Date):
+      clonedObj = new Date();
+      clonedObj.setTime(obj.getTime());
+      break;
+  }
+
+  return clonedObj;
+}
+
+switch (1) {
+  case (1 === 2):
+    break
+  case (3 === 3):
+  case (window.someCondition):
+    break
+}
+
+
+
