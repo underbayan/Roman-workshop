@@ -1,7 +1,14 @@
-function MergeSort(arr, comparator = (a, b)=>a < b, timer = 0, blockLength = 100) {
+function MergeSort(
+  arr,
+  comparator = (a, b) => a < b,
+  timer = 0,
+  blockLength = 100
+) {
   function quickSort(arr, left, right) {
     function partition(arr, pivot, left, right) {
-      var pivotValue = arr[pivot], partitionIndex = left, temp;
+      var pivotValue = arr[pivot],
+        partitionIndex = left,
+        temp
       for (var i = left; i < right; i++) {
         if (comparator(arr[i], pivotValue)) {
           temp = arr[i]
@@ -16,10 +23,10 @@ function MergeSort(arr, comparator = (a, b)=>a < b, timer = 0, blockLength = 100
       return partitionIndex
     }
 
-    var pivot, partitionIndex;
+    var pivot, partitionIndex
     if (left < right) {
       pivot = right
-      partitionIndex = partition(arr, pivot, left, right);
+      partitionIndex = partition(arr, pivot, left, right)
       quickSort(arr, left, partitionIndex - 1)
       quickSort(arr, partitionIndex + 1, right)
     }
@@ -27,7 +34,9 @@ function MergeSort(arr, comparator = (a, b)=>a < b, timer = 0, blockLength = 100
   }
   function merge(arr, start, mid, end) {
     var helpArray = []
-    var a = start, b = mid, index = 0
+    var a = start,
+      b = mid,
+      index = 0
     while (a < mid && b < end) {
       helpArray.push(comparator(arr[a], arr[b]) ? arr[a++] : arr[b++])
     }
@@ -48,8 +57,7 @@ function MergeSort(arr, comparator = (a, b)=>a < b, timer = 0, blockLength = 100
       mergeSort(arr, start, mid)
       mergeSort(arr, mid, end)
       merge(arr, start, mid, end)
-    }
-    else {
+    } else {
       quickSort(arr, start, end - 1)
     }
     return arr
@@ -57,5 +65,3 @@ function MergeSort(arr, comparator = (a, b)=>a < b, timer = 0, blockLength = 100
   mergeSort(arr, 0, arr.length)
   return arr
 }
-
-
