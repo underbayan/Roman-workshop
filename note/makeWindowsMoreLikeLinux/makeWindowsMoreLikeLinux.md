@@ -30,7 +30,7 @@ choco install -y  python3
 choco install -y  python2
 choco install -y  docker
 choco install -y  docker-compose
-choco install -y  docker-for-windows 
+choco install -y  docker-for-windows
 choco install -y  redis-64
 choco install -y  ffmpeg
 choco install -y  mysql
@@ -46,9 +46,17 @@ choco install -y virtualbox
 choco install -y shadowsocks
 choco install -y haskell-stack
 choco install -y cabal
+choco install -y rsync
 choco install -y superbenchmarker
+##--------------------- 下面可选
+choco install -y carnac #键盘记录
+choco install -y ScreenToGif #录屏  
 npm install -g windosu
 refreshenv
+
+
+# C:\tools\cmder\config\user-aliases.cmd
+
 :: THIS IS USED IN THE CMDER config alias file.
 ;= @echo off
 ;= rem Call DOSKEY and use this file as the macrofile

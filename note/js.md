@@ -289,3 +289,6 @@ SetImmediate: 一个 js 库，可以取代 setTimeout
 The mixup between objects and hashes is also a very bad idea.
 callable attributes should not be called directly like a function.
 you should using class or Map instead of Object
+
+
+
