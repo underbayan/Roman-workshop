@@ -48,9 +48,10 @@ choco install -y haskell-stack
 choco install -y cabal
 choco install -y rsync
 choco install -y superbenchmarker
+choco install -y bind-toolsonly
 ##--------------------- 下面可选
 choco install -y carnac #键盘记录
-choco install -y ScreenToGif #录屏  
+choco install -y ScreenToGif #录屏
 npm install -g windosu
 refreshenv
 
