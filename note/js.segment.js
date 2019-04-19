@@ -26,10 +26,7 @@ var e = e || event
 e.bubbles && e.stopPropagation ? e.stopPropagation() : (e.cancelBubble = true)
 
 //set Cookie
-var setCookie = (name, value, time, path = '/') =>
-  (document.cookie = `${name}=${value};expires=${new Date().setTime(
-    new Date().getTime() + time
-  )};path=${path}`)
+var setCookie = (name, value, time, path = '/') => (document.cookie = `${name}=${value};expires=${new Date().setTime(new Date().getTime() + time)};path=${path}`)
 //getCookie
 var getCookie = name =>
   decodeURIComponent(document.cookie)
@@ -46,7 +43,14 @@ var domNodes = Array.prototype.slice.call(document.getElementsByTagName('*'))
 var fakeArgsArray = function() {
   var args = Array.prototype.slice.call(arguments)
 }
-
+function getCookie(name, cookie = '') {
+  const r = {}
+  cookie.split(/\s*;\s*/).forEach(p => {
+    ip = p.split(/\s*=\s*/)
+    r[ip[0]] = ip.splice(1)
+  })
+  return r[name]
+}
 function queryString(url) {
   let result = {}
   let params = url.split('?')[1]
@@ -143,12 +147,7 @@ function encode64(input) {
       enc4 = 64
     }
 
-    output =
-      output +
-      keyStr.charAt(enc1) +
-      keyStr.charAt(enc2) +
-      keyStr.charAt(enc3) +
-      keyStr.charAt(enc4)
+    output = output + keyStr.charAt(enc1) + keyStr.charAt(enc2) + keyStr.charAt(enc3) + keyStr.charAt(enc4)
   } while (i < input.length)
 
   return output
@@ -205,3 +204,32 @@ Object.defineProperty(exports, name, {
 /**
  * 大型的app 中需要 提供 disable，set 和 enable，register，use 等方法？
  */
+
+//  deepClone
+JSON.parse(JSON.stringify(obj))
+
+function cloneDeep(o) {
+  let newO
+  let i
+
+  if (typeof o !== 'object') return o
+
+  if (!o) return o
+
+  if (Object.prototype.toString.apply(o) === '[object Array]') {
+    newO = []
+    for (i = 0; i < o.length; i += 1) {
+      newO[i] = cloneDeep(o[i])
+    }
+    return newO
+  }
+
+  newO = {}
+  for (i in o) {
+    if (o.hasOwnProperty(i)) {
+      newO[i] = cloneDeep(o[i])
+    }
+  }
+  return newO
+}
+share

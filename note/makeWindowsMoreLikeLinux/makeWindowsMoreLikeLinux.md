@@ -48,6 +48,7 @@ choco install -y haskell-stack
 choco install -y cabal
 choco install -y rsync
 choco install -y superbenchmarker
+choco install -y jdk8 -params "both=true"
 choco install -y bind-toolsonly
 ##--------------------- 下面可选
 choco install -y carnac #键盘记录
