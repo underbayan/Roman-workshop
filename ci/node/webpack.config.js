@@ -1,13 +1,13 @@
 'use strict'
 var path = require('path')
-var fs =require('fs')
+var fs = require('fs')
 var webpack = require('webpack')
 var HtmlWebpackPlugin = require('html-webpack-plugin')
-const CompressionPlugin = require("compression-webpack-plugin")
+const CompressionPlugin = require('compression-webpack-plugin')
 
-var sassImporter = require('node-sass-import-once')
-const ManifestPlugin = require('webpack-manifest-plugin');
-module.exports = function (env) {
+var sassImporter = require('./node_modules/node-sass-import-once')
+const ManifestPlugin = require('webpack-manifest-plugin')
+module.exports = function(env) {
   var devToolConfig
   var isSourceMap
   var plugins = []
@@ -17,12 +17,12 @@ module.exports = function (env) {
   var externalCdn
   var htmlPlugins = []
 
-  var isProduction = function () {
+  var isProduction = function() {
     return process && process.env.NODE_ENV === 'production'
   }
-  var htmlCreator = function (list) {
+  var htmlCreator = function(list) {
     var TEM_PATH = path.resolve(__dirname, '../web/public')
-    return list.map(function (o) {
+    return list.map(function(o) {
       var h = new HtmlWebpackPlugin({
         template: path.resolve(TEM_PATH, o + '.html'),
         filename: o + '.html',
@@ -38,8 +38,8 @@ module.exports = function (env) {
           keepClosingSlash: true,
           minifyJS: true,
           minifyCSS: true,
-          minifyURLs: true,
-        },
+          minifyURLs: true
+        }
       })
       return h
     })
@@ -47,19 +47,18 @@ module.exports = function (env) {
 
   //noinspection JSDuplicatedDeclaration
   entry = {
-    index: ['babel-polyfill', require.resolve('../web/polyfill/index.js'), './web/index.js'],
+    index: ['babel-polyfill', require.resolve('../web/polyfill/index.js'), './web/index.js']
   }
   htmlPlugins = htmlCreator(['index'])
   var CommonPlugins = [
     // new ExtractTextPlugin("[name].[hash:8] .css"),
     new webpack.IgnorePlugin(/^\.\/lang$/, /^\.\/locale$/, /moment$/),
-    new webpack.ProvidePlugin(require('./baseConfig/global').globalPlugin),
-    new ManifestPlugin({fileName: 'asset-manifest.json',}),
+    new webpack.ProvidePlugin(require('./global').globalPlugin),
+    new ManifestPlugin({ fileName: 'asset-manifest.json' }),
     new webpack.LoaderOptionsPlugin({
       options: {
         sassLoader: {
-          includePaths: [
-            path.resolve(__dirname, './web')]
+          includePaths: [path.resolve(__dirname, './web')]
         },
         sassConfig: {
           importer: sassImporter
@@ -85,25 +84,23 @@ module.exports = function (env) {
     new webpack.optimize.MinChunkSizePlugin({
       compress: {
         warnings: false
-      }
-      , sourceMap: false
+      },
+      sourceMap: false
     }),
     new webpack.optimize.OccurrenceOrderPlugin(),
     new webpack.optimize.UglifyJsPlugin({
-      compress: {warnings: false},
+      compress: { warnings: false },
       sourceMap: false,
       bare_returns: true
     }),
     new webpack.optimize.AggressiveMergingPlugin({
       minSizeReduce: 1.5,
       moveToParents: true
-    }),
-
+    })
   ]
 
   plugins = plugins.concat(CommonPlugins)
   plugins = plugins.concat(htmlPlugins)
-
 
   if (isProduction()) {
     plugins = plugins.concat(optimizePlugins)
@@ -112,14 +109,15 @@ module.exports = function (env) {
     isSourceMap = false
     publicPath = './'
     outputPath = '../dist'
-  }
-  else {
+  } else {
     devToolConfig = 'source-map'
     isSourceMap = true
     publicPath = './'
     outputPath = '../dist'
     var hotServerReplace = 'webpack-hot-middleware/client?path=http://localhost:3000/__webpack_hmr'
-    for (var o in entry) {entry[o] = [hotServerReplace].concat(entry[o])}
+    for (var o in entry) {
+      entry[o] = [hotServerReplace].concat(entry[o])
+    }
     plugins.push(new webpack.HotModuleReplacementPlugin())
   }
   var config = {
@@ -135,13 +133,9 @@ module.exports = function (env) {
     },
     resolve: {
       extensions: ['.js', '.jsx', '.less', '.scss', '.css'],
-      modules: [
-        'node_modules',
-        'web',
-        './',
-      ],
+      modules: ['node_modules', 'web', './'],
       alias: {
-        webworkify: 'webworkify-webpack-dropin',
+        webworkify: 'webworkify-webpack-dropin'
       }
     },
     externals: '',
@@ -159,20 +153,19 @@ module.exports = function (env) {
           use: [
             {
               options: {
-                baseConfig: require('./baseConfig/lint').lintConfig,
+                baseConfig: require('./lint').lintConfig,
                 ignore: false,
-                useEslintrc: false,
+                useEslintrc: false
               },
-              loader: 'eslint-loader?parser=babel-eslint',
-            },
+              loader: 'eslint-loader?parser=babel-eslint'
+            }
           ],
-          include: [/web/],
+          include: [/web/]
         },
         {
           test: /\.(js|jsx)$/,
           loader: ['babel-loader?compact=false'],
-          include: [/web/],
-
+          include: [/web/]
         },
         {
           test: /\.(ttf|eot|svg|woff|woff2|)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
@@ -184,54 +177,78 @@ module.exports = function (env) {
         },
         {
           test: /\.css/,
-          use: [{
-            loader: "style-loader"
-          }, {
-            loader: "css-loader",
-            options: {
-              alias: {}, includePaths: [], sourceMap: isSourceMap, modules: false, minimize: true
-            }
-          }, {loader: 'resolve-url-loader'}],
-
+          use: [
+            {
+              loader: 'style-loader'
+            },
+            {
+              loader: 'css-loader',
+              options: {
+                alias: {},
+                includePaths: [],
+                sourceMap: isSourceMap,
+                modules: false,
+                minimize: true
+              }
+            },
+            { loader: 'resolve-url-loader' }
+          ]
         },
         {
           test: /\.scss$/,
-          use: [{
-            loader: "style-loader"
-          }, {
-            loader: "css-loader",
-            options: {
-              alias: {}, includePaths: [], sourceMap: isSourceMap, minimize: true
-            }
-          },
-            {loader: 'resolve-url-loader'}, {
-              loader: "sass-loader",
+          use: [
+            {
+              loader: 'style-loader'
+            },
+            {
+              loader: 'css-loader',
               options: {
-                alias: {}, includePaths: [], sourceMap: isSourceMap,
+                alias: {},
+                includePaths: [],
+                sourceMap: isSourceMap,
+                minimize: true
               }
-            }],
+            },
+            { loader: 'resolve-url-loader' },
+            {
+              loader: 'sass-loader',
+              options: {
+                alias: {},
+                includePaths: [],
+                sourceMap: isSourceMap
+              }
+            }
+          ]
         },
         {
           test: /\.less$/,
           // use: ExtractTextPlugin.extract({
-          use: [{
-            loader: "style-loader"
-          }, {
-            loader: "css-loader",
-            options: {
-              alias: {}, includePaths: [], sourceMap: isSourceMap, minimize: true
+          use: [
+            {
+              loader: 'style-loader'
+            },
+            {
+              loader: 'css-loader',
+              options: {
+                alias: {},
+                includePaths: [],
+                sourceMap: isSourceMap,
+                minimize: true
+              }
+            },
+            { loader: 'resolve-url-loader' },
+            {
+              loader: 'less-loader',
+              options: {
+                alias: {},
+                includePaths: [],
+                sourceMap: isSourceMap
+              }
             }
-          }, {loader: 'resolve-url-loader'}, {
-            loader: "less-loader",
-            options: {
-              alias: {}, includePaths: [], sourceMap: isSourceMap,
-            }
-          }],
-
+          ]
         }
       ]
     }
   }
   return config
 }
-
