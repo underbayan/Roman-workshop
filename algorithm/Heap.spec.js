@@ -1,6 +1,6 @@
 (function __heapTest() {
     let as = console.assert
-    let Heap = require('../Heap')
+    let Heap = require('./Heap')
     let num = 100
     while (num--) {
         let minHeap = new Heap(undefined, (i1, i2)=>i1 < i2)
