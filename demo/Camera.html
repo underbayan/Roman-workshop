@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<video id="video" style="width: 800px;height:600px;background: black"></video>
+<script>
+
+    var videoE = document.getElementById('video')
+    var onSuccess = function (stream) {
+        var createSrc = (window.URL) ? window.URL.createObjectURL : function (stream) { return stream };
+        videoE.src = createSrc(stream);
+        videoE.play()
+    }
+    var onError = function (e) {
+        console.log('Media error,', e)
+    }
+    navigator.getUserMedia(
+            {audio: true, video: true},
+            onSuccess, onError
+    )
+</script>
+</body>
+</html>

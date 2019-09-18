@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<input type="button"
+       value="Memory Leaking Insert" onclick="LeakMemory()"/>
+<input type="button"
+       value="Memory Leaking Insert with no function" onclick="LeakMemoryWithoutFun()"/>
+</body>
+<script type="text/javascript">
+    //http://www.javascriptkit.com/javatutors/closuresleak/
+    var foo = function () {
+    }
+    function LeakMemory() {
+        for (i = 0; i < 5000; i++) {
+            var parentDiv =
+                    document.createElement('div');
+            parentDiv.onclick=foo
+        }
+    }
+</script>
+<script type="text/javascript">
+
+    function LeakMemoryWithoutFun() {
+        for (i = 0; i < 50000; i++) {
+            var parentDiv =
+                    document.createElement("div");
+        }
+    }
+
+    function tmp(){
+        var obj = document.getElementById("element")
+        obj.onclick=function(evt){}
+    }//=== 这个函数原来会内存泄露,旧版本浏览器
+
+</script>
+</html>

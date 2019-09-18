@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>webAPP</title>
+</head>
+<body>
+<script>
+    var w = window
+    var apc = w.applicationCache
+    var logEvent = function (e) {
+        console.log(e)
+    }
+    var logError = function (e) {
+        console.log(e)
+    }
+    w.ononline = logEvent
+    w.onoffline = logEvent
+    w.onbeforeunload = logEvent
+    w.onload = logEvent
+    apc.addEventListener('cached', logEvent, false)
+    apc.addEventListener('checking', logEvent, false)
+    apc.addEventListener('downloading', logEvent, false)
+    apc.addEventListener('error', logError, false)
+    apc.addEventListener('noupdate', logEvent, false)
+    apc.addEventListener('obsolete', logEvent, false)
+    apc.addEventListener('progress', logEvent, false)
+    apc.addEventListener('updateready', logEvent, false)
+</script>
+</body>
+</html>

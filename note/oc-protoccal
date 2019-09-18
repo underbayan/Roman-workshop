@@ -1,0 +1,49 @@
+
+协议可以被任何类实现的方法
+协议本身不是类，它是定义了一个其他类可以实现的接口
+类别也可以采用协议（用的不多）
+协议中的关键字
+
+协议没有父类也不能定义实例变量
+
+申明一个协议
+        @protocol ProtocolName
+
+        //method declarations
+        - (id)copyWithZone:(NSZone*) zone;
+        @end
+
+
+        @protocol MyProtocol
+        - (void)requiredMethod;
+        @optional
+        - (void)anOptionalMethod;
+        - (void)anotherOptionalMethod;
+        @required
+        - (void)anotherRequiredMethod;
+        @end//MyProtocol
+
+
+
+
+        //采用多个协议
+
+        @interface Car:NSObject<NSCopying,NSCoding,ProtocolName1,...>
+
+        {
+
+        //instance variables
+
+        }
+
+        //methods
+
+        @end
+
+        检查一个类是否遵循特定的协议(conformsToProtocol:)
+
+                 Objective-C通过类遵循的协议和类继承的超类来定义类的类型。您可以通过发送conformsToProtocol:消息来检查一个类是否遵循特定的协议：
+
+        if ([anObject conformsToProtocol:@protocol(MyProtocol)]){
+            // do something appropriate
+        }
