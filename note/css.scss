@@ -12,7 +12,8 @@
 }
 
 //hover 前后变化
-a:hover::before, a:hover::after {
+a:hover::before,
+a:hover::after {
   position: absolute;
 }
 
@@ -44,15 +45,17 @@ h1::before {
 //counter() –  调用计数器，可以不使用列表元素实现序号功能。具体请参见 counter-increment 和 counter-reset 属性的用法。示例：
 h2:before {
   counter-increment: chapter;
-  content: "Chapter " counter(chapter) ". "
+  content: "Chapter " counter(chapter) ". ";
 }
 //////////////////////////////////default
-img,div,input {
+img,
+div,
+input {
   width: 100%;
   height: 100%;
 }
 
-.apsect-86{
+.apsect-86 {
   &:before {
     content: "";
     float: left;
@@ -72,5 +75,46 @@ img,div,input {
 //如果是nav 是99
 //大于nav 我到我们用100 200 300。。。
 
-
 // transition， animation, @keyframe,  requestAnimationFrames(兼容问题) ,setInterval
+
+// colorSystem.scss
+$color-primary-major: #98ed00; // Main Primary color */
+$color-primary-white: #e0efc5;
+$color-primary-less: #b3e656;
+$color-primary-more: #74b400;
+$color-primary-dark: #558400;
+$color-secondary-1-major: #133cac; // Main Secondary color (1) */
+$color-secondary-1-white: #99a0b5;
+$color-secondary-1-less: #4a63a7;
+$color-secondary-1-more: #092a83;
+$color-secondary-1-dark: #021b5f;
+$color-secondary-2-major: #ffad00; // Main Secondary color (2) */
+$color-secondary-2-white: #fff1d3;
+$color-secondary-2-less: #f8c65c;
+$color-secondary-2-more: #c28400;
+$color-secondary-2-dark: #8e6000;
+$color-complement-major: #d0006e; // Main Complement color */
+$color-complement-white: #d5b0c4;
+$color-complement-less: #ca4b8e;
+$color-complement-more: #9e0054;
+$color-complement-dark: #74003d;
+$rgba-primary-major: rgba(152, 237, 0, 1); // Main Primary color */
+$rgba-primary-white: rgba(224, 239, 197, 1);
+$rgba-primary-less: rgba(179, 230, 86, 1);
+$rgba-primary-more: rgba(116, 180, 0, 1);
+$rgba-primary-dark: rgba(85, 132, 0, 1);
+$rgba-secondary-1-major: rgba(19, 60, 172, 1); // Main Secondary color (1) */
+$rgba-secondary-1-white: rgba(153, 160, 181, 1);
+$rgba-secondary-1-less: rgba(74, 99, 167, 1);
+$rgba-secondary-1-more: rgba(9, 42, 131, 1);
+$rgba-secondary-1-dark: rgba(2, 27, 95, 1);
+$rgba-secondary-2-major: rgba(255, 173, 0, 1); // Main Secondary color (2) */
+$rgba-secondary-2-white: rgba(255, 241, 211, 1);
+$rgba-secondary-2-less: rgba(248, 198, 92, 1);
+$rgba-secondary-2-more: rgba(194, 132, 0, 1);
+$rgba-secondary-2-dark: rgba(142, 96, 0, 1);
+$rgba-complement-major: rgba(208, 0, 110, 1); // Main Complement color */
+$rgba-complement-white: rgba(213, 176, 196, 1);
+$rgba-complement-less: rgba(202, 75, 142, 1);
+$rgba-complement-more: rgba(158, 0, 84, 1);
+$rgba-complement-dark: rgba(116, 0, 61, 1);

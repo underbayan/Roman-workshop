@@ -21,5 +21,7 @@ brew install node
 npm install supervisor -g
 #npm forever run
 npm install forever -g
-
+npm install -g generator-license -g
 ssh-copy-id  root@45.77.45.15
+git clone https://github.com/amix/vimrc.git ~/.vim_runtime
+sh ~/.vim_runtime/install_awesome_vimrc.sh

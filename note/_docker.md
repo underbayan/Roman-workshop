@@ -25,6 +25,9 @@ docker run -p 8080:8080 --name drm_mysql_container -e MYSQL_ROOT_PASSWORD=mysql_
 ###Run wordpress
 docker run --name wordpress --link sad_ardinghelli:mysql_password -d wordpress
 
+### using container to run command
+docker run -it -v "$PWD":/app -w /app images yarn test
+
 ### docker backup Script using aws ec2 container service 
 ```bash 
 CONTAINER_ID=`docker ps -aqf "name=app"`
