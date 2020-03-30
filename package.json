@@ -79,7 +79,7 @@
     "videojs": "^1.0.0",
     "videojs-contrib-hls": "^5.12.2",
     "webpack-node-externals": "^1.6.0",
-    "webtorrent": "^0.98.20",
+    "webtorrent": "^0.107.17",
     "whatwg-fetch": "^2.0.3",
     "wrtc": "0.0.65",
     "ws": "^5.0.0",
