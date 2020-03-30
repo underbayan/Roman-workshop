@@ -282,3 +282,64 @@ function throttle(fn, delay) {
 }
 
 //https://gist.github.com/jfsiii/034152ecfa908cf66178
+function dp(obj) {
+  if (obj instanceof Date) return new Date(obj);
+  if (obj.nodeType && typeof obj.cloneNode === "function") return obj.cloneNode(true);
+  if (isObject(obj)) {
+    finalObj = {};
+    for (let i in obj) {
+      if (obj[i]) finalObj[i] = dp(obj[i]);
+    }
+    return finalObj;
+  }
+  return obj;
+}
+Array.prototype.reduce = function(fn, init) {
+  let result = init;
+  this.forEach((element, index) => {
+    result = fn(result, element, index);
+  });
+  return result;
+};
+
+const curry = fn => {
+  const _fn = (...a) => (a.length > 1 ? (...l) => _fn(fn(...a), ...l) : fn(...a));
+  return _fn;
+};
+
+const add = (...l) => l.reduce((s, v) => s + v, 0);
+const cc = curry(add);
+cc(1, 2, 3, 4)();
+
+const compose = mids => {
+  if (!Array.isArray(mids)) throw new TypeError("");
+  return (ctx, next) => {
+    const consume = index => {
+      if (index > mids.length) next();
+      if (!typeof mids[index] === "function") throw new TypeError("");
+      mids[index](ctx, () => consume(++index));
+    };
+    consume(0);
+  };
+};
+
+const reqLimit = () => {
+  const currency = 0;
+  const work = 0;
+  const nextWork = 0;
+  const Max = 5;
+  const eventBus = new EventEmitter();
+  return async (ctx, next) => {
+    if (currency++ < Max) {
+      await next();
+      currency--;
+      eventBus.emit(work++);
+    } else {
+      eventBus.on(nextWork++, async () => {
+        await next();
+        currency--;
+        eventBus.emit(work++);
+      });
+    }
+  };
+};

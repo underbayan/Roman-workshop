@@ -225,7 +225,7 @@ There is only two scopes in js, global and function scope, weuse scope chain to 
 没有指定则返回的 undefined
 
 # tip：
-
+- 为什么 js 中没有析构函数
 - for in 遍历对象属性的顺序不是固定的
 - for in 再原型上表现糟糕
 - delete 可以删除对象的属性，但是不会操作原型链中的任何对象

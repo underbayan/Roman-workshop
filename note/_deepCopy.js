@@ -1,16 +1,21 @@
 function deepCopy(obj) {
   if (obj instanceof Date) {
-    return new Date(obj)
+    return new Date(obj);
   }
-  if (obj.nodeType && typeof obj.cloneNode == 'function') {
-    return obj.cloneNode(true)
+  if (typeof obj === "funciton") {
+    const _fun = eval(obj.toString());
+    _fun.prototype = obj.prototype;
+    return _fun;
   }
-  if (typeof obj == 'object') {
-    var finalObj = {}
+  if (obj.nodeType && typeof obj.cloneNode == "function") {
+    return obj.cloneNode(true);
+  }
+  if (typeof obj == "object") {
+    var _finalObj = {};
     for (var i in obj) {
-      finalObj[i] = deepCopy(obj[i])
+      _finalObj[i] = deepCopy(obj[i]);
     }
-    return finalObj
+    return _finalObj;
   }
-  return obj
+  return obj;
 }
