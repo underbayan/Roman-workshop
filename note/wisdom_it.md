@@ -63,7 +63,7 @@
  
  
 # http  
- * 几乎所有的uri都是url，反之不成立
+* 几乎所有的uri都是url，反之不成立
 * 所有的对象都有mime 类型
 * method 除了curd 还有第3种
 * http1.0报文是文本而非二进制
@@ -122,3 +122,55 @@
     - 设置cookie的sameSte策略（只有chrome支持. Example: Set-Cookie: JSESSIONID=xxxxx; SameSite=Strict
 - 参考资料
   - [link1](https://seclab.stanford.edu/websec/csrf/csrf.pdf) [link2](https://www.owasp.org/index.php/Cross-Site_Request_Forgery_(CSRF)_Prevention_Cheat_Sheet#Double_Submit_Cookie)
+
+
+# performance table tips
+```
+cmdid num(request) mean stdDev min 50th 70th 80th 90th max
+cmdid num(users) mean stdDev section1 section2 section3...
+-     -          -    -      percent1 percent2 percent3...
+```
+- The Maximum Number of Concurrent Users
+- The Optimum Number of Concurrent Users
+- Response Time: RT
+- Query Per Second: QPS
+- Throughput :req/s,bytes/s,pages/s
+- TPS: Transaction Per second
+- ## 标准的 metrics ，支持几种标准类型
+- Gauge 瞬时值
+- Counter 计数器
+- Meter 吞吐率度量器
+- Histogram 直方分布度量器
+- Timer 吞吐率和响应时间分布度量器
+- ## cpu 详情
+- 物理 cpu\*核数+ 超线程技术=逻辑 cpu
+- 主频：时钟频率，GHZ
+- 外频： 决定主板运行速度 单位 MHZ
+- 前端总线 FSB 频率： 决定数据交换的数度
+
+# bash proxy 
+````bash
+#use agent to access the destination
+ssh -L 9090:destination-host.com:8080 ssh-agent-host.com
+````
+- ## 本地转发
+* ssh hostname 是 ssh server，local 是 ssh client
+````bash
+ssh -L <local port>:<remote host>:<remote port> <SSH hostname>
+````
+- ## 远程转发
+* ssh hostname 是 ssh client，local 是 ssh server
+
+````bash
+ssh -R <local port>:<remote host>:<remote port> <SSH hostname>
+````
+- ## 共享本地端口转发
+````
+ssh -g -L <local port>:<remote host>:<remote port> <SSH hostname>
+````
+- ### 问题： 两个内网之间的linux 服务器怎么才能够相互登录呢？
+* 把 两个linux 服务器的端口 都映射到 公共ip的主机的端口上，就可以通过端口来互联了。
+- ### 问题： 如果mysql限制了只有本地ip才可以访问服务器的数据库，那么我们应该怎么在远程连接mysql呢？ 把机器的端口映射到服务器的某个端口，通过该端口访问数据库
+
+
+# 喷泉码 : 想象下数据像喷泉一样，数据传输的时候像喷泉一样 就可以到目的地。

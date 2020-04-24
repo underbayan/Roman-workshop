@@ -26,7 +26,10 @@ var e = e || event;
 e.bubbles && e.stopPropagation ? e.stopPropagation() : (e.cancelBubble = true);
 
 //set Cookie
-var setCookie = (name, value, time, path = "/") => (document.cookie = `${name}=${value};expires=${new Date().setTime(new Date().getTime() + time)};path=${path}`);
+var setCookie = (name, value, time, path = "/") =>
+  (document.cookie = `${name}=${value};expires=${new Date().setTime(
+    new Date().getTime() + time
+  )};path=${path}`);
 //getCookie
 var getCookie = name =>
   decodeURIComponent(document.cookie)
@@ -123,7 +126,8 @@ switch (1) {
     break;
 }
 
-var keyStr = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";
+var keyStr =
+  "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";
 
 function encode64(input) {
   var output = "";
@@ -147,7 +151,12 @@ function encode64(input) {
       enc4 = 64;
     }
 
-    output = output + keyStr.charAt(enc1) + keyStr.charAt(enc2) + keyStr.charAt(enc3) + keyStr.charAt(enc4);
+    output =
+      output +
+      keyStr.charAt(enc1) +
+      keyStr.charAt(enc2) +
+      keyStr.charAt(enc3) +
+      keyStr.charAt(enc4);
   } while (i < input.length);
 
   return output;
@@ -284,7 +293,8 @@ function throttle(fn, delay) {
 //https://gist.github.com/jfsiii/034152ecfa908cf66178
 function dp(obj) {
   if (obj instanceof Date) return new Date(obj);
-  if (obj.nodeType && typeof obj.cloneNode === "function") return obj.cloneNode(true);
+  if (obj.nodeType && typeof obj.cloneNode === "function")
+    return obj.cloneNode(true);
   if (isObject(obj)) {
     finalObj = {};
     for (let i in obj) {
@@ -303,7 +313,8 @@ Array.prototype.reduce = function(fn, init) {
 };
 
 const curry = fn => {
-  const _fn = (...a) => (a.length > 1 ? (...l) => _fn(fn(...a), ...l) : fn(...a));
+  const _fn = (...a) =>
+    a.length > 1 ? (...l) => _fn(fn(...a), ...l) : fn(...a);
   return _fn;
 };
 
@@ -343,3 +354,29 @@ const reqLimit = () => {
     }
   };
 };
+
+/**
+ * don't use this code inproduction
+ * @param {*} obj
+ */
+function deepCopy(obj) {
+  if (obj instanceof Date) {
+    return new Date(obj);
+  }
+  if (typeof obj === "funciton") {
+    const _fun = eval(obj.toString());
+    _fun.prototype = obj.prototype;
+    return _fun;
+  }
+  if (obj.nodeType && typeof obj.cloneNode == "function") {
+    return obj.cloneNode(true);
+  }
+  if (typeof obj == "object") {
+    var _finalObj = {};
+    for (var i in obj) {
+      _finalObj[i] = deepCopy(obj[i]);
+    }
+    return _finalObj;
+  }
+  return obj;
+}
