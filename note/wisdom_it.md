@@ -99,3 +99,26 @@
 | media-src：   | 限制视频和音频的来源。                                                                                |
 | object-src：  | 限制Flash和其他插件的来源。                                                                           |
 | style-src：   | 类似于Script-src，只是作用于css文件。                                                                 |
+
+
+# SSCCE
+- Short (Small) - Minimise bandwidth for the example, do not bore the audience.
+- Self Contained - Ensure everything is included, ready to go.
+- Correct - Copy, paste, (compile,) see is the aim.
+- Example - Displays the problem we are trying to solve.
+
+### CSRF 防范的通常建议：
+- 前提条件：不存在xss的漏洞。
+- 防范基本步骤：
+  - 1 使用 header 中的 origin 和referer 验证 request的来源。（没有该字段默认打安全log然后先通过，进入下一级验证）
+  - 2 使用 csrf token
+    - 2.1 服务器端有session机制。那么比较session和request中的 csrfToken 是否相等.(Synchronizer Tokens)
+    - 2.2 服务器没有session机制。那么比较form 和 cookie 中的 csrfToken是否相等.(Double Submit Cookie)
+    - 2.3 使用加密的token做认证，不使用cookie。 就是token 是根据用户id等信息对称加密的值。只有服务器端可以解密认证。
+  - 3 使用 Custom Request Headers
+    - 用js在访问请求中自定义一个header字段作为认证。其原理是sop同源政策不允许跨域的ajax用js自己构造自定义header字段。
+    - 例如 设置X-XSRF-Cookie 为 cookie 某个 key 的 value
+  - 4 使用 SameSite cookie attribute
+    - 设置cookie的sameSte策略（只有chrome支持. Example: Set-Cookie: JSESSIONID=xxxxx; SameSite=Strict
+- 参考资料
+  - [link1](https://seclab.stanford.edu/websec/csrf/csrf.pdf) [link2](https://www.owasp.org/index.php/Cross-Site_Request_Forgery_(CSRF)_Prevention_Cheat_Sheet#Double_Submit_Cookie)
