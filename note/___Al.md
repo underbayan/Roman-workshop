@@ -214,3 +214,9 @@ let fv = (o, v1, v2) => {
 ```
 
 #### 一张纸撕成了 50 片 ，怎么把他们恢复过来？
+### Sattolo's algorithm 萨托洛算法 https://danluu.com/sattolo/ 部分解决方案是执行一系列指针访问，这些指针访问将以伪随机顺序绕过内存块。萨托洛的算法为此提供了一个解决方案
+def shuffle(a):
+    n = len(a)
+    for i in range(n - 1):  # i from 0 to n-2, inclusive.
+        j = random.randrange(i, n)  # j from i to n-1, inclusive.
+        a[i], a[j] = a[j], a[i]  # swap a[i] and a[j].
