@@ -316,3 +316,5 @@ git gc --prune=now
 
 git for-each-ref --format='delete %(refname)' refs/original | git update-ref --stdin
 ###################### ----------------------
+直接自动合并代码
+grep --exclude-dir=node_modules -lr '<<<<<<<' . | xargs git checkout --theirs/ours
