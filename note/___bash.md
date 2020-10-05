@@ -300,6 +300,8 @@ netstat
 
 
 
+###################### ----------------------
+
 清除 git 本地 文件所有记录
 git filter-branch --force --index-filter 'git rm --cached --ignore-unmatch src/main/resources/config/application-test.yml' --prune-empty --tag-name-filter cat -- --all
 
@@ -308,7 +310,9 @@ git push origin --force --all
 git push origin --force --tags
 
 清理本地 引用缓存
-
 git for-each-ref --format='delete %(refname)' refs/original | git update-ref --stdin
 git reflog expire --expire=now --all
 git gc --prune=now
+
+git for-each-ref --format='delete %(refname)' refs/original | git update-ref --stdin
+###################### ----------------------
