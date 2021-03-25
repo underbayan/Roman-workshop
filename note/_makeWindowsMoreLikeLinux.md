@@ -67,20 +67,23 @@ refreshenv
 ;= goto:eof
 ;= Add aliases below here
 e.=explorer .
-gss=git status
+gs=git status
 gl=git log --oneline --all --graph --decorate  $*
 ga=git add  $*
 gcam= git diff --check &&  git commit -a -m $*
 gca!= git diff --check && git commit -v -a --amend $*
 gcp= git cherry-pick $*
-gpf= git push force
-gc=git checkout $*
+gp=git push
+gpf= git push --force
+gpp=git pull -p 
+gb= git branch 
+gbd= git branch -D 
 gco=git checkout  $*
 gcb=git checkout -b $*
-gp=git push
-gpl=git pull 
 gr=git rebase -i $*
 gm= git merge --no-ff $*
+gsss= git stash && git stash clear
+
 gpr=git pull --rebase
 gfa=git fetch --all --prune
 gfli=git flow init
@@ -90,7 +93,7 @@ gflrs=git flow release start $*
 gflrf=git flow release finish $*
 gflhs=git flow hotfix start $*
 gflhf=git flow hotfix finish $*
-gsss= git stash && git stash clear
+
 gsh= git stash
 ls=ls --show-control-chars -F --color $*
 pwd=cd
