@@ -1,52 +1,3 @@
-
-const text = `
-
-/**
- * comment-2 // {} ${1 + 2} "" '' \`\` \${}
- * ["", [[[[], []], [{}]]], { e: { ie: '' } }]
- */
-comment_2_1 ?: boolean;
-
-/** comment-2  ["", [[[[], []], [{}]]], { e: { ie: '' } }]*/
-comment_2_2 ?: string;
-
-//  Flag to indicate whether single column setting is persisted in psl // /** */ {{}} [[]]
-comment_1 ?: number;
-
-public static defaultProps: Partial<test> = {
-        key: test
-};
-
-private name: string;
-private age: number;
-static category: string = "animal"
-/**
- * Test innerMethod
- * */
-innerMethod =({name})=> {
-    console.log(name)
-}
-
-logoRow = 1; // comment-1
-
-
-    // comment-1-1
-        // comment-1-2
-            // comment-1-3
-
-if (this) {
-    doNothing
-}
-const dd = ["", [[[[], []], [{}]]], { e: { ie: '' } }]
-
-num: new TokenType("n#um", { startsExpr })
-backQuote: new TokenType("\`", { startsExpr })
-dollarBraceL: new TokenType("\${", { beforeExpr, startsExpr })
-
-// Special hashbang token.
-interpreterDirective: new TokenType("#!...")
-`
-
 const scopeType = {
     normal: 1, // {},(),[] 
     template: 2, // ``
@@ -62,9 +13,6 @@ const scopeType = {
 const clone = obj => JSON.parse(JSON.stringify(obj))
 
 const startMatrix = {
-    "": {
-        name: "expression",
-    },
     "`": {
         parent: scopeType.normal,
         scope: scopeType.template,
@@ -177,17 +125,20 @@ const genStackItem = (obj, index) => {
 }
 
 
-const lexer = (str) => {
+exports.lexer = (str) => {
     const length = str.length
     const scopeStack = genStack()
     let scopeText = ""
+    let preScope = null
     const tokens = []
-    const addTokens = (k) => {
+
+    const addTokens = (k, scope = scopeType.normal) => {
         if (scopeText !== "" && (!scopeStack.last()) && (k === '\n' || k === '\r')) {
-            tokens.push(scopeText)
+            tokens.push({ scope, scopeText })
             scopeText = ""
         }
     }
+
     for (let i = 0; i < length; i++) {
         const k = str[i]
         const kr = str[i + 1]
@@ -206,22 +157,17 @@ const lexer = (str) => {
             scopeText += hitEnd.etag
             i += hitEnd.etag.length - 1
             last.end = i
+            preScope = last
             scopeStack.pop()
-            addTokens(k)
+            addTokens(k, last.scope)
             continue
         }
         scopeText += k
-        addTokens(k)
+        addTokens(k, preScope?.scope)
+        preScope = last
+
     }
     tokens.push(scopeText)
-    tokens.map(r => console.log(r, "\n-----------------------------------"))
-    console.log(scopeText)
+    return tokens
 }
-lexer(text)
 
-// const commentsRex = /(\/\*([^*]|[\r\n]|(\*+([^*/]|[\r\n])))*\*+\/)|(\/\/.*)/g
-
-
-// while ((array1 = commentsRex.exec(text)) !== null) {
-//     console.log(array1[0])
-// }
