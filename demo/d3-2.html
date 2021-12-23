@@ -56,7 +56,57 @@
             stroke: #ccc;
             stroke-width: 0.5;
         }
+
+        .backer {
+            fill: white;
+        }
+
+        .main,
+        .detail {
+            vector-effect: non-scaling-stroke;
+            fill: none;
+            stroke: black;
+            fill-rule: nonzero;
+        }
+
+        .detail {
+            stroke: white;
+        }
+
+        .fill {
+            fill: gray;
+            stroke: none;
+        }
+
+        .handle {
+            fill: gray;
+            stroke-width: 1;
+            stroke: 1;
+            pointer-events: all;
+            cursor: move;
+
+        }
+
+        .handle:hover {
+            fill: #ff0;
+            fill-opacity: 1;
+        }
+
+        .arc {
+            fill: none;
+            stroke-width: 1;
+            stroke: white;
+            display: none;
+        }
+
+        .grid-polygon,
+        .line {
+            fill: none;
+            stroke: black;
+        }
     </style>
+    <title> From https://observablehq.com/@stringertheory/stretchy-fish</title>
+
 
     <body>
         <script src="https://d3js.org/d3.v5.min.js"></script>
@@ -263,17 +313,6 @@
                     x = pts[i + 6], y = pts[i + 7];
                 }
             }
-        </script>
-        <script>
-
-            const width = 960, height = 500;
-            const nBetween = 4
-            const controlPoints = [[0, 0], [0.5, 0], [1, 0], [0, 0.5], [0.5, 0.5], [1, 0.5], [0, 1], [0.5, 1], [1, 1]].map(d => [width / 10 + (width - width / 5) * d[0], height / 10 + (height - height / 5) * d[1]])
-
-            let handleRadius = 12
-
-            const svg = d3.select("body").append("svg").attr("width", width).attr("height", height)
-
 
             function calcCircleParams(points) {
                 var a = points[0];
@@ -328,117 +367,7 @@
                 params: calcCircleParams
 
             }
-            plotarc = () => {
-                const
-                    p1 = [width / 5, 200],
-                    p2 = [width / 3, 100],
-                    p3 = [2 * width / 3, 350],
 
-                    arc = svg.append("path")
-                        .attr("fill", "none")
-                        .attr("stroke-width", "2px")
-                        .attr("stroke", "#79e"),
-
-                    small_points = svg.append("g")
-                        .selectAll("circle")
-                        .data(Array.from(Array(33), (_, i) => i / 32))
-                        .enter().append("circle")
-                        .attr("fill", "#c38")
-                        .attr("r", 3),
-
-                    point = svg.append("g")
-                        .attr("cursor", "move")
-                        .attr("pointer-events", "all")
-                        .attr("stroke", "transparent")
-                        .attr("stroke-width", 30)
-                        .selectAll("circle")
-                        .data([p1, p2, p3])
-                        .enter().append("circle")
-                        .attr("r", 7)
-                        .attr("fill", "#26b")
-                        .call(d3.drag()
-                            .subject(([x, y]) => ({ x, y }))
-                            .on("drag", (d) => {
-                                d[0] = clamp(5, width - 5, d3.event.x);
-                                d[1] = clamp(5, height - 5, d3.event.y);
-                                update();
-                            }));
-
-                function update() {
-                    const
-                        parametric_arc = circle_interp(p1, p2, p3),
-                        arc_path = bezpts_to_svgpath(bezeval(
-                            parametric_arc, [0, 1], [0, width, 0, height], 0.1));
-                    arc.attr("d", arc_path);
-                    point
-                        .attr("cx", d => d[0])
-                        .attr("cy", d => d[1]);
-                    small_points
-                        .attr("cx", t => parametric_arc(t)[0])
-                        .attr("cy", t => parametric_arc(t)[1]);
-                }
-                update();
-                return svg.node();
-            }
-
-
-            console.log(svg.selectAll(".big-arc"))
-            var rubberArcs = svg.selectAll(".big-arc")
-                .data(slicePoints(controlPoints))
-                .join("path")
-                .attr("class", "arc")
-                .attr("d", calcArc.path)
-
-            var frameLines = svg.selectAll(".small-arc")
-                .data(interpolatedFrame(slicePoints(controlPoints), nBetween).triples)
-                .join("path")
-                .attr("class", "small-arc")
-                .attr("d", calcArc.path)
-
-            var gridPoints = svg.selectAll(".grid-points")
-                .data(smallPoints(slicePoints(controlPoints)))
-                .join("circle")
-                .attr("class", "grid-point-1")
-                .attr("cx", d => d[0])
-                .attr("cy", d => d[1])
-                .attr("r", 2)
-                .style("stroke", "none");
-
-            var rubberPolygons = svg.selectAll(".grid-polygons")
-                .data(pointsToPolygons(smallPoints(slicePoints(controlPoints))))
-                .join("polygon")
-                .attr("class", "grid-polygon")
-                .attr("points", d => [d.tl, d.tr, d.br, d.bl])
-
-            svg.selectAll(".handle")
-                .data(controlPoints)
-                .join("circle")
-                .attr("class", "handle")
-                .attr("cx", d => d[0])
-                .attr("cy", d => d[1])
-                .attr("r", handleRadius)
-                .style("fill", "white")
-                .style("stroke", "black")
-                .style("stroke-width", 2)
-                .call(d3.drag().on("drag", dragged));
-
-            function dragged(d) {
-                var x = Math.max(handleRadius + 1, Math.min(width - handleRadius - 1, d3.event.x));
-                var y = Math.max(handleRadius + 1, Math.min(height - handleRadius - 1, d3.event.y));
-                var t = d3.select(this);
-                t.attr("cx", d[0] = x).attr("cy", d[1] = y);
-                transformed()
-            }
-
-            function transformed() {
-                rubberArcs.attr("d", calcArc.path)
-                frameLines.data(interpolatedFrame(slicePoints(controlPoints), nBetween).triples).attr("d", calcArc.path)
-                gridPoints.data(smallPoints(slicePoints(controlPoints))).attr("cx", d => d[0]).attr("cy", d => d[1])
-                rubberPolygons.data(pointsToPolygons(smallPoints(slicePoints(controlPoints)))).attr("points", d => [d.tl, d.tr, d.br, d.bl])
-            }
-
-            svg.node();
-            console.log(svg)
             function slicePoints(controlPoints) {
                 return [
                     [controlPoints[0], controlPoints[1], controlPoints[2]],
@@ -448,64 +377,6 @@
                     [controlPoints[1], controlPoints[4], controlPoints[7]],
                     [controlPoints[2], controlPoints[5], controlPoints[8]],
                 ]
-            }
-            function interpolatedFrame(arcs, nBetween = 1) {
-                let dense = []
-                let points = []
-                for (let i = 0; i < arcs.length; i++) {
-                    let arc = arcs[i]
-                    let more = interpolateArc(arc, nBetween)
-                    dense.push(more)
-                    if (i < (arcs.length / 2)) {
-                        points.push(...arc)
-                    }
-                    for (let j = 0; j < more.length; j++) {
-                        let point = more[j]
-                        if (j % (nBetween + 1)) {
-                            points.push(point)
-                        }
-                    }
-                }
-
-                let triples = []
-                dense[3].map(function (d, i) {
-                    triples.push([d, dense[4][i], dense[5][i]])
-                })
-                dense[0].map(function (d, i) {
-                    triples.push([d, dense[1][i], dense[2][i]])
-                })
-
-
-                return {
-                    points: points,
-                    triples: triples,
-                }
-            }
-            function smallPoints(arcs) {
-                let smallArcs = interpolatedFrame(arcs, nBetween).triples
-                let aPoints = []
-                for (let i = 0; i < (smallArcs.length / 2); i++) {
-                    let more = interpolateArc(smallArcs[i], nBetween)
-                    aPoints.push(more)
-                }
-                let bPoints = []
-                for (let i = smallArcs.length / 2; i < smallArcs.length; i++) {
-                    let more = interpolateArc(smallArcs[i], nBetween)
-                    bPoints.push(more)
-                }
-                // transpose
-                bPoints = bPoints[0].map((col, i) => bPoints.map(row => row[i]));
-
-                // average the positions of the points together
-                let points = []
-                aPoints.map(function (aRow, i) {
-                    let bRow = bPoints[i]
-                    aRow.map(function (a, j) {
-                        let b = bRow[j]
-                        points.push([0.5 * (a[0] + b[0]), 0.5 * (a[1] + b[1])])
-                    })
-                })
-                return points
             }
             function pointsToPolygons(points) {
                 let result = []
@@ -566,84 +437,66 @@
                 let p = points.map(d => [d[1], d[2]])
                 return slicePoints(p)
             }
-
-
-
-
-            const pad = 30
-            const x = d3.scaleLinear().domain([0, 1]).range([width / 2 + pad, width - pad])
-
-            const y = d3.scaleLinear().domain([0, 1]).range([pad, height - pad])
-            const startingPoints = [
-                [[0.2, 0.22], [0.5, 0.05], [0.9, 0.2]],
-                [[0.2, 0.3], [0.5, 0.3], [0.9, 0.3]],
-                [[0.2, 0.38], [0.5, 0.55], [0.9, 0.4]],
-            ]
-            const controlPoints = [
-                ["tl", x(startingPoints[0][0][0]), y(startingPoints[0][0][1])],
-                ["tm", x(startingPoints[0][1][0]), y(startingPoints[0][1][1])],
-                ["tr", x(startingPoints[0][2][0]), y(startingPoints[0][2][1])],
-                ["ml", x(startingPoints[1][0][0]), y(startingPoints[1][0][1])],
-                ["mm", x(startingPoints[1][1][0]), y(startingPoints[1][1][1])],
-                ["mr", x(startingPoints[1][2][0]), y(startingPoints[1][2][1])],
-                ["bl", x(startingPoints[2][0][0]), y(startingPoints[2][0][1])],
-                ["bm", x(startingPoints[2][1][0]), y(startingPoints[2][1][1])],
-                ["br", x(startingPoints[2][2][0]), y(startingPoints[2][2][1])]
-            ];
-
-
-
-
-            fish = mapping["OGF Scarus fish"]
-            let wkt = new Wkt.Wkt()
-            let poly = wkt.read("LINESTRING ((30 10, 10 20, 20 40, 40 40, 30 10))")
-            ashape = poly.components
-            project = function (sourcePoints, targetPoints) {
-
-                function transform(x, y) {
-                    for (var a = [], b = [], i = 0, n = sourcePoints.length; i < n; ++i) {
-                        var s = sourcePoints[i], t = targetPoints[i];
-                        a.push([s[0], s[1], 1, 0, 0, 0, -s[0] * t[0], -s[1] * t[0]]), b.push(t[0]);
-                        a.push([0, 0, 0, s[0], s[1], 1, -s[0] * t[1], -s[1] * t[1]]), b.push(t[1]);
+                function interpolatedFrame(arcs, nBetween = 1) {
+                    let dense = []
+                    let points = []
+                    for (let i = 0; i < arcs.length; i++) {
+                        let arc = arcs[i]
+                        let more = interpolateArc(arc, nBetween)
+                        dense.push(more)
+                        if (i < (arcs.length / 2)) {
+                            points.push(...arc)
+                        }
+                        for (let j = 0; j < more.length; j++) {
+                            let point = more[j]
+                            if (j % (nBetween + 1)) {
+                                points.push(point)
+                            }
+                        }
                     }
 
-                    var X = solve(a, b, true);
-                    var matrix = [
-                        X[0], X[3], 0, X[6],
-                        X[1], X[4], 0, X[7],
-                        0, 0, 1, 0,
-                        X[2], X[5], 0, 1
-                    ];
+                let triples = []
+                dense[3].map(function (d, i) {
+                    triples.push([d, dense[4][i], dense[5][i]])
+                })
+                dense[0].map(function (d, i) {
+                    triples.push([d, dense[1][i], dense[2][i]])
+                })
 
-                    return project(matrix, [x, y]);
+
+                return {
+                    points: points,
+                    triples: triples,
                 }
-
-                // Given a 4x4 perspective transformation matrix, and a 2D point (a 2x1 vector),
-                // applies the transformation matrix by converting the point to homogeneous
-                // coordinates at z=0, post-multiplying, and then applying a perspective divide.
-                function project(matrix, point) {
-                    point = multiply(matrix, [point[0], point[1], 0, 1]);
-                    return [point[0] / point[3], point[1] / point[3]];
+            }
+                function smallPoints(arcs) {
+                    let smallArcs = interpolatedFrame(arcs, nBetween).triples
+                    let aPoints = []
+                    for (let i = 0; i < (smallArcs.length / 2); i++) {
+                        let more = interpolateArc(smallArcs[i], nBetween)
+                        aPoints.push(more)
                 }
-
-                // Post-multiply a 4x4 matrix in column-major order by a 4x1 column vector:
-                // [ m0 m4 m8  m12 ]   [ v0 ]   [ x ]
-                // [ m1 m5 m9  m13 ] * [ v1 ] = [ y ]
-                // [ m2 m6 m10 m14 ]   [ v2 ]   [ z ]
-                // [ m3 m7 m11 m15 ]   [ v3 ]   [ w ]
-                function multiply(matrix, vector) {
-                    return [
-                        matrix[0] * vector[0] + matrix[4] * vector[1] + matrix[8] * vector[2] + matrix[12] * vector[3],
-                        matrix[1] * vector[0] + matrix[5] * vector[1] + matrix[9] * vector[2] + matrix[13] * vector[3],
-                        matrix[2] * vector[0] + matrix[6] * vector[1] + matrix[10] * vector[2] + matrix[14] * vector[3],
-                        matrix[3] * vector[0] + matrix[7] * vector[1] + matrix[11] * vector[2] + matrix[15] * vector[3]
-                    ];
+                let bPoints = []
+                for (let i = smallArcs.length / 2; i < smallArcs.length; i++) {
+                    let more = interpolateArc(smallArcs[i], nBetween)
+                    bPoints.push(more)
                 }
+                // transpose
+                bPoints = bPoints[0].map((col, i) => bPoints.map(row => row[i]));
 
-                return transform;
+                // average the positions of the points together
+                let points = []
+                aPoints.map(function (aRow, i) {
+                    let bRow = bPoints[i]
+                    aRow.map(function (a, j) {
+                        let b = bRow[j]
+                        points.push([0.5 * (a[0] + b[0]), 0.5 * (a[1] + b[1])])
+                    })
+                })
+                return points
             }
 
-            solve = (function () {
+                const solve = (function () {
 
                 var abs = Math.abs;
 
@@ -772,6 +625,268 @@
                 };
 
             })();
+</script>
+        <script>
+            const themes = ({
+                "dark": ({
+                    "foreground": "white",
+                    "background": "black",
+                }),
+                "light": ({
+                    "foreground": "black",
+                    "background": "white",
+                }),
+            })
+            const theme = themes["light"]
+
+            const width = 960, height = 500;
+            const nBetween = 4
+            // const controlPoints = [[0, 0], [0.5, 0], [1, 0], [0, 0.5], [0.5, 0.5], [1, 0.5], [0, 1], [0.5, 1], [1, 1]].map(d => [width / 10 + (width - width / 5) * d[0], height / 10 + (height - height / 5) * d[1]])
+
+
+            const pad = 30
+            const x = d3.scaleLinear().domain([0, 1]).range([width / 2 + pad, width - pad])
+
+            const y = d3.scaleLinear().domain([0, 1]).range([pad, height - pad])
+            const startingPoints = [
+                [[0.2, 0.22], [0.5, 0.05], [0.9, 0.2]],
+                [[0.2, 0.3], [0.5, 0.3], [0.9, 0.3]],
+                [[0.2, 0.38], [0.5, 0.55], [0.9, 0.4]],
+            ]
+            const controlPoints = [
+                ["tl", x(startingPoints[0][0][0]), y(startingPoints[0][0][1])],
+                ["tm", x(startingPoints[0][1][0]), y(startingPoints[0][1][1])],
+                ["tr", x(startingPoints[0][2][0]), y(startingPoints[0][2][1])],
+                ["ml", x(startingPoints[1][0][0]), y(startingPoints[1][0][1])],
+                ["mm", x(startingPoints[1][1][0]), y(startingPoints[1][1][1])],
+                ["mr", x(startingPoints[1][2][0]), y(startingPoints[1][2][1])],
+                ["bl", x(startingPoints[2][0][0]), y(startingPoints[2][0][1])],
+                ["bm", x(startingPoints[2][1][0]), y(startingPoints[2][1][1])],
+                ["br", x(startingPoints[2][2][0]), y(startingPoints[2][2][1])]
+            ];
+
+
+
+
+            fish = mapping["OGF Scarus fish"]
+            let wkt = new Wkt.Wkt()
+            let poly = wkt.read("LINESTRING ((30 10, 10 20, 20 40, 40 40, 30 10))")
+            ashape = poly.components
+            let handleRadius = 12
+            let nTicks = 11
+            const svg = d3.select("body").append("svg").attr("width", width).attr("height", height)
+            let padding = width / 10;
+
+            // top left, top right, bottom right, bottom left
+            let bounds = d3.geoPath().bounds(fish)
+            let sx0 = bounds[0][0], sy0 = bounds[0][1], sx1 = bounds[1][0], sy1 = bounds[1][1];
+            var orig_rects_data = makeRectPolygons(sx0, sy0, sx1, sy1, nTicks)
+
+            function whichRect(x, y) {
+                let xScaled = (x - sx0) / (sx1 - sx0)
+                let yScaled = (y - sy0) / (sy1 - sy0)
+                let xIndex = Math.min(nTicks - 2, Math.floor(xScaled * (nTicks - 1)))
+                let yIndex = Math.min(nTicks - 2, Math.floor(yScaled * (nTicks - 1)))
+                return xIndex * (nTicks - 1) + yIndex
+            }
+
+            var backer = svg.append("rect").attr("class", "backer").attr("x", 0).attr("y", 0).attr("width", width).attr("height", height)
+
+            const orig_proj = d3.geoIdentity().fitExtent([
+                [0 + padding, padding],
+                [width / 2 - padding, height - 3 * padding]
+            ], fish)
+
+            const path = d3.geoPath().projection(orig_proj);
+
+            let ltlx = orig_proj(bounds[0])[0]
+            let ltly = orig_proj(bounds[0])[1]
+            let lbrx = orig_proj(bounds[1])[0]
+            let lbry = orig_proj(bounds[1])[1]
+            var left_rects_data = makeRectPolygons(ltlx, ltly, lbrx, lbry, nTicks)
+
+            var left_rects = svg.selectAll(".left-grid")
+                .data(left_rects_data).enter().append("polygon")
+                .attr("points", d => [[d.tlX, d.tlY], [d.trX, d.trY], [d.brX, d.brY], [d.blX, d.blY]])
+                .attr("class", "line");
+
+            // make left hand fish
+            var orig_fish = svg.append("g").attr("id", "orig-fish").selectAll(".orig-fish")
+                .data(fish.features)
+                .enter().append("path")
+                .attr("d", path)
+                .attr("class", d => d.properties.class)
+
+            var rubberArcs = svg.selectAll(".big-arc")
+                .data(orderPoints(controlPoints))
+                .join("path")
+                .attr("class", "arc")
+                .attr("d", calcArc.path)
+
+            var rubberPolygons = svg.selectAll(".grid-polygons")
+                .data(pointsToPolygons(smallPoints(orderPoints(controlPoints))))
+                .join("polygon")
+                .attr("class", "grid-polygon")
+                .attr("points", d => [d.tl, d.tr, d.br, d.bl])
+
+            // append right fish path
+            var dest_fish = svg.selectAll('dest-fish-path')
+                .data(fish.features).enter()
+                .append("path")
+                .attr("class", d => d.properties.class)
+
+            let handles = svg.selectAll(".handle")
+                .data(controlPoints)
+                .join("circle")
+                .attr("class", "handle")
+                .attr("name", d => d[0])
+                .attr("cx", d => d[1])
+                .attr("cy", d => d[2])
+                .attr("r", handleRadius)
+                .call(d3.drag().on("drag", dragged));
+
+            function dragged(d) {
+                var x = Math.max(handleRadius + 1, Math.min(width - handleRadius - 1, d3.event.x));
+                var y = Math.max(handleRadius + 1, Math.min(height - handleRadius - 1, d3.event.y));
+                var t = d3.select(this);
+                t.attr("cx", d[1] = x).attr("cy", d[2] = y)
+                transformed()
+            }
+
+            function transformed() {
+
+                let rubbyData = pointsToPolygons(smallPoints(orderPoints(controlPoints)))
+
+                rubberArcs.data(orderPoints(controlPoints)).attr("d", calcArc.path)
+                rubberPolygons.data(rubbyData).attr("points", d => [d.tl, d.tr, d.br, d.bl])
+
+                var rubbyTransforms = rubbyData.map(function (d, i) {
+                    var targetPoints = [d.tl, d.tr, d.br, d.bl]
+                    return project(object_to_array(orig_rects_data[i]), targetPoints)
+                })
+
+                var path = d3.geoPath().projection(d3.geoTransform({
+                    point: function (i, j) {
+                        let transformIndex = whichRect(i, j)
+                        var xy = rubbyTransforms[transformIndex](i, j)
+                        this.stream.point(xy[0], xy[1]);
+                    }
+                }))
+
+                dest_fish.attr("d", path)
+
+            }
+            transformed()
+            svg.node();
+            // var rubberArcs = svg.selectAll(".big-arc")
+            //     .data(slicePoints(controlPoints))
+            //     .join("path")
+            //     .attr("class", "arc")
+            //     .attr("d", calcArc.path)
+
+            // var frameLines = svg.selectAll(".small-arc")
+            //     .data(interpolatedFrame(slicePoints(controlPoints), nBetween).triples)
+            //     .join("path")
+            //     .attr("class", "small-arc")
+            //     .attr("d", calcArc.path)
+
+            // var gridPoints = svg.selectAll(".grid-points")
+            //     .data(smallPoints(slicePoints(controlPoints)))
+            //     .join("circle")
+            //     .attr("class", "grid-point-1")
+            //     .attr("cx", d => d[0])
+            //     .attr("cy", d => d[1])
+            //     .attr("r", 2)
+            //     .style("stroke", "none");
+
+            // var rubberPolygons = svg.selectAll(".grid-polygons")
+            //     .data(pointsToPolygons(smallPoints(slicePoints(controlPoints))))
+            //     .join("polygon")
+            //     .attr("class", "grid-polygon")
+            //     .attr("points", d => [d.tl, d.tr, d.br, d.bl])
+
+            // svg.selectAll(".handle")
+            //     .data(controlPoints)
+            //     .join("circle")
+            //     .attr("class", "handle")
+            //     .attr("cx", d => d[0])
+            //     .attr("cy", d => d[1])
+            //     .attr("r", handleRadius)
+            //     .style("fill", "white")
+            //     .style("stroke", "black")
+            //     .style("stroke-width", 2)
+            //     .call(d3.drag().on("drag", dragged));
+
+            // function dragged(d) {
+            //     var x = Math.max(handleRadius + 1, Math.min(width - handleRadius - 1, d3.event.x));
+            //     var y = Math.max(handleRadius + 1, Math.min(height - handleRadius - 1, d3.event.y));
+            //     var t = d3.select(this);
+            //     t.attr("cx", d[0] = x).attr("cy", d[1] = y);
+            //     transformed()
+            // }
+
+            // function transformed() {
+            //     rubberArcs.attr("d", calcArc.path)
+            //     frameLines.data(interpolatedFrame(slicePoints(controlPoints), nBetween).triples).attr("d", calcArc.path)
+            //     gridPoints.data(smallPoints(slicePoints(controlPoints))).attr("cx", d => d[0]).attr("cy", d => d[1])
+            //     rubberPolygons.data(pointsToPolygons(smallPoints(slicePoints(controlPoints)))).attr("points", d => [d.tl, d.tr, d.br, d.bl])
+            // }
+
+            // svg.node();
+
+
+
+
+
+
+
+
+            function project(sourcePoints, targetPoints) {
+
+                function transform(x, y) {
+                    for (var a = [], b = [], i = 0, n = sourcePoints.length; i < n; ++i) {
+                        var s = sourcePoints[i], t = targetPoints[i];
+                        a.push([s[0], s[1], 1, 0, 0, 0, -s[0] * t[0], -s[1] * t[0]]), b.push(t[0]);
+                        a.push([0, 0, 0, s[0], s[1], 1, -s[0] * t[1], -s[1] * t[1]]), b.push(t[1]);
+                    }
+
+                    var X = solve(a, b, true);
+                    var matrix = [
+                        X[0], X[3], 0, X[6],
+                        X[1], X[4], 0, X[7],
+                        0, 0, 1, 0,
+                        X[2], X[5], 0, 1
+                    ];
+
+                    return project(matrix, [x, y]);
+                }
+
+                // Given a 4x4 perspective transformation matrix, and a 2D point (a 2x1 vector),
+                // applies the transformation matrix by converting the point to homogeneous
+                // coordinates at z=0, post-multiplying, and then applying a perspective divide.
+                function project(matrix, point) {
+                    point = multiply(matrix, [point[0], point[1], 0, 1]);
+                    return [point[0] / point[3], point[1] / point[3]];
+                }
+
+                // Post-multiply a 4x4 matrix in column-major order by a 4x1 column vector:
+                // [ m0 m4 m8  m12 ]   [ v0 ]   [ x ]
+                // [ m1 m5 m9  m13 ] * [ v1 ] = [ y ]
+                // [ m2 m6 m10 m14 ]   [ v2 ]   [ z ]
+                // [ m3 m7 m11 m15 ]   [ v3 ]   [ w ]
+                function multiply(matrix, vector) {
+                    return [
+                        matrix[0] * vector[0] + matrix[4] * vector[1] + matrix[8] * vector[2] + matrix[12] * vector[3],
+                        matrix[1] * vector[0] + matrix[5] * vector[1] + matrix[9] * vector[2] + matrix[13] * vector[3],
+                        matrix[2] * vector[0] + matrix[6] * vector[1] + matrix[10] * vector[2] + matrix[14] * vector[3],
+                        matrix[3] * vector[0] + matrix[7] * vector[1] + matrix[11] * vector[2] + matrix[15] * vector[3]
+                    ];
+                }
+
+                return transform;
+            }
+        
+
         </script>
     </body>
 
