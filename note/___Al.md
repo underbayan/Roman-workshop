@@ -220,3 +220,10 @@ def shuffle(a):
     for i in range(n - 1):  # i from 0 to n-2, inclusive.
         j = random.randrange(i, n)  # j from i to n-1, inclusive.
         a[i], a[j] = a[j], a[i]  # swap a[i] and a[j].
+
+
+
+#### Reservoir Sampling
+
+
+#### 有一栋100层的大楼，该种玻璃杯从某一层楼扔下，刚好会碎。   现给你两个杯子，问怎样检测出这个杯子的质量，即找到在哪一层楼刚好会碎？

@@ -17,9 +17,9 @@ zero=''
 find . -name "*.bak" -print0 | xargs -0 rename -f 's/\.bak$//'
 
 ##替换空格
-#find . -name "*.htm*" -print0 | xargs -0  perl -pi -e 's/\n|\r//g'
-#find . -name "*.htm*" -print0 | xargs -0  perl -pi -e 's/\s+/ /g'
 #find . -name "*.htm*" -print0 | xargs -0  perl -pi -e 's/\　+/ /g'
+#find . -name "*.htm*" -print0 | xargs -0  perl -pi -e 's/\s+/ /g'
+#find . -name "*.htm*" -print0 | xargs -0  perl -pi -e 's/\n|\r//g'
 
 # 重命名
 for d in ./*/*更多电子书籍 ; do (mv $d ${d/更多电子书籍/}); done
@@ -40,14 +40,14 @@ find . -name "*.htm*" -print0 | xargs -0  grep -v "charset=utf8" -l >text.txt
 #转换为字体
 find . -name "*.htm*" -print0 | xargs -0 -I '{}'  cconv -o '{}' -f utf-8 -t utf8-tw '{}'
 # clear info
-find . -name "*.htm*" -print0 | xargs -0  perl -pi -e 's/<!--[\s\S]*?-->//g'
 find . -name "*.htm*" -print0 | xargs -0  perl -pi -e 's/□//g'
 find . -name "*.htm*" -print0 | xargs -0  perl -pi -e 's/www.163164.com\/ebook.htm"/www.bookocean.online"/gi'
 find . -name "*.htm*" -print0 | xargs -0  perl -pi -e 's/www.163164.com/www.bookocean.online/gi'
-find . -name "*.htm*" -print0 | xargs -0  perl -pi -e 's/<a href="http:\/\/www.163164.com" target="_blank"><img src="yao123.gif" width="120" height="40" border=0><\/a>//gi'
 find . -name "*.htm*" -print0 | xargs -0  perl -pi -e 's/<script language=javascript src="http:\/\/www.163164.cn\/js\/xia.js"><\/script>//gi'
-find . -name "*.htm*" -print0 | xargs -0  perl -pi -e 's/163164/bookocean/g'
+find . -name "*.htm*" -print0 | xargs -0  perl -pi -e 's/<a href="http:\/\/www.163164.com" target="_blank"><img src="yao123.gif" width="120" height="40" border=0><\/a>//gi'
 find . -name "*.htm*" -print0 | xargs -0  perl -pi -e 's/<\/body>/######include("js.html")<\/body>/gi'
+find . -name "*.htm*" -print0 | xargs -0  perl -pi -e 's/<!--[\s\S]*?-->//g'
+find . -name "*.htm*" -print0 | xargs -0  perl -pi -e 's/163164/bookocean/g'
 
 
 #  generate the index.html
