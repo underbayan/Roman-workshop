@@ -318,3 +318,7 @@ git for-each-ref --format='delete %(refname)' refs/original | git update-ref --s
 ###################### ----------------------
 直接自动合并代码
 grep --exclude-dir=node_modules -lr '<<<<<<<' . | xargs git checkout --theirs/ours
+
+
+# proxy forwad by ssh
+ssh -L 9221:localhost:9229 user@remote.example.com
