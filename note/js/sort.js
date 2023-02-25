@@ -32,10 +32,10 @@ function quickSortHandler() {
       flag++
       pivot = right;
       partitionIndex = partition(arr, pivot, left, right);
-      if(left<right-100){
-        setTimeout(()=>quickSort(arr, left, partitionIndex - 1, callback), 0);
-        setTimeout(()=>quickSort(arr, partitionIndex + 1, right, callback), 0);
-      }else {
+      if (left < right - 100) {
+        setTimeout(() => quickSort(arr, left, partitionIndex - 1, callback), 0);
+        setTimeout(() => quickSort(arr, partitionIndex + 1, right, callback), 0);
+      } else {
         quickSort(arr, left, partitionIndex - 1, callback);
         quickSort(arr, partitionIndex + 1, right, callback);
       }
@@ -52,7 +52,7 @@ function quickSortHandler() {
 
 var st = new Date();
 var qs = quickSortHandler();
-qs(arr, 0, arr.length - 1, ()=> {
+qs(arr, 0, arr.length - 1, () => {
   var et = new Date();
   console.log(arr)
   console.log(et - st)
