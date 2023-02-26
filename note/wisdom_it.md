@@ -173,4 +173,9 @@ ssh -g -L <local port>:<remote host>:<remote port> <SSH hostname>
 - ### 问题： 如果mysql限制了只有本地ip才可以访问服务器的数据库，那么我们应该怎么在远程连接mysql呢？ 把机器的端口映射到服务器的某个端口，通过该端口访问数据库
 
 
-# 喷泉码 : 想象下数据像喷泉一样，数据传输的时候像喷泉一样 就可以到目的地。
+### 喷泉码 : 想象下数据像喷泉一样，数据传输的时候像喷泉一样 就可以到目的地。
+
+- REFE   规则引擎
+- round-robin   1~n 轮询调度算法
+- Zero-downtime Restarts
+- Bug-for-bug compatible

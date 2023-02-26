@@ -1,31 +1,9 @@
-### 水仙花数
+- 水仙花数:153= 1^3+5^3+3^3
+- 韩信点兵:中国余数定理
+- 开灯问题 1-10000 灯 k 个人，第 i 个人每 i 盏等操作一次，求灯状态。
+- 判断俩个链表是否相交 ===两个链表有没有共同终点
 
-153= 1^3+5^3+3^3
-
-### 韩信点兵
-
-一个整数 被 a,b,c 除，余数为 ya,yb,yc
-那么这个数为 a*ma+b*mb+c*mb+M*k
-M 为 a,b,c 公倍数， mi 分别满足 ,k 为任意整数
-
-```
-ma mod a == 1
-ma mod b == 0
-ma mod c == 0
-
-mb mod a == 0
-mb mod b == 1
-mb mod c == 0
-
-mc mod a == 0
-mc mod b == 0
-mc mod c == 1
-```
-
-### 开灯问题 1-10000 灯 k 个人，第 i 个人每 i 盏等操作一次
-
-### 给你 10 分钟时间，根据上排给出十个数，在其下排填出对应的十个数,要求下排每个数都是先前上排那十个数在下排出现的次数。
-
+ 给你 10 分钟时间，根据上排给出十个数，在其下排填出对应的十个数,要求下排每个数都是先前上排那十个数在下排出现的次数。
 ```
 举一个例子，
 数值:0,1,2,3,4,5,6,7,8,9
@@ -38,23 +16,25 @@ mc mod c == 1
 6）a中至少有两个非0数值在b中出现的次数非0
 ```
 
-### 判断俩个链表是否相交 ===两个链表有没有共同终点
 
-### 有两个房间，一间房里有三盏灯，另一间房有控制着三盏灯的三个开关，这两个房间是 分割开的，从一间里不能看到另一间的情况。 现在要求受训者分别进这两房间一次，然后判断出这三盏灯分别是由哪个开关控制的。
 
-### 你让一些人为你工作了七天，你要用一根金条作为报酬。金条被分成七小块，每天给出一块。如果你只能将金条切割两次，你怎样分给这些工人?
+有两个房间，一间房里有三盏灯，另一间房有控制着三盏灯的三个开关，这两个房间是 分割开的，从一间里不能看到另一间的情况。 现在要求受训者分别进这两房间一次，然后判断出这三盏灯分别是由哪个开关控制的。
+````
+````
+你让一些人为你工作了七天，你要用一根金条作为报酬。金条被分成七小块，每天给出一块。如果你只能将金条切割两次，你怎样分给这些工人?
+````
+````
+输入一颗二元树，从上往下按层打印树的每个结点，同一层中按照从左往右的顺序打印。
 
-# 输入一颗二元树，从上往下按层打印树的每个结点，同一层中按照从左往右的顺序打印。
+在一个字符串中找到第一个只出现一次的字符。如输入 abaccdeff，则输出 b。
 
-### 在一个字符串中找到第一个只出现一次的字符。如输入 abaccdeff，则输出 b。
+一亿个数字里面找到 最大的 1w 的数字
 
-### 一亿个数字里面找到 最大的 1w 的数字
+一亿个用户数 积分排名，要求实时性 === 桶排序？？
 
-### 一亿个用户数 积分排名，要求实时性 === 桶排序？？
+网络流问题 == 残留网络+增广路径+最小流割 [link]http://mindlee.com/2011/11/19/network-flow/
 
-### 网络流问题 == 残留网络+增广路径+最小流割 [link]http://mindlee.com/2011/11/19/network-flow/
-
-### 如何让 cpu 的占有率 保持一个曲线, 锯齿状？ 一条直线？ 正弦曲线
+如何让 cpu 的占有率 保持一个曲线, 锯齿状？ 一条直线？ 正弦曲线
 
 ```
 1、电脑的cpu 频率 ，cpu 每一个时间周期 执行的代码数量？ 循环 n次，利用sleep函数。
@@ -62,7 +42,7 @@ mc mod c == 1
 3、performanceCounter 获取使用率
 ```
 
-### 将帅问题
+将帅问题
 
 ```
 抽象棋盘为数组。
@@ -70,7 +50,7 @@ mc mod c == 1
 搜索过程 抽象为对81钟可能的遍历。
 ```
 
-### 摞烙饼问题
+摞烙饼问题
 
 ```
 最简单的递归方法：
@@ -86,59 +66,18 @@ mc mod c == 1
     递归执行P 过程
 ```
 
-###给你一个数组 如何找到一个分割这个数组为 AB 首尾两部分，使得中的元素(ai-bj)\*(ak-bm)>0
-
+给你一个数组 如何找到一个分割这个数组为 AB 首尾两部分，使得中的元素(ai-bj)\*(ak-bm)>0
 ```
-function search(A) {
-    var inc = []
-    var dec = []
-    var length = A.length, index, cMax = A[0], cMin = A[0]
-    A.map(
-        (o, i)=> {
-            inc[i] = {}
-            cMax = inc[i].max = Math.max(cMax, A[i])
-            cMin = inc[i].min = Math.min(cMin, A[i])
-        }
-    )
-    cMax = A[length - 1]
-    cMin = A[length - 1]
-    A.map(
-        (o, i)=> {
-            index = length - 2 - i
-            dec[index] = {}
-            cMax = dec[index].max = Math.max(cMax, A[index+1])
-            cMin = dec[index].min = Math.min(cMin, A[index+1])
-        })
-    var isOverLap = (a, b)=>!(a.min > b.max || a.max < b.min)
-    var binarySearch = (start,end)=> {
-        if(start>end){
-            return -1
-        }
-        var mid=Math.floor((start+end)/2)
-        if (!isOverLap(inc[mid], dec[mid])) {
-            return mid
-        }
-        else {
-            var result=binarySearch(start,mid-1)
-            if(!~result)return binarySearch(mid+1,end)
-            return result
-        }
-    }
-    return binarySearch(0,length-2)
-}
 ```
 
-### 算法的归类
-
+算法的问题分析
 ```
 每个阶段只有一个状态->递推；
 每个阶段的最优状态都是由上一个阶段的最优状态得到的->贪心；
 每个阶段的最优状态是由之前所有阶段的状态的组合得到的->搜索；
 每个阶段的最优状态可以从之前某个阶段的某个或某些状态直接得到而不管之前这个状态是如何得到的->动态规划。
 ```
-
-#### 判断一个数是不是素数，算法复杂度是 o1,费马判定,Carmichael,Miller-Rabin ,!!AKS
-
+判断一个数是不是素数，算法复杂度是 o1,费马判定,Carmichael,Miller-Rabin ,!!AKS
 ```
 old: 埃拉托斯特尼筛法
 aks: http://yves.gallot.pagesperso-orange.fr/src/
@@ -147,11 +86,10 @@ https://www.codeproject.com/Articles/691200/Primality-test-algorithms-Prime-test
 http://www.geeksforgeeks.org/primality-test-set-3-miller-rabin/
 aks 复杂度：http://mathworld.wolfram.com/AKSPrimalityTest.html
 ```
-
-#### 编辑距离: 动态规划： 复杂度 O(M\*N)
-
-####
-
+编辑距离: 动态规划： 复杂度 O(M\*N)
+````
+````
+编码
 ```
 URL_ENCODE的过程就是把URL作为字符按照某种编码方式(GBK, UTF-8等)编码成二进制的字节码
 base64 字符串转为二进制,而后每6个比特（2^6）一个字符, 它防止了 每一个路由对特殊字符的过滤。
@@ -160,11 +98,10 @@ base32  没有大小写之分,同时适合二维码
 `
 ```
 
-#### 拜占庭将军问题
-
-#### 如何找到一个中位数量，如何找到一个众数
-
-#### 什么是绝对众数 ，什么是普通众数， 各自算法复杂度是多少？
+拜占庭将军问题
+````
+````
+如何找到一个中位数量，如何找到一个众数. 什么是绝对众数 ，什么是普通众数， 各自算法复杂度是多少？
 
 ```
 定义：给定N个数，出现次数最多的数为众数，若某众数出现次数大于N/2，则称其为绝对众数
@@ -177,34 +114,25 @@ base32  没有大小写之分,同时适合二维码
 例如：一个数组长度为n，如果众数出现次数大于n/2， 这个众数为绝对众数，第一次快速排序后，就可以得到众数，复杂度为on
 如果出现次数大于n/4，小于n/2，那么在快速排序中，那么在第二层级排序中就可以得出，算法复杂度为，o2n
 ```
-
-#### 数组中是否存在重复元素
-
+数组中是否存在重复元素
 ```
 一边快速排序，一边比较是否重复，o(nlogn）
 ```
-
-##### 荷兰国旗问题
-
+荷兰国旗问题
 ```
 红色为0 ，白色为1， 蓝色为2. 然后使用快速排序即可
 ```
-
-##### 矩阵相乘
-
+矩阵相乘
 ```
 复杂度为n^2.3737
 分治，把矩阵分解为不同的大小的区块
 ```
-
-##### 寻找公共父节点
-
+寻找公共父节点
 ```javascript
 // if node include A then thisNode.flag = 1
 // if node include B then thisNode.flag = 2
 // if node include A and B then thisNode.flag = 3
 // find the deepest node when its flag is 3
-
 let fv = (o, v1, v2) => {
   if (!o) return 0
   let flag = o.value === v1 ? 1 : o.value === v2 ? 2 : 0
@@ -213,17 +141,29 @@ let fv = (o, v1, v2) => {
 }
 ```
 
-#### 一张纸撕成了 50 片 ，怎么把他们恢复过来？
-### Sattolo's algorithm 萨托洛算法 https://danluu.com/sattolo/ 部分解决方案是执行一系列指针访问，这些指针访问将以伪随机顺序绕过内存块。萨托洛的算法为此提供了一个解决方案
+一张纸撕成了 50 片 ，怎么把他们恢复过来？
+````
+````
+Sattolo's algorithm 萨托洛算法 https://danluu.com/sattolo/ 部分解决方案是执行一系列指针访问，这些指针访问将以伪随机顺序绕过内存块。萨托洛的算法为此提供了一个解决方案
 def shuffle(a):
     n = len(a)
     for i in range(n - 1):  # i from 0 to n-2, inclusive.
         j = random.randrange(i, n)  # j from i to n-1, inclusive.
         a[i], a[j] = a[j], a[i]  # swap a[i] and a[j].
 
+Reservoir Sampling
+````
+````
+有一栋100层的大楼，该种玻璃杯从某一层楼扔下，刚好会碎。   现给你两个杯子，问怎样检测出这个杯子的质量，即找到在哪一层楼刚好会碎？
+````
+````
 
+#### LRU
+- DualLinkedHashMap
+- LRU2: Two queue, LRU2 is best of LRUK.
+- 2Q: FIFO + LRU1
+- MQ: M * LRU1
+- LRU of redis ?? (Random remove sample items by timeStamp)
 
-#### Reservoir Sampling
-
-
-#### 有一栋100层的大楼，该种玻璃杯从某一层楼扔下，刚好会碎。   现给你两个杯子，问怎样检测出这个杯子的质量，即找到在哪一层楼刚好会碎？
+#### Dijkstra 
+#### FLOYD

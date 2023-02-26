@@ -47,6 +47,7 @@ h2:before {
   counter-increment: chapter;
   content: "Chapter " counter(chapter) ". ";
 }
+
 //////////////////////////////////default
 img,
 div,
@@ -61,12 +62,14 @@ input {
     float: left;
     padding-bottom: 56.2%;
   }
+
   &:after {
     content: "";
     display: table;
     clear: both;
   }
 }
+
 //zindex 的定义
 //999 一定是最大的
 //普通的我们定义为0
