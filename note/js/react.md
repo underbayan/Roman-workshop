@@ -1,0 +1,2 @@
+- React components are regular JavaScript functions, but their names must start with a capital letter or they won’t work!
+- Components can render other components, but you must never nest their definitions:

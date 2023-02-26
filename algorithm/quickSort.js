@@ -3,7 +3,7 @@
 //a: array, si: startIndex, ei: endIndex
 function qsort(a, si, ei) {
   //base case
-  if (ei <= si || si >= ei) {}
+  if (ei <= si || si >= ei) { }
   else {
     let pivot = a[si];
     let i = si + 1;
@@ -28,5 +28,5 @@ function qsort(a, si, ei) {
   return a
 }
 // test line
-let a = [4, 7, 6, 34, 1, 22, 10, 0,5]
+let a = [4, 7, 6, 34, 1, 22, 10, 0, 5]
 console.log(qsort(a, 0, 8))
