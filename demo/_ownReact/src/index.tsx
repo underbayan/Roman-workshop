@@ -82,7 +82,6 @@ const App = () => {
   );
 };
 
-console.log(<App />);
 
 const render = (reactElement, container) => {
   if (typeof reactElement !== "object") {
@@ -106,3 +105,4 @@ const rerender = () => {
   render(<App />, document.getElementById("app"));
 };
 
+rerender()

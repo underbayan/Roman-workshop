@@ -1,7 +1,9 @@
 {
   "name": "react",
   "version": "1.0.0",
-  "scripts": {},
+  "scripts": {
+    "start": "vite"
+  },
   "author": "",
   "license": "ISC",
   "devDependencies": {
