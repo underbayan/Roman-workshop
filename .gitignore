@@ -18,5 +18,5 @@ bootstrap-material-design
 .env
 yarn-debug.log*
 yarn-error.log*
-
+target
 *.lock

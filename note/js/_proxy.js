@@ -58,3 +58,31 @@ delete p.a
 console.log('_a' in p)
 // Object.keys(p) ??? TypeError: 'getOwnPropertyDescriptor' on proxy: trap reported non-configurability for property 'length' which is either non-existant or configurable in the proxy target
 // p.call(null, 1) ???
+
+
+
+// A way to avoid alloc memory freqently 
+class Anyclass {
+  constructor() { }
+}
+const T = new Proxy(Anyclass, {
+  construct: (t, args, nt) => {
+    console.log(t, nt, args)
+    if (/** cache  */) {
+      // return caches[]
+    }
+    return Reflect.construct(t, args, nt)
+  }
+})
+class T2 extends T { }
+console.log(new T2(1, 2, 3, 4, 5) instanceof T)
+
+// 
+
+
+let proxyCallable = new Proxy(function (a) { return a + 2 }, {
+  apply: (target, t, ...args) => {
+    console.log(Reflect.apply(target, t, ...args))
+    return proxyCallable
+  }
+})

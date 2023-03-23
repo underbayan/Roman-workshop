@@ -167,3 +167,6 @@ Reservoir Sampling
 
 #### Dijkstra 
 #### FLOYD
+
+#### Consistent Hashing
+- balance Monotonicity Spread

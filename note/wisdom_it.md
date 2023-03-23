@@ -179,3 +179,16 @@ ssh -g -L <local port>:<remote host>:<remote port> <SSH hostname>
 - round-robin   1~n 轮询调度算法
 - Zero-downtime Restarts
 - Bug-for-bug compatible
+- Patterns:
+  - single responsibility / open and closed / liskov substitution / interface segregation / dependency inversion
+  - Dont repeat yourself
+  - Simplicity
+  - information hiding 
+  - Design by contract. 
+  - Encapsulation. Prevent any unauthorized direct access.
+  - Functions should not produce abstract side effects, only commands will be permitted. 
+  - linguistic-modular-units. synactic
+  - Self-documenttation
+  - uniform - access
+  - single - choice
+  - persistence - closure

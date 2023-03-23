@@ -1,5 +1,4 @@
 - javascript 函数是对象 其实除了 null 和 undefined 其他的都是对象,只有函数才有 prototype 属性
-
 - Number,Function,Object,Date,String 本质都是函数，当然函数的本质也是对象
 
 # \_\_proto\_\_ 详解
@@ -41,12 +40,12 @@ console.log(typeof Object.prototype) // object
 # class 详解
 
 ```javascript
-//局部变量(其实是利用了函数作用域)
+//局部变量(函数作用域)
 function A() {
   var privateVariable = 12
   var privateFunction = function() {}
 }
-//私有变量,本质是闭包
+//私有变量
 function A() {
   var privateProperty = 0
   return function get() {
@@ -58,14 +57,14 @@ function A() {}
 A.staticVariable = 12
 A.staticFunction = function() {}
 
-// 本质是原型链
+// 原型链
 // all instatnce share a memory can sue prototype
 // following methodA wouldn't be changed by sub instance
 A.prototype.methodA = function() {
   console.log('Amethod')
 }
 
-// 本质是 new 过程会改变this 为当前作用域
+// 函数调用过程会改变this 为当前作用域(context)
 // all instantce will keep own memory for OwnProperty(成员变量)
 function A() {
   this.OwnProperty = 'Aproperty'
@@ -128,8 +127,8 @@ p.print() // 10 20
 
 # new 详解
 
-- new 指能用于函数,生成一个对象
-- new A 和 new A() 本质一样
+- new 用于函数,成一个对象
+- new A 和 new A() 一样
 
 ```javascript
 /*
@@ -233,9 +232,8 @@ There is only two scopes in js, global and function scope, weuse scope chain to 
 - 只有函数作用域没有块作用域
 - JavaScript 中 if 语句求值其实使用 eval 函数
 - instanceof 和 typeof 的区别
-- 未使用 var 关键字定义的变量都是全局变量。
-- 函数中声明的变量在整个函数中都有定义
-- 全局变量都是 window 对象的属性
+- 未使用 var 关键字定义的变量都是全局global的属性。
+- 函数中声明的变量在整个函数中都有定义（提升）
 - JavaScript 中的函数运行在它们被定义的作用域里,而不是它们被执行的作用域里
 - 迭代器： 是一个实现 next 函数 的对象
 - next 函数：是一个返回{done:false, value:'' } 形式的无参函数
@@ -243,7 +241,7 @@ There is only two scopes in js, global and function scope, weuse scope chain to 
 - entries: 返回一个可迭代对象的迭代器
 - IIFE Immediately-Invoked Function Expression
 - 立即调用表达式: 自执行匿名函数 的设计模式: (function(){/_ code _/}())
-- setTimeout 有一个最小时间 4ms/10ms? ,I will choose using the setImmediate
+- setTimeout 有一个最小时间 4ms/10ms? ,I will choose using the setImmediate(macro, micro)
 -  async 修饰会使得 运行的时候脱离原有的上下文，而加上await 之后 throw 出来的error 依然可以在外部获取到
 # Object:
 
@@ -257,7 +255,6 @@ setPrototypeOf(修改 **proto** )
 
 箭头函数： 不绑定自己的 this，super 和 arguments，所以不能作为构造函数和 new 一起使用，返回对象需要用 o=>({o:12})的形式，可以用...arg 来代替 arguments
 yield
-curry 化 sum: sum= (...o)=>o.length?(o.pop()+sum(...o)):0
 
 # 正则表达式
 
@@ -449,3 +446,4 @@ setImmediate(_ => console.log("setImmediate"));
 // => async one end => async one return 
 // => setTimeout => setImmediate
 ````
+
