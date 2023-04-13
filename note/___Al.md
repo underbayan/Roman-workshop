@@ -170,3 +170,9 @@ Reservoir Sampling
 
 #### Consistent Hashing
 - balance Monotonicity Spread
+
+
+#### 回溯法1 https://leetcode.cn/problems/combinations/description/
+#### 回溯法2 https://leetcode.cn/problems/combination-sum/submissions/418514513/
+
+- Boyer–Moore majority vote algorithm  众数推广

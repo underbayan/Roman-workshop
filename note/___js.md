@@ -78,6 +78,9 @@ function A() {
   Object.defineProperty(this, 'propertyName', { value: 'propertyValue' })
 }
 
+// {__proto__:null} -> Object.create(null)
+// Object.create(A.prototype) -> {__proto__:A.prototype} 
+
 //实例化
 var a = new A()
 //继承方式 原理:
@@ -152,8 +155,9 @@ function New(f) {
 
 # javascript 类型
 
-基本类型：number，string，boolean，null，undefined, symbol
+基本类型：number，string，boolean，null，undefined, symbol, BigInt
 引用类型(Object)： Array, Date, RegExp
+typeof + instanceof > Object.prototype.toString
 
 # 数字
 
