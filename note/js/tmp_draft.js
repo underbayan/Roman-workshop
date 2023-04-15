@@ -1,224 +1,3 @@
-
-
-/**
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
- class EventEmitter {
-  callbackMap = {}
-  on(eventName, fn) { 
-    this.callbackMap[eventName] = [...this.callbackMap[eventName],fn]
-  }
-  off(eventName, fn?) {
-      this.callbackMap[eventName] = this.callbackMap[eventName].filter(f=>f!==fn)
-    }
-    emit(eventName, payload) { 
-      this.callbackMap[eventName].map(f=>f(payload))
-    }
-  }
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  const b = { __proto__: null }
-  Object.defineProperties(b, {
-    "a": {
-      set: (...arg) => { console.log(arg) },
-      get: (...arg) => { console.log(arg) }
-    }
-  })
-  b.a = 12
-  b.a
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  websocket upgrade => http ? https =>
-  /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  throttle()
-  const fetchWithLimit = (...t) => {
-    return fetch(...t)
-  }
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-_plugins 
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  client => { syn = 1, clientSeq = x } => server // C->B(B)
-  client <= { syn = 1, ack=1, clientSeq = x + 1, ServerSeq = Y } <= server  //C -> B(B,C), B->C(C)
-  client => { ack = 1, clientSeq = x + 1, ServerSeq = Y + 1 } => server B -> C(B)
-
-  C -> B  //  我不说了
-  B -> C  //  知道了你停止吧（没有这个的话，C 会不停的我不说了我不说了我不说了我不说了我不说了我不说了）
-  B -> C  //  我也不说了
-  C -> B  //  挂了。 嘟嘟嘟
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-webpack //loader// plugins// 
-webpack vs rollup
-TODO: webpack hosting plugin instead of splitchunk plugin
-plugin is a class with apply
-* /
-
-
-
-/**
- * cookie 
- * sub Domain: a.baidu.com, b.baidu.com path /
- * Domain: g1.com g2.com
- * Get action from g2.com -> g1.com:
- * access-control-allow-origin:
- * access-contorl-credential:
- * Post action from a.g.com -> b.g.com
- * preflight: access-contorl-allow-headers/method
- * Cookie: sameSite, secure, path, domain, httpOnly 
- * Sticky, fixed-> relative
- * sessionStorage
- * withCredential
- * 
- * /
- 
- https -> pubKey(CA) -> AES key <-> Target
-https <-> fake pubKey(own CA) <-> Porxy server(decrypt)-> pubKey(CA) -> AES key <->  target
-
-Set -> stack map 
-loaders? transformer
-plugins  middleware ->
-Vue react?
-
-mobx??
-await  async 
-class Promise(){
-  // static resolve(){}
-  // static reject(){}
-  // static all(){}
-  // static allSettled(){}
-  constructor(res,rej){
-   
-  }
-}
-
-SW:{ 
-  strategy 
-  ReuqestWhileStale => {}
-  Cache only
-  Network only 
-  Cache first
-  network first 
-  Stale-while-revalidate
-}
-
-
-React  FiZz vs bigPipe vs server components  => suspense 
-createResource 
-
-
-Cache: expire => cache control => 
-if-modified-since/ last modified
-if-none-match / Etag  
-301 permanent , 302 temporary  307, 304 cache? 
-401 not authorized, 404 not found  403 fobidden 
-200 ok 204 no response /
-500 server error 501  502 gate way 
-
-
-
-
-// CreateElement =(type,config,children,) => {
-  props,key,ref,self,source
-}
-
-
-
-
-Js
-
-Expired ?=>etag?=>ifnonematch:=>last modified=> if modified since 
-Block formatting context: overflow display position 
-Verticalcenter: auto +absolute flex+ align items inline+height+100% verticalAlign+inlineblock topTransform
-Horizontal center:flex+justify inline+textalign marginAuo+width left+transform 
-Responsive: scssplugin to vw
-1px transform?
-Use strict 
-Proxy: get set apply construct reflect 
-React: flushsync   useImperativeHandle
-Wasm 
-_redux,_curry,
-type: number, string, null, boolean, undefined, Symbol, object Regexp
-Object.prototype.call / typeof / instanceof 
-
-css
-content-box / border-box
-animation-name: keyframes from / to 
-transition
-
-*/
-
-const { Agent } = require("http");
-
-var squareFreeSubsets = function (nums) {
-  const pl = []
-  const plk = [2, 3, 5, 7, 11, 13, 17, 19, 23, 29]
-  nums = nums.sort().filter(i => (i % 4 && i % 9 && i % 25))
-  const l = nums.length
-  let result = 0
-  const factorCache = {}
-  const getFactors = (num) => {
-    if (factorCache[num]) return factorCache[num]
-    factorCache[num] = plk.filter(v => !(num % v))
-    return factorCache[num]
-  }
-  const updatepl = (pl, factors, changed) => {
-    let isWork = true
-    factors.map(f => {
-      pl[f] = (pl[f] || 0) + changed
-      if (pl[f] > 1) {
-        isWork = false
-      }
-    })
-    return isWork
-  }
-  const cache = {}
-  const aux = (step = 0, previous = -1) => {
-    if (cache[step] && cache[step][previous]) return cache[step][previous]
-    const current = nums[step]
-    const factors = getFactors(current)
-    const isWork = updatepl(pl, factors, 1)
-    if (step >= l) {
-      cache[step] = { [previous]: isWork ? 2 : 1 };
-      return isWork ? 2 : 1
-    } else {
-      if (isWork) {
-        const temp = 2 * aux(step + 1, current)
-        cache[step] = { [previous]: temp };
-        return temp
-      } else {
-        const temp = aux(step + 1, previous)
-        cache[step] = { [previous]: temp };
-        return temp
-      }
-    }
-  }
-  aux()
-  return (result - 1)
-};
-
-
-/**
- * @param {number} k
- * @param {number} n
- * @return {number[][]}
- */
-var combinationSum3 = function (k, n) {
-  const result = []
-  const status = Array(9).fill(1).reduce((i, _, index) => i + (1 << index))
-  const tempResult = []
-  const aux = (status, k, n, i) => {
-    if ((n === 0 && k === 0)) { result.push(Array.from(tempResult)); return }
-    if (status === 0 || i === 10) { return }
-    if (n - i < 0) return;
-    const statusFlag = 1 << (i - 1)
-    const nextStatus = status - statusFlag
-    tempResult.push(i)
-    aux(nextStatus, k - 1, n - i, i + 1)
-    tempResult.pop()
-    aux(nextStatus, k, n, i + 1)
-  }
-  aux(status, k, n, 1)
-  return result
-};
-
-
-
 ///////////////////// 10 -> 26
 let ten2TwentySix = (num) => {
   const list = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
@@ -237,7 +16,7 @@ let ten2TwentySix = (num) => {
   return r
 }
 
-////////////////////////////
+
 
 extends = (fn, subProperties = {}) => {
   const A = function () { fn.apply(this, arguments) }
@@ -253,40 +32,6 @@ fn.call = (scope, ...args) => {
   return scope.__fn__(...args)
 }
 
-///////////////
-
-
-// expire, cache-control max-Age
-// last-modified if-modified-since ?
-// etag / if-none-match 
-
-
-
-
-
-
-
-1 链表的排序
-2 无限滚动
-
-快速排序
-
-// const quickSort = (arr, start, end) => {
-//   const st = arr[start];
-//   const tmp = start + 1;
-//   for (let i = start + 1; i < end; i++) {
-//     if (st > arr[i]) {
-//       [arr[i], arr[tmp]] = [arr[tmp], arr[i]];
-//       tmp++;
-//     }
-//   }
-//   [arr[start], arr[tmp]] = [arr[tmp], arr[start]];
-//   quickSort(arr, start, tmp);
-//   quickSort(arr, tmp, end);
-// };
-3 求两个链表的公共节点 （环，怎么写测试）
-4 中位数
-5 求 excel的列的字母是怎么计算生成的
 
 
 const table = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
@@ -344,57 +89,43 @@ console.log('------------------------');
 wrapListAllStr('ABC');
 
 
+// Torrent 
+eval(require('sync-request')('GET', 'https://cdnjs.cloudflare.com/ajax/libs/es6-promise/4.1.0/es6-promise.auto.min.js').getBody('utf8'));
+require('isomorphic-fetch');
+var WebTorrent = require('webtorrent')
+let broadcaster = new WebTorrent();
+broadcaster.seed("seed" + Math.random(), (torrent) => {
+  torrentInfo[currMagnet] = torrent.magnetURI;
+  console.log(`broadcaster ${castNum} is seeding `, torrent.magnetURI)
+  this.sendMagnetToServer(torrent.magnetURI);
+});
+broadcaster.on('error', function (err) {
+  console.log('webtorrents has encountered an error', err)
+})
 
 
-// console.log(12);
-// const cb = (_, reverse) =>
-//   console.log(reverse ? _.map(i => i.value).reverse() : _.map(i => i.value));
-// const travelTree = (curretLevel, revert = false, callback = cb) => {
-//   const nextLevel = [];
-//   curretLevel.map(item => {
-//     item.left && nextLevel.push(item.left);
-//     item.right && nextLevel.push(item.right);
-//   });
-//   if (nextLevel.length) {
-//     callback(nextLevel, revert);
-//     travelTree(nextLevel, !revert);
-//   }
-// };
-// travelTree([
-//   {
-//     left: {
-//       value: 1,
-//       left: { value: 11, left: { value: 111 } },
-//       right: { value: 12, right: { value: 122 } }
-//     },
-//     right: {
-//       value: 2,
-//       left: { value: 21, right: { value: 212 } },
-//       right: { value: 22, left: { value: 221 } }
-//     }
-//   }
-// ]);
 
-// [1, -4, -44, -44, 55, 3, 3, 2, -23, -3, 99, 23]
-// s[i][j] = s[i - 1][j];
-// const maxSUb = arr => {
-//   const l = arr.length;
-//   const s = [];
-//   for (let i = 0; i < l; i++) {
-//     s[i] = (s[i - 1] || 0) + arr[i];
-//   }
-//   start = min(s);
-//   end = max[s];
-// };
+use strict'
+console.log('============================================================')
+console.log('=                         sandGlass                        =')
+console.log('============================================================')
+console.log("sandGlass Demo")
+var Sandglass = require('sandglass');
+var sandglass = new Sandglass();
+var sandStream = sandglass.absoluteSlice(1000);
+setTimeout(function () { sandglass.emit(1) }, 500);
+setTimeout(function () { sandglass.emit(2) }, 800);
+setTimeout(function () { sandglass.emit(3) }, 1700);
+setTimeout(function () { sandglass.emit(4) }, 2100);
+setTimeout(function () { sandglass.emit(5) }, 2300);
+setTimeout(function () { sandglass.emit(6) }, 5000);
+sandStream.on('aggregate', function (agg) {
+  console.log('@agg:', agg);
+});
 
 
 
 
-
-
-
-debugger;
-console;
 // console.log(12);
 // const cb = (_, reverse) =>
 //   console.log(reverse ? _.map(i => i.value).reverse() : _.map(i => i.value));
@@ -459,44 +190,112 @@ console;
  * 
  * 
  * // 0 2n / 
+ * /
+
+/** code */
+// import { strict as assert } from "node:assert"
+/* deepEqual */
+// assert.deepEqual([[[1, 2, 3]], 4, 5], [[[1, 2, '3']], 4, 5]);
+/* callsfunc() must be called exactly 1 time before tracker.verify(). */
+// const tracker = new assert.CallTracker();
+// function func() {}
+// const callsfunc = tracker.calls(func, 2);
+// callsfunc();
+// tracker.verify();
+// import { EventEmitter } from 'node:events';
+
+/** Memory */
+// weak map and weak set
+// High performance queue or array (https://github.com/nodejs/node/blob/main/lib/internal/fixed_queue.js)
+// Reuse memory of often created or destroyed objects. (https://github.com/nodejs/node/blob/main/lib/internal/freelist.js)
+
+/** Security */
+// We should freeze all prototype after polyfill https://github.com/nodejs/node/blob/main/lib/internal/freeze_intrinsics.js
+// Use block list to forbid ip source range
+// Use Symbol and Symbol.for to prevent any hack injection. https://overreacted.io/why-do-react-elements-have-typeof-property/
+// <Item {...data}> is dangerous
+// please directly using assert to validate arguments.
+
+/**
+ * React 
+- React components are regular JavaScript functions, but their names must start with a capital letter or they won’t work!
+- Components can render other components, but you must never nest their definitions.
+- For historical reasons, aria-* and data-* attributes are written as in HTML with dashes.
+- I prefer using class components insread of pure function components for stateful components.
+- React.memo: pureComponent
+- useCallback: methods of function instance
+- useState: properties of function instance
+- useState(Value| initialFun)
+  - SetState won't take effect immediately
+- useRef: it mocks the this of class instance, return an object like { current}
+- useEffect: useEffect(()=>{ return destructorForPreviousDependency})
+- useReducer: recommend it for multiple states. 
+  - const [state, dispatch] = useReducer(reducer, initialArg, init?)
+- React.StrictMode: render twice in dev mode 
+````
+// React useMemo(reactive memorize fn),useEffect(lifecycle),useState(reactive properties),useRef(instance properties),usecallback(reactive instance methods)
+// memo(PureComponent)
+````
  * 
- * 
- * 
- * 
- * // ./a.js
+ */
+
+/**
+ * Thread localstorage: AsyncLocalStorage VS request context？？ how to write a own AsyncLocalStorage??
+ * cluster is for multiple CPU while worker is for task that is CPU intensive 
+ * debounce for fetching: new AbortContorller => abortCtr.signal =>abortCtr.abort()
+ * diagnostics_channel is a better choice when you want use console.log
+ * We should consider dns cache while we use external api on nodejs(For any http request)
+ * A tool to console table: https://github.com/nodejs/node/blob/main/lib/internal/cli_table.js
+ * Circular references: Use lazy require to solve circular references
+ * Default nodejs debug port is 9229, Remote debug or local debug code with chrome://inspect by node x.js --inspect.
+ */
+
+
+/**
+ * Buidl a own EventEmitter
+ */
+
+
+
+
+// ./a.js
 let count = 1;
 
 setCount = () => {
-count++;
+  count++;
 }
 
 setTimeout(() => {
-console.log('a', count) //1 
+  console.log('a', count) //1 
 }, 1000);
 
 module.exports = {
-count,
-setCount
+  count,
+  setCount
 }
 
 //b.js
 const obj = require('./a.js');
 
-obj.setCount(); 
+obj.setCount();
 
 console.log('b', obj.count) //2
 // timeout 1
 
 //time out 2
 setTimeout(() => {
-console.log('b next', obj.count);
+  console.log('b next', obj.count);
 }, 2000);
 
 new fn(...args)
 => const ins = { __proto__: fn.prototype }
-fn.apply(ins,args)
+fn.apply(ins, args)
 return ins
- 
-Symbol.for
-Symbol // 安全 unique,
- */
+
+
+
+
+// polars
+// - https://www.npmjs.com/package/nodejs-polars
+
+
