@@ -1,51 +1,58 @@
-// Following implement is not right
-// class FixedSizeMinHeap {
-//   constructor(size) {
-//     this.size = size;
-//     this.heap = new Array(size).fill(Number.MAX_SAFE_INTEGER);
-//     this.count = 0;
-//   }
+class Heap {
+  constructor(arr, compareFunc) {
+    this.heap = [];
+    this.compare = compareFunc || ((a, b) => a < b);
+    if (arr && Array.isArray(arr)) {
+      this.push(...arr);
+    }
+  }
 
-//   // 上浮操作
-//   bubbleUp(index) {
-//     const parentIndex = Math.floor((index - 1) / 2);
-//     while (index > 0 && this.heap[parentIndex] > this.heap[index]) {
-//       [this.heap[parentIndex], this.heap[index]] = [this.heap[index], this.heap[parentIndex]];
-//       index = parentIndex;
-//       parentIndex = Math.floor((index - 1) / 2);
-//     }
-//   }
+  push(...ks) {
+    ks.map(k => {
+      this.heap.push(k);
+      let i = this.heap.length - 1;
+      while (i > 0 && this.compare(this.heap[i], this.heap[Math.floor((i - 1) / 2)])) {
+        [this.heap[i], this.heap[Math.floor((i - 1) / 2)]] = [this.heap[Math.floor((i - 1) / 2)], this.heap[i]];
+        i = Math.floor((i - 1) / 2);
+      }
+    })
+  }
 
-//   // 下沉操作
-//   bubbleDown(index) {
-//     let childIndex = 2 * index + 1;
-//     while (childIndex < this.count) {
-//       if (childIndex + 1 < this.count && this.heap[childIndex + 1] < this.heap[childIndex]) {
-//         childIndex++;
-//       }
-//       if (this.heap[index] <= this.heap[childIndex]) {
-//         break;
-//       }
-//       [this.heap[index], this.heap[childIndex]] = [this.heap[childIndex], this.heap[index]];
-//       index = childIndex;
-//       childIndex = 2 * index + 1;
-//     }
-//   }
+  heapify(i) {
+    let next = i;
+    const left = 2 * i + 1;
+    const right = 2 * i + 2;
+    if (left < this.heap.length && this.compare(this.heap[left], this.heap[next])) {
+      next = left;
+    }
+    if (right < this.heap.length && this.compare(this.heap[right], this.heap[next])) {
+      next = right;
+    }
+    if (next !== i) {
+      [this.heap[i], this.heap[next]] = [this.heap[next], this.heap[i]];
+      this.heapify(next);
+    }
+  }
 
-//   // 插入元素
-//   insert(value) {
-//     if (this.count < this.size) {
-//       this.heap[this.count] = value;
-//       this.bubbleUp(this.count);
-//       this.count++;
-//     } else if (value < this.heap[0]) {
-//       this.heap[0] = value;
-//       this.bubbleDown(0);
-//     }
-//   }
+  clear() {
+    this.heap = []
+  }
+  get peek() {
+    return this.heap[0];
+  }
+  get size() {
+    return this.heap.length
+  }
 
-//   // 获取堆顶元素
-//   getMin() {
-//     return this.heap[0];
-//   }
-// }
+  pop() {
+    const top = this.heap[0];
+    const last = this.heap.pop();
+    if (this.heap.length > 0) {
+      this.heap[0] = last;
+      this.heapify(0);
+    }
+    return top;
+  }
+}
+
+exports.Heap = Heap 

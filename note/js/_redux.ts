@@ -3,7 +3,7 @@ type State<T> = { [T]: unknown }
 type Reducer<T> = (preState: State<T>, action) => State<T>
 
 type CombineReducer = (rs: {
-  [key: T]: State<T>
+  [key: T]: Reducer<T>
 }) => Reducer<unknown>
 
 

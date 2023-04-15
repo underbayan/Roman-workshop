@@ -1,13 +1,4 @@
-/**
- * 
- * @param {*} arr 
- * @param {*} comparator 
- * @param {*} timer 
- * @param {*} blockLength 
- * @desription merge sort data by trade-off between code size and efficiency
- * @returns 
- */
-module.exports = function quickMerge(arr, comparator = (a, b) => a < b, timer = 0, blockLength = 100) {
+module.exports = function quickMerge(arr, comparator = (a, b) => a < b, blockLength = 1000) {
   function quickSort(arr, left, right) {
     function partition(arr, pivot, left, right) {
       let pivotValue = arr[pivot], partitionIndex = left, temp

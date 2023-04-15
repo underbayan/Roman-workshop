@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 let assert = require('assert')
 let quickMerge = require('./quickMerge')
-let randomList = l=>Array.from({length: l}, () => Math.floor(Math.random() * l));
+let randomList = l => Array.from({ length: l }, () => Math.floor(Math.random() * l));
 for (let i = 0; i < 10; i++) {
   //------------------------------------
   let arr = randomList(500000)
@@ -11,7 +11,7 @@ for (let i = 0; i < 10; i++) {
   //------------------------------------
   arr = randomList(500000)
   st = new Date()
-  let qs = quickMerge(arr);
+  let qs = quickMerge(arr, undefined, 50000);
   let mergeCost = new Date() - st
   console.log('Speed Compare:', (mergeCost + 0.0) / originCost)
   //------------------------------------
