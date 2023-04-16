@@ -1,3 +1,15 @@
+fn methods() {
+    // std::mem::size_of_val(12)
+    // println!()
+    // diverge fn
+    // ()
+    // let y = { let x =1; x+1}
+    // let y2 = if false { 1 } else { 2 }
+
+    // fn add(a: i32, b: i32) -> i32 {
+    //     a + b
+    // }
+}
 fn greet_world() {
     let regions = ["世界你好", "hello world"];
     for region in regions.iter() {
@@ -9,7 +21,8 @@ fn greet_world() {
 }
 
 fn print_table() {
-    let penguin_data = "\
+    let penguin_data =
+        "\
     name,length
     little_penguin,33
     yellow_eyed_penguin,65
@@ -20,7 +33,10 @@ fn print_table() {
         if i == 0 || record.trim().len() == 0 {
             continue;
         }
-        let fields: Vec<_> = record.split(",").map(|field| field.trim()).collect();
+        let fields: Vec<_> = record
+            .split(",")
+            .map(|field| field.trim())
+            .collect();
         if cfg!(debug_assertions) {
             eprintln!("debug: {:?} -> {:?}", record, fields);
         }
@@ -59,6 +75,18 @@ fn string2name() {
 
     println!("{:?}", numbers);
 }
+
+fn print_num() {
+    let (a, b, c, d, e) = (1u8, 2u16, 3i32, 4f64, 5i128);
+    println!(
+        "Print 5 numbers {},{:?},{},{},{}",
+        a.wrapping_add(3),
+        b.checked_add(300),
+        c.overflowing_add(500).1,
+        e.saturating_add(500),
+        d
+    )
+}
 enum Direction {
     East,
     West,
@@ -66,7 +94,7 @@ enum Direction {
     South,
 }
 
-fn direction_print() {
+fn print_direction() {
     let dire = Direction::South;
     match dire {
         Direction::East => println!("East"),
@@ -74,12 +102,13 @@ fn direction_print() {
             println!("South or North");
         }
         _ => println!("West"),
-    };
+    }
 }
 fn main() {
     greet_world();
     print_table();
+    print_num();
+    print_direction();
     cal();
     string2name();
-    direction_print();
 }

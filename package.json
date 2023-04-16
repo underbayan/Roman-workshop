@@ -18,5 +18,8 @@
   "bugs": {
     "url": "https://github.com/underbayan/Roman-workshop/issues"
   },
-  "homepage": "https://github.com/underbayan/Roman-workshop#readme"
+  "homepage": "https://github.com/underbayan/Roman-workshop#readme",
+  "devDependencies": {
+    "@types/node": "^18.15.11"
+  }
 }
