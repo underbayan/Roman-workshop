@@ -3,7 +3,7 @@
 
 var iteratorFunc = () => {
   var index = 0
-  return {next: ()=> ({value: index++, done: false})}
+  return { next: () => ({ value: index++, done: false }) }
 }
 
 var iterator
@@ -15,7 +15,7 @@ iterator = "1234567"[Symbol.iterator](); // String is iterable
 iterator.next();
 
 //Own iterable Object
-var iterableClass =class {
+var iterableClass = class {
   [Symbol.iterator]() {
     return iteratorFunc() // Must return a iterator
   }
@@ -24,7 +24,7 @@ var instance = new iterableClass()
 
 for (var i of instance) {
   console.log(i)
-  if (i > 15)break
+  if (i > 15) break
 }
 
 // Iteration<Promise<T>>

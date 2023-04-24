@@ -1,4 +1,42 @@
-var QueryString = (function() {
+class Deferred {
+  constructor() {
+    this.promise = new Promise((resolve, reject) => {
+      this.resolve = resolve;
+      this.reject = reject;
+    });
+  }
+}
+
+function deferred() {
+  let resolve, reject;
+  const promise = new Promise((res, rej) => {
+    resolve = res;
+    reject = rej;
+  });
+  return { resolve, reject, promise };
+}
+
+
+// Dynamic require 
+async function require(url) {
+  const response = await fetch(url);
+  const scriptCode = await response.text();
+  const module = { exports: {} };
+  const moduleFunction = new Function('module', 'exports', scriptCode);
+  moduleFunction(module, module.exports);
+  return module.exports;
+}
+
+// Array polyfill
+Array.prototype.zip = arr => Array.from({ length: Math.max(...arr.map(x => x.length)) }).map((_, i) => Array.from({ length: arr.length }, (_, k) => arr[k][i]))
+Array.prototype.unzip = arr => arr.reduce((acc, val) => (val.forEach((v, i) => acc[i].push(v)), acc), Array.from({ length: Math.max(...arr.map(x => x.length)) }).map(x => []))
+Array.prototype.union = (a, b) => Array.from(new Set([...a, ...b]))
+Array.prototype.unique = arr => [...new Set(arr)]
+Array.prototype.range = n => Array.apply(null, Array(n)).map((_, i) => i);
+Array.prototype.chunk = (arr, n) => Array.range(Math.ceil(arr.length / n)).map((_, i) => arr.slice(i * n, i * n + n))
+Array.prototype.shuffle = (arr) => arr.map((_, i, a) => (m = Math.floor(Math.random() * (a.length - i)) + i, [a[i], a[m]] = [a[m], a[i]])) && arr;
+
+var QueryString = (function () {
   // This function is anonymous, is executed immediately and
   // the return value is assigned to QueryString!
   var query_string = {};
@@ -27,9 +65,9 @@ e.bubbles && e.stopPropagation ? e.stopPropagation() : (e.cancelBubble = true);
 
 //set Cookie
 var setCookie = (name, value, time, path = "/") =>
-  (document.cookie = `${name}=${value};expires=${new Date().setTime(
-    new Date().getTime() + time
-  )};path=${path}`);
+(document.cookie = `${name}=${value};expires=${new Date().setTime(
+  new Date().getTime() + time
+)};path=${path}`);
 //getCookie
 var getCookie = name =>
   decodeURIComponent(document.cookie)
@@ -37,13 +75,13 @@ var getCookie = name =>
     .map(c => (c.charAt(0) === " " ? c.substring(1) : c))
     .find(c => !c.indexOf(name))
     .substring(name.length + 1);
-[].forEach.call($("*"), function(a) {
+[].forEach.call($("*"), function (a) {
   a.style.outline = "1px solid #" + ~~(Math.random() * (1 << 24));
   a.style.backgroundColor = "#" + ~~(Math.random() * (1 << 24));
 });
 // Fake Array
 var domNodes = Array.prototype.slice.call(document.getElementsByTagName("*"));
-var fakeArgsArray = function() {
+var fakeArgsArray = function () {
   var args = Array.prototype.slice.call(arguments);
 };
 function getCookie(name, cookie = "") {
@@ -78,9 +116,9 @@ function addEvent(ele, type, func) {
   }
 }
 let sum = (...o) => (o.length ? o.pop() + sum(...o) : 0);
-let sum2 = (function() {
+let sum2 = (function () {
   let data = [];
-  return function() {
+  return function () {
     if (!arguments.length) {
       return data.reduce((sum, i) => i + sum, 0);
     } else {
@@ -205,7 +243,7 @@ app.request = Object.create(req, {
  * 通过 改写 get 来禁用一个对象的属性，而不是改写这个属性, 有时候属性应该是不可写的。
  */
 Object.defineProperty(exports, name, {
-  get: function() {
+  get: function () {
     throw new Error("");
   },
   configurable: true
@@ -265,7 +303,7 @@ function isAsyncFn(fn) {
 // Tiny Debounce
 function debounce(fn, delay = 0) {
   let timer;
-  return function() {
+  return function () {
     if (timer) cleatTimeout(timer);
     timer = setTimeout(() => {
       timer = undefined;
@@ -276,7 +314,7 @@ function debounce(fn, delay = 0) {
 // tiny throttle
 function throttle(fn, delay) {
   var timer;
-  return function() {
+  return function () {
     var last = timer;
     var now = Date.now();
     if (!last) {
@@ -304,7 +342,7 @@ function dp(obj) {
   }
   return obj;
 }
-Array.prototype.reduce = function(fn, init) {
+Array.prototype.reduce = function (fn, init) {
   let result = init;
   this.forEach((element, index) => {
     result = fn(result, element, index);
@@ -379,4 +417,56 @@ function deepCopy(obj) {
     return _finalObj;
   }
   return obj;
+}
+
+
+function deepCopy(obj) {
+  if (!item) { return item; } // null, undefined values check
+
+  var types = [Number, String, Boolean],
+    result;
+
+  // normalizing primitives if someone did new String('aaa'), or new Number('444');
+  types.forEach(function (type) {
+    if (item instanceof type) {
+      result = type(item);
+    }
+  });
+
+  if (typeof result == "undefined") {
+    if (Object.prototype.toString.call(item) === "[object Array]") {
+      result = [];
+      item.forEach(function (child, index, array) {
+        result[index] = deepCopy(child);
+      });
+    } else if (typeof item == "object") {
+      // testing that this is DOM
+      if (item.nodeType && typeof item.cloneNode == "function") {
+        var result = item.cloneNode(true);
+      } else if (!item.prototype) { // check that this is a literal
+        if (item instanceof Date) {
+          result = new Date(item);
+        } else {
+          // it is an object literal
+          result = {};
+          for (var i in item) {
+            result[i] = deepCopy(item[i]);
+          }
+        }
+      } else {
+        // depending what you would like here,
+        // just keep the reference, or create new object
+        if (false && item.constructor) {
+          // would not advice to do that, reason? Read below
+          result = new item.constructor();
+        } else {
+          result = item;
+        }
+      }
+    } else {
+      result = item;
+    }
+  }
+
+  return result;
 }

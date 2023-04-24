@@ -1,22 +1,15 @@
 - javascript 函数是对象 其实除了 null 和 undefined 其他的都是对象,只有函数才有 prototype 属性
 - Number,Function,Object,Date,String 本质都是函数，当然函数的本质也是对象
-
 # \_\_proto\_\_ 详解
-
 - 每一对象都有一个 内置属性[[prototype]],可以通过 \_\_proto\_\_ 来访问这个属性 ，这个属性指向了构造该对象的函数(构造函数的)的对象的原型
-
 ```javascript
-;(2).__proto__ === Number.prototype // 2的构造者是Number
+(2).__proto__ === Number.prototype // 2的构造者是Number
+({}).__proto__ ===Object.prototype // {}的构造者是Object
 Number.__proto__ === Function.prototype //Number 的构造者是Function
 Function.__proto__ === Function.prototype //Function的构造者是 Function
-;(Math.__proto__ ===
-  Object.prototype(
-    // Math的构造者是Object
-    {}
-  ).__proto__) ===
-  Object.prototype // {}的构造者是Object
+Math.__proto__ === Object.prototype // Math的构造者是Object
 Object.__proto__ === Function.prototype //Object 的构造者是 Function
-
+// Why？？
 var A = function() {}
 var a = new A()
 a.__proto__ === A.prototype //a 的构造者是A
@@ -37,7 +30,7 @@ console.log(typeof Date.prototype) // object
 console.log(typeof Object.prototype) // object
 ```
 
-# class 详解
+# fn and prototype 详解
 
 ```javascript
 //局部变量(函数作用域)
@@ -53,7 +46,6 @@ function A() {
   }
 }
 // 静态变量和静态函数，只能通过A来调用，本质就是A的属性
-function A() {}
 A.staticVariable = 12
 A.staticFunction = function() {}
 
@@ -114,6 +106,7 @@ Object.create = function(parent) {
   F.prototype = parent
   return new F()
 }
+
 var Point = {
   x: 0,
   y: 0,
@@ -161,14 +154,16 @@ typeof + instanceof > Object.prototype.toString
 
 # 数字
 
-只有 64 位数浮点数
+只有 64 位数浮点数 
+1 位符号位 11 位指数 53位数值位，所以js 精度的最大整数 2^53-1
 NAN 是一个数值，不等于任何值，包括自己，用 isNaN 来检测。
 Infinity 很大的数，但不是无限大，是 js 表示的最大值
 
 # 字符串
 
 不可改变
-表达式
+
+# 表达式
 =====
 略
 ==：(隐藏的类型转化)
@@ -200,37 +195,33 @@ typeof 不能区分出数组，null 和普通对象
 在判断是否字符串，是否数字，是否布尔值的时候，我们应该使用 typeof,对数组和要判断对象是否是在某个构造函数或对象的原型链上时使用 instanceof,对函数的判断两者皆可
 
 # 数组：
-
 length 没有上限
 delete 和 splice 的区别
-delete 不影响数组长度
+delete 不影响数组长度, splice 会操作(移动)后续数组的内存，速度很慢，特别是大数组的splice是耗时的.
 
 # 函数：
 
 函数就是对象
-调用：方法调用（this 值为调用的对象）、
-函数调用（this 是外部的全局对象）、
-构造器调用（this 就是 new 出来的新的对象）、
-apply 调用（this 可以被指定）
-  
+
 this:
 =====
 this is bound at runtime based on the context
+调用：方法调用（this 值为调用的对象）、
+函数调用（this 是外部的context对象）、
+构造器调用（this 就是 new 出来的新的对象）、
+apply 调用（this 可以被指定）
 
 # context vs scope
-
 A context of function is the value of this for that function
 Scope defines the way javascript resolves a variable at run time.
 There is only two scopes in js, global and function scope, weuse scope chain to make closures possible
 
 # 返回：
-
 没有指定则返回的 undefined
 
 # tip：
 - 为什么 js 中没有析构函数
-- for in 遍历对象属性的顺序不是固定的
-- for in 再原型上表现糟糕
+- for in 遍历对象属性的顺序不是固定的, 在原型上表现糟糕
 - delete 可以删除对象的属性，但是不会操作原型链中的任何对象
 - javascript 没有尾递归优化
 - 只有函数作用域没有块作用域
