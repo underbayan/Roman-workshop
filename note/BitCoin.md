@@ -1,0 +1,13 @@
+- bitcoin adress: base58
+- POW: find the right nonce to make hash256(hash256(...+nonce))< target, target is about 10**75
+- bonus: 50*(0.5**(n/210000)) bitcoin/perblock + gas
+- wallet: >400gb, Num of Blocks: > 719,000 (2023-04-26)
+- record on block: only describe each description, when we try to know how much coin in a address we need to query all transaction fo address
+- block format: header + transaction count + transactions
+- block headers: head + version + preHash + Merkle Root hash + timestamp + target + nonce
+- risk: miners could ignore some trasations to make these trasactions not happened.
+- 50 coin bonus: we call these are coinbase transactions. these transactions has no input
+- nonce: it is 32bit integer, miner will try each interger to make hash256(hash256(...+nonce))< target
+- target : initial target is 0xffff * 2^208, dynamic target is target*=avg(T)/10min, T is about 10min, since target/hashMaxSIze is about  1.1579 × 10^-77, it's hard to figure out the right nonce. That's why POW need GPU to calculate it.    
+- nums of transaction on blockchain.com: 30000-40000/per day
+- About 4,000,000 bit coins is lose theirs private key
