@@ -63,3 +63,33 @@
 // ```
 // fcntl: 可以将文件io 变成非阻塞
 
+
+
+
+/**
+<memory>,<iostream>,<vector>,<algorithm>,<numeric>,<map>,<set>,<utility>,<functional>,<thread>,<chrono>,<random>,<regex>
+
+*/
+
+
+/**
+* Virtual method provides mechanism for achieving runtime polymorphic behavior and dynamic dispatch, meaning that the appropriate derived class implementation of the virtual method is invoked based on the actual object type at runtime through a common base class interface. (flexible and extensible ) 
+*/
+
+
+/** 
+* auto is similar to let of typescript, But we should pay attention to deduced type for integer.
+auto u32 = 32;   // Deduced type: int
+auto i32 = 32;   // Deduced type: int
+auto u64 = 32;   // Deduced type: int
+auto u32 = 32u;   // Deduced type: unsigned int
+auto i32 = 32i;   // Error: no valid suffix for type deduction
+auto u64 = 32ull; // Deduced type: unsigned long long
+*/
+
+
+/** 
+* Lambda expression
+* using & to allow lambda to modify the captured variable.
+* auto modifyValues = [x, &y]() mutable throw() {  x = 10;   y = 7;};
+*/
