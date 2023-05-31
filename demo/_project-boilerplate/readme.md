@@ -1,0 +1,1 @@
+This is just a learning project about common infrastructures of fronend project

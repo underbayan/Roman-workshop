@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <script type="module">
+        import {FASTElement, html, css} from "https://cdn.jsdelivr.net/npm/@microsoft/fast-element/dist/fast-element.min.js";
+
+        const template = html`<>`;
+        const styles = css`
+        my-element{
+            color:red
+        }}`;
+        const converter = {l: 12};
+
+        export class MyElement extends FASTElement
+        {
+            static definition = {
+                name: 'my-element',
+                template,
+                styles,
+                attributes: [
+                    'value', // same attr/prop
+                    {attribute: 'some-attr', property: 'someAttr'}, // different attr/prop
+                    {property: 'count', converter} // derive attr; add converter
+                ]
+            };
+
+            value = '';
+            someAttr = '';
+            count = 0;
+        }
+
+        FASTElement.define(MyElement);
+          // your code here
+    </script>
+</head>
+<!-- ... -->
+
+<body>
+    <my-element />
+
+</body>
+
+</html>

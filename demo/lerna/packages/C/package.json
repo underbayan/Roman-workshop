@@ -1,0 +1,13 @@
+{
+  "name": "@theomist/c",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "webpack ./index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "gitHead": "cd79a41cfe169002e7ccd778b938b933310e6b37"
+}

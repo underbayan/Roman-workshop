@@ -1,0 +1,68 @@
+/*清楚浮动*/
+.clear-fix {
+  *overflow: hidden;
+  *zoom: 1;
+}
+
+.clear-fix:after {
+  display: table;
+  content: "";
+  width: 0;
+  clear: both;
+}
+
+//hover 前后变化
+a:hover::before,
+a:hover::after {
+  position: absolute;
+}
+
+a:hover::before {
+  content: "\5B";
+  left: -20px;
+}
+
+a:hover::after {
+  content: "\5D";
+  right: -20px;
+}
+
+//[String] – 使用引号包括一段字符串，将会向元素内容中添加字符串。示例：
+a:after {
+  content: "↗";
+}
+
+//attr() – 调用当前元素的属性，可以方便的比如将图片的 Alt 提示文字或者链接的 Href 地址显示出来。示例：
+a:after {
+  content: "(" attr(href) ")";
+}
+
+//url() / uri() – 用于引用媒体文件。示例：
+h1::before {
+  content: url(logo.png);
+}
+
+//counter() –  调用计数器，可以不使用列表元素实现序号功能。具体请参见 counter-increment 和 counter-reset 属性的用法。示例：
+h2:before {
+  counter-increment: chapter;
+  content: "Chapter " counter(chapter) ". ";
+}
+
+.apsect-86 {
+  &:before {
+    content: "";
+    float: left;
+    padding-bottom: 56.2%;
+  }
+
+  &:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+}
+
+// Z-index: normal 0-98, nav 99-998, dialog 999-9998, 9999-99998 
+// transition， animation, @keyframe,  requestAnimationFrames(兼容问题) ,setInterval
+
+// colorSystem.scss

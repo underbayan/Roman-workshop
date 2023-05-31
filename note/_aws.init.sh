@@ -30,7 +30,6 @@ echo "<?php phpinfo(); ?>" > /var/www/html/phpinfo.php
 # 会话管理
 yum install screen
 
-
 #auto restart node
 npm install supervisor -g
 #  docker pull for rocket chat
@@ -41,7 +40,6 @@ npm install forever -g
 #spider
 #pip3 install magneticod --user
 #export PATH=$PATH:~/.local/bin
-
 
 firewall-cmd --zone=dmz --add-service=smtp --permanent
 firewall-cmd --zone=dmz --add-service=smtps --permanent

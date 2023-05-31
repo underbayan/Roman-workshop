@@ -1,0 +1,27 @@
+{
+  "name": "@theomist/d",
+  "version": "1.0.0",
+  "description": "> TODO: description",
+  "author": "romanTai <underbayan@gmail.com>",
+  "homepage": "",
+  "license": "ISC",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib",
+    "test": "__tests__"
+  },
+  "files": [
+    "lib"
+  ],
+  "publishConfig": {
+    "registry": "http://registry.npm.taobao.org/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "\"\""
+  },
+  "scripts": {
+    "test": "node ./__tests__/D.test.js"
+  },
+  "gitHead": "cd79a41cfe169002e7ccd778b938b933310e6b37"
+}
