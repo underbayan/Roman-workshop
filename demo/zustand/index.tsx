@@ -1,4 +1,4 @@
-import React, { useSyncExternalStore } from 'react';
+import React, { use, useSyncExternalStore, useDeferredValue } from 'react';
 import { createRoot } from 'react-dom/client';
 
 const create = (f) => {
@@ -31,9 +31,19 @@ function Counter() {
   const { count, inc } = useStore();
   return <button onClick={inc}>{count}</button>;
 }
+const  Lazy = ({value})=>{
+  const  lazy = use(new Promise((resolve)=>{
+    setTimeout(()=>resolve(value), 700)
+  }))
+  return <div>{lazy}</div>
+}
 const App = () => {
+  const useDeffer = useDeferredValue(123456)
   return <div><h1>Hello, world!</h1>
   <Counter />
+  <React.Suspense fallback={<div>Loading...</div>}>
+      <Lazy value={useDeffer} />
+  </React.Suspense>
     <ul >
       <li>1</li>
       <li>2</li>
