@@ -21,5 +21,8 @@
   "homepage": "https://github.com/underbayan/Roman-workshop#readme",
   "devDependencies": {
     "@types/node": "^18.15.11"
+  },
+  "dependencies": {
+    "typescript": "^5.9.3"
   }
 }
