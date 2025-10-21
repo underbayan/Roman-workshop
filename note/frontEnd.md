@@ -10,3 +10,11 @@
 
 # JS
 - Js has no language items.
+
+
+# FE Performance
+- Metrics: LCP<2.5s, FCP<1.8s, TTI, CLS<0.1s, INP<0.2s, lighthouse
+
+# JS security
+- inline script: nonce
+- subresource: integrity
